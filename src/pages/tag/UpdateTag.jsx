@@ -5,11 +5,13 @@ import Layout from "../../components/Layout";
 import TagService from "../../services/TagService";
 import Alert from "../../components/Alert";
 import { useNavigate } from "react-router-dom";
+import ContentHeading from "../../components/ContentHeading";
+import BreadCrumbs from "../../components/BreadCrumbs";
 
 const UpdateTag = () => {
   const navigate = useNavigate();
   const [updateTag, setUpdateTag] = useState({
-    tagString: "Hibernate",
+    tagString: "HIBERNATE",
     newTagString: "",
   });
 
@@ -60,10 +62,28 @@ const UpdateTag = () => {
     navigate("/etiket");
   };
 
+  //
+
+  const header = { header: "Etiket Güncelle", href: "/etiket/guncelle" };
+
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/",
+    },
+    {
+      title: "Etiket İşlemleri",
+      href: "/etiket",
+    },
+    {
+      title: "Etiket Güncelle",
+      href: "/etiket/guncelle",
+    },
+  ];
   return (
     <Layout>
       <div className="flex flex-col bg-white h-full">
-        <div className="p-5 text-start">Bitmesi bekleniyor</div>
+        <BreadCrumbs header={header} subtitle={subtitle} />
         <form
           onSubmit={handleSubmit}
           className="class1 flex justify-center align-center"
