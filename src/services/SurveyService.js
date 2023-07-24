@@ -3,6 +3,8 @@ import axios from "axios";
 const CREATE = "http://localhost:8090/api/v1/survey/create";
 const QUESTIONS = "http://localhost:8090/api/v1/questions";
 const ADD_QUESTIONS_TO_SURVEY = "http://localhost:8090/api/v1/survey/add-questions-to-survey";
+const LIST = "http://localhost:8090/api/v1/survey/list";
+const DELETE = "http://localhost:8090/api/v1/survey/delete/";
 
 class SurveyService {
   create(survey) {
@@ -24,6 +26,26 @@ class SurveyService {
     };
     return axios.get(QUESTIONS, config);
   }
+
+  async list()  {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    return await axios.get(LIST, config);
+  }
+  async delete(id) {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    return await axios.delete(DELETE+id,config);
+}
+
 
   addQuestionsToSurvey(addQuestion) {
     const token = localStorage.getItem("token");
