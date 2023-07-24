@@ -1,158 +1,75 @@
-import React, { useState } from 'react'
-import Table from '../../components/Table/Table'
-import Sidebar from "../../components/Sidebar";
-
-import "./TumAnketler.css";
-import Layout from '../../components/Layout';
+import React, { useState, useEffect } from "react";
+import Table from "../../components/Table/Table";
+import Layout from "../../components/Layout";
+import SurveyService from "../../services/SurveyService";
+import { Link, useNavigate } from "react-router-dom";
+import Alert from "../../components/Alert";
 const TumAnketler = () => {
+  const [surveys, setSurveys] = useState([]);
 
+  const header = ["No", "Anket Adı", "Konu Başlığı"];
 
-  const [surveys,setSurveys] = useState([
-    {
-      no: "1",
-      anketAdi: "Boost Değerlendirme anketi - JAVA",
-      konuBasligi: "java",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "2",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "3",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "4",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "5",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "6",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "7",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "8",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "9",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "10",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "11",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-
-    {
-      no: "12",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "13",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "14",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "15",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "16",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "17",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-    {
-      no: "18",
-      anketAdi: "Boost Değerlendirme anketi - .NET",
-      konuBasligi: ".NET",
-      anketEtiket: "etiket iconu",
-    },
-  ]);
-
-  const header = [
-    "No",
-    "Anket Adı",
-    // "Anket Etiketleri",
-    "Konu Başlığı",
-
-  ];
-
-  const deleteTableRows = (index) => {
+  const deleteTableRows = async (index,rowData) => {
+    const response = await SurveyService.delete(rowData.surveyOid);
+    if (response.status === 200) {
+      alert(rowData.surveyOid + ". id'ye sahip anket başarıyla silindi")
+    }else{
+      alert("bir hata meydana geldi")
+    }
+    console.log(response);
     const rows = [...surveys];
-    rows.splice(index,1);
+    rows.splice(index, 1);
     setSurveys(rows);
-  }
- 
-  const handleChange = (index,evnt) => {
-    const {name,value} = evnt.target;
-    const rowsInput = [...surveys];
-    rowsInput[index][name] = value;
-    setSurveys(rowsInput);
-  }
+  };
+
+  const navigate = useNavigate();
+
+  const handleEditClick = (rowData) => {
+    navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
+  };
+
+  useEffect(() => {
+    const fetchSurveys = async () => {
+      try {
+        const response = await SurveyService.list();
+        console.log(response);
+        if (response.status === 200) {
+          // API yanıtındaki "surveyTags" alanını düzenle
+          const formattedSurveys = response.data.map((survey) => ({
+            ...survey,
+            surveyTags: survey.surveyTags
+              .map((tag) => tag.tagString)
+              .join(", "),
+          }));
+          setSurveys(formattedSurveys.reverse());
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchSurveys();
+
+    return () => {
+      console.log("useEffect clean up");
+    };
+  }, []);
 
   return (
-
     <Layout>
-    <div className='flex flex-col  gap-10 bg-slate-100 h-full'>
-      <div className='h-10'>dasda</div>
-      <Table  data={surveys} header={header} useIcon={true} useLabel={true} deleteTableRows={deleteTableRows} handleChange={handleChange} />
+      <div className="flex flex-col gap-10 bg-slate-100 h-full">
+        <div className="h-10">dasda</div>
+        <Table
+          data={surveys}
+          header={header}
+          useIcon={true}
+          useLabel={true}
+          deleteTableRows={deleteTableRows}
+          editTableRows={handleEditClick}
+        />
       </div>
     </Layout>
-
-
-    
-   
-  )
-}
+  );
+};
 
 export default TumAnketler;

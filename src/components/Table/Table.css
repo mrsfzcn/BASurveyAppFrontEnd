@@ -11,7 +11,6 @@
     overflow: hidden;
     table-layout: fixed;
     border-collapse: collapse;
-    /* box-shadow: 0px 0px 10px 10px #ccc; */
     white-space: nowrap;
     
     
@@ -38,6 +37,8 @@
 .table td{
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: center;
+    justify-content: center;
    
 }
 
@@ -70,9 +71,9 @@
 
 
 .table-container {
-    max-height: 58vh; /* veya istediğiniz bir yükseklik değeri */
+    max-height: 58vh; 
     overflow-y: auto;
-     /* İsteğe bağlı: Kenarlıklar için bir çerçeve ekler */
+    
   }
 
 .first-column{
@@ -83,4 +84,4 @@
     align-items: center;
 }
 
-  /* flex justify-between w-90 mx-auto  */
+ 
