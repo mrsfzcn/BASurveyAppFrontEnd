@@ -8,10 +8,12 @@ import ClassroomSvg from "./classroomSvg";
 import SurveySvg from "./surveySvg";
 import UserGroupSvg from "./userGroupSvg";
 import QuestionSvg from "./questionSvg";
+import MultiDropdown from "../../components/MultiDropdown";
 
 function AdminHome() {
   const [name, setName] = useState("");
   const [selection, setSelection] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -19,33 +21,28 @@ function AdminHome() {
 
   const handleUserClick = (event) => {
     const target = event.target;
-      console.log("User area clicked!");
-    
+    console.log("User area clicked!");
   };
 
   const handleSurveyClick = (event) => {
     const target = event.target;
-    
-      console.log("Survey area clicked!");
-    
+
+    console.log("Survey area clicked!");
   };
   const handleReportingClick = (event) => {
     const target = event.target;
-    
-      console.log("Reporting area clicked!");
-   
+
+    console.log("Reporting area clicked!");
   };
   const handleQuestionClick = (event) => {
     const target = event.target;
-    
-      console.log("Question area clicked!");
-   
+
+    console.log("Question area clicked!");
   };
   const handleClassroomClick = (event) => {
     const target = event.target;
-   
-      console.log("Classroom area clicked!");
-  
+
+    console.log("Classroom area clicked!");
   };
 
   const options = [
@@ -58,32 +55,44 @@ function AdminHome() {
     setSelection(option);
   };
 
+  const handleSelectedOptionsChange = (updatedOptions) => {
+    setSelectedOptions(updatedOptions);
+  };
+
   return (
     <Layout>
       <div className="flex">
-        <Dropdown value={selection} onChange={onChange} options={options} />
-        <Dropdown value={selection} onChange={onChange} options={options} />
+        <Dropdown options={options} value={selection} onChange={onChange} />
+        <MultiDropdown
+          options={options}
+          selectedOptions={selectedOptions}
+          onChange={handleSelectedOptionsChange}
+        />
+        Seçili seçenekler:
+        {selectedOptions.map((option) => (
+          <span key={option.value}>{option.label}, </span>
+        ))}
       </div>
       <div className="question-container" onClick={handleQuestionClick}>
-   <QuestionSvg/>
-    </div>
-    <div className="classroom-container" onClick={handleClassroomClick}>
-    <ClassroomSvg/>
-    </div>
-    <div className="survey-container" onClick={handleSurveyClick}>
-    <SurveySvg/> 
-    </div>
-    <div className="user-container" onClick={handleUserClick}>  
-    <UserGroupSvg/> 
-    </div>
-    <div className="circle-reporting" onClick={handleReportingClick}> 
-    <div className="svg-reporting" >
-      <ReportingSvg/>
+        <QuestionSvg />
       </div>
-      <div>
-      <p>Raporlama İşlemleri</p>
+      <div className="classroom-container" onClick={handleClassroomClick}>
+        <ClassroomSvg />
       </div>
-    </div>
+      <div className="survey-container" onClick={handleSurveyClick}>
+        <SurveySvg />
+      </div>
+      <div className="user-container" onClick={handleUserClick}>
+        <UserGroupSvg />
+      </div>
+      <div className="circle-reporting" onClick={handleReportingClick}>
+        <div className="svg-reporting">
+          <ReportingSvg />
+        </div>
+        <div>
+          <p>Raporlama İşlemleri</p>
+        </div>
+      </div>
     </Layout>
   );
 }
