@@ -8,10 +8,13 @@ import Layout from "../../../../components/Layout";
 import EditIcon from "../svg/edit-svg.jsx";
 import SortIcon from "../svg/sort-solid.jsx";
 import DeleteIcon from "../svg/delete-svg";
+import Alert from "../../.../../../../components/Alert";
 import Input from "../../../../components/Input";
 
 export default function List() {
   const [selectedCombo, setSelectedCombo] = useState(10);
+  const [alert, setAlert] = useState({ type: "", message: "" });
+
   const [userList, setUserList] = useState([]);
   const [search, setSeach] = useState("");
   const [searchedList, setSearchedList] = useState([]);
@@ -44,6 +47,7 @@ export default function List() {
       console.log(response.data);
       setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
     } catch (error) {
+      setUserList([]);
       console.error(error);
     }
   };
@@ -96,21 +100,36 @@ export default function List() {
   };
 
   const handleDeleteClick = async (oid) => {
+    setAlert({ type: "", message: "" });
     console.log(oid);
-    await axios.delete(`http://localhost:8090/api/v1/user/delete/${oid}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    fetchData();
+    try {
+      const response = await axios.delete(
+        `http://localhost:8090/api/v1/user/delete/${oid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setAlert({ type: "success", message: "Kullanıcı başarıyla silindi." });
+      fetchData();
+    } catch (error) {
+      console.error(error);
+      setAlert({
+        type: "error",
+        message: "Kullanıcı silme işlemi başarısız.",
+      });
+    }
   };
 
-  const currentItems = userList
-    .slice(indexOfFirstItem, indexOfLastItem)
-    .filter((item) =>
-      item.firstName.toLowerCase().trim().includes(search.toLowerCase().trim())
-    );
+  const filteredUserList = userList.filter((item) =>
+    item.firstName.toLowerCase().trim().includes(search.toLowerCase().trim())
+  );
 
+  const currentItems = filteredUserList.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   return (
     <>
       <Layout>
@@ -209,7 +228,7 @@ export default function List() {
                         <td style={{ width: "13rem" }}>
                           {user.authorizedRole}
                         </td>
-                        <td style={{ width: "13rem" }}>{user.createdAt}</td>
+                        <td style={{ width: "13rem" }}>{user.createdDate}</td>
                         <td style={{ width: "15rem" }}>
                           <button
                             className="editButton"
@@ -230,7 +249,7 @@ export default function List() {
                 <div>
                   <p style={{ marginBottom: "2rem" }}>
                     {userList.length} kullanıcıdan {currentItems.length}'sı
-                    gösteriliryor.
+                    gösteriliyor.
                   </p>
                 </div>
                 <div>
@@ -262,6 +281,7 @@ export default function List() {
               </div>
             </div>
           </div>
+          {alert.type && <Alert type={alert.type} message={alert.message} />}
         </div>
       </Layout>
     </>
