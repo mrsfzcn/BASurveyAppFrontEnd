@@ -5,9 +5,10 @@ import Layout from "../../components/Layout";
 import "./userRegistration.css";
 import Dropdown from "../../components/Dropdown";
 import AuthService from "../../services/AuthService"
+import Alert from "../../components/Alert";
 
 const UserRegistration = () => {
-
+  
   const[user,setUser] = useState({
     password: "",
     firstName: "",
@@ -15,7 +16,8 @@ const UserRegistration = () => {
     roles:[
       
     ]
-  })
+  });
+  const [alert, setAlert] = useState({ type: "", message: "" });
   
   const [selection, setSelection] = useState(null);
   const options =[
@@ -34,11 +36,29 @@ const UserRegistration = () => {
     event.preventDefault();
     console.log(user);
     console.log(typeof user.roles);
+    if(user.firstName.length < 2){
+      setAlert({ type: "error", message: "Ad 2 karakterden uzun olmalıdır." });
+      return;
+    }
+    if(user.lastName.length < 2){
+      setAlert({ type: "error", message: "Soyad 2 karakterden uzun olmalıdır." });
+      return;
+    }
+    if(user.password.length < 8){
+      setAlert({ type: "error", message: "Şifre 8 karakterden uzun olmalıdır." });
+      return;
+    }
+    if(user.roles.length<1){
+      setAlert({ type: "error", message: "Rol seçiniz." });
+      return;
+    }
+    
     AuthService.register(user).then(()=>{
-      alert("başarılı");
+      setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
     })
     .catch((error)=>{
-      console.log(error);
+
+      setAlert({ type: "error", message: "HATA" });
     })
 
   }
@@ -51,9 +71,9 @@ const UserRegistration = () => {
         </div>
         <div className="class1  flex justify-center align-center">
           <div className="class2  bg-[#F1F1F1] flex  justify-center align-center m-auto ">
-            <div className="class3  bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-14 ">
-              <form onSubmit={handleCreate} className=" flex flex-col justify-center gap-14">
-              <div className="flex flex-col gap-14 justify-center items-center">
+            <div className="class3  bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-12 ">
+              <form onSubmit={handleCreate} className=" flex flex-col justify-center gap-12">
+              <div className="flex flex-col gap-12 justify-center items-center">
                
                 <Input placeholder="Ad" half required onChange={(e=>setUser({...user,firstName: e.target.value}))}/>
                 <Input placeholder="Soyad" half required onChange={(e=>setUser({...user,lastName: e.target.value}))}/>
@@ -61,7 +81,9 @@ const UserRegistration = () => {
                 <div className="w-1/2 flex justify-start">
                   <Dropdown options={options} onChange={onChange} value={selection}/>
                 </div>
+                {alert.type && <Alert type={alert.type} message={alert.message} />}
               </div>
+              
               <div className="flex justify-center gap-7 flex-wrap">
                 <Button className="" primary rounded bold>
                   KAYDET
