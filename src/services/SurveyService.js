@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const CREATE = "http://localhost:8090/api/v1/survey/create";
-const QUESTIONS = "http://localhost:8090/api/v1/questions";
+const CREATE = "http://localhost:8090/api/v1/survey";
+const QUESTIONS = "http://localhost:8090/api/v1/questions/findallquestion";
 const ADD_QUESTIONS_TO_SURVEY = "http://localhost:8090/api/v1/survey/add-questions-to-survey";
 const LIST = "http://localhost:8090/api/v1/survey/list";
 const DELETE = "http://localhost:8090/api/v1/survey/delete/";
