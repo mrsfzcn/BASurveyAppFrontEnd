@@ -67,7 +67,7 @@ function MultiDropdown({ options, selectedOptions, onChange }) {
       >
         {selectedOptions.length === 0
           ? "Seçim yapınız"
-          : selectedOptions.map((option) => option.label).join(", ")}
+          : "Seçim yapınız"}
         <GoChevronDown className="text-lg" />
       </Panel>
       {isOpen && (
