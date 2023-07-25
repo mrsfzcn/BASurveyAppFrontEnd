@@ -1,32 +1,37 @@
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
+import Input from "../../components/Input";
+import Dropdown from "../../components/Dropdown"; 
 import { useNavigate } from "react-router-dom";
 import SurveyService from "../../services/SurveyService.js"
 import "./createsurvey.css"
 import { useLocation } from "react-router-dom";
 
-function AddQuestion(){
+function AddQuestion() {
   const location = useLocation();
   const surveyTitle = location.state.surveyTitle;
   const surveyOid = location.state.surveyOid;
   const [questions, setQuestions] = useState([]);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
-
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState('option1'); 
   const navigate = useNavigate();
 
   const navigateMain = (e) =>{
     navigate("/adminhome");
   }
-
+  const dropdownOptions = [
+    { value: 'option1', label: 'Soru Cümlesine Göre' },
+    { value: 'option2', label: 'Soru Etiketine Göre' },
+   
+  ];
 
   useEffect(() => {
     SurveyService.getQuestions()
       .then(response => {
         setQuestions(response.data);
         console.log(response.data);
-
       })
       .catch(error => {
         console.error("Sorular listelenirken bir hata oldu.", error);
@@ -36,34 +41,25 @@ function AddQuestion(){
   function handleQuestionClick(question) {
     setQuestions((questions) =>
       questions.map((q) =>
-        q.questionOid === question.questionOid ? { ...q, selected: true } : q
+        q.questionOid === question.questionOid ? { ...q, selected: !q.selected, required: false } : q
       )
     );
     setSelectedQuestions((prevSelectedQuestions) => [
       ...prevSelectedQuestions,
-      question,
+      { ...question, required: false },
     ]);
   }
-
+  
   function handleSelectedQuestionClick(question) {
     setSelectedQuestions((prevSelectedQuestions) =>
       prevSelectedQuestions.filter((q) => q.questionOid !== question.questionOid)
     );
     setQuestions((questions) =>
       questions.map((q) =>
-        q.questionOid === question.questionOid ? { ...q, selected: false } : q
+        q.questionOid === question.questionOid ? { ...q, selected: false, required: false } : q
       )
     );
   }
-
-
-  const handlePreviewClick = () => {
-    navigate("/preview", { state: { surveyTitle, surveyOid, selectedQuestions } });
-    console.log(surveyOid)
-    console.log(surveyTitle)
-    console.log(selectedQuestions)
-;
-  };
 
   function toggleRequired(question) {
     const updatedQuestions = questions.map((q) => {
@@ -90,20 +86,39 @@ function AddQuestion(){
     setSelectedQuestions(updatedSelectedQuestions);
   }
 
+  const handlePreviewClick = () => {
+    navigate("/preview", { state: { surveyTitle, surveyOid, selectedQuestions } });
+  };
+
+  const filteredQuestions = questions.filter((question) => {
+    if (searchType === 'option1') { 
+      return question.questionString.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (searchType === 'option2') { 
+      return question.questionTags.some(tag => tag.tagString.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    return true; 
+  });
+
+
+  function handleSearchTypeChange(selectedOption) {
+    setSearchType(selectedOption.value);
+  }
   return (
     <Layout>
       <div className="flex h-full justify-center items-center flex-col">
         <div className="bg-gray-300 w-11/12 h-5/6 flex items-center justify-center rounded">
+      
           <div className="bg-white h-5/6 w-2/5 m-8 rounded flex flex-col overflow-auto">
             <div className="flex flex-row">
               <h2 className="text-left font-bold m-2 p-2">Anket Adı: </h2>
               <p className="m-2 p-2">{surveyTitle}</p>
             </div>
+           
 
             {selectedQuestions.map((question, index) => (
               <div
                 key={index}
-                className="bg-green-400 m-2 p-2 rounded-full"
+                className="bg-gray-300 m-2 p-2 rounded-full"
                 onClick={() => handleSelectedQuestionClick(question)}
               >
                 <div className="flex items-center">
@@ -112,7 +127,7 @@ function AddQuestion(){
                     <label>
                       <input
                         type="checkbox"
-                        className="rounded-full checked:bg-gray-500"
+                        className="rounded-full checked:bg-[#64E9B1]"
                         checked={question.required}
                         onChange={() => toggleRequired(question)}
                       />
@@ -123,11 +138,32 @@ function AddQuestion(){
             ))}
           </div>
           <div className="bg-white h-5/6 w-2/5 m-8 rounded flex flex-col overflow-auto">
-            <h2 className="text-left font-bold m-2 p-2">Sorular</h2>
-            {questions.map((question, index) => (
+          <div className="flex justify-between">
+                <h2 className="text-left font-bold m-2 p-2">Sorular</h2>
+                {/* Arama kutusu */}
+                <div className="flex items-center">
+                  <Input
+                    type="text"
+                    placeholder="Soruları ara..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="h-full "
+                  />
+                  {/* Dropdown component'i */}
+                  <Dropdown
+                      options={dropdownOptions}
+                      value={dropdownOptions.find(option => option.value === searchType)}
+                      onChange={handleSearchTypeChange}
+            
+                    />
+
+                </div>
+              </div>
+
+            {filteredQuestions.map((question, index) => (
               <div
                 key={index}
-                className="bg-green-400 m-2 p-2 rounded-full"
+                className="bg-[#64E9B1] m-2 p-2 rounded-full"
                 onClick={() => handleQuestionClick(question)}
               >
                 <div className="flex items-center">
@@ -137,7 +173,7 @@ function AddQuestion(){
                       <label>
                         <input
                           type="checkbox"
-                          className="rounded-full checked:bg-gray-500"
+                          className="rounded-full checked:bg-gray-700"
                           checked={question.required}
                           onChange={() => toggleRequired(question)}
                         />
