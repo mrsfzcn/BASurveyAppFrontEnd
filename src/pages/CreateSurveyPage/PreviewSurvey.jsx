@@ -14,8 +14,8 @@ function PreviewSurvey() {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const navigateBack = () => {
-    navigate("/addquestion");
+  const navigateHome = () => {
+    navigate("/adminhome");
   };
 
   const handleSendSurvey = () => {
@@ -28,7 +28,7 @@ function PreviewSurvey() {
     SurveyService.addQuestionsToSurvey(surveyData)
       .then((response) => {
         console.log(response.data);
-        setIsPopupOpen(true); // Popup'ı aç
+        setIsPopupOpen(true); 
       })
       .catch((error) => {
         console.log(error.response);
@@ -37,40 +37,48 @@ function PreviewSurvey() {
   };
 
   const closePopup = () => {
-    setIsPopupOpen(false); // Popup'ı kapat
-    navigate("/adminhome"); // Anasayfaya dön
+    setIsPopupOpen(false); 
+    navigate("/adminhome");
   };
 
   return (
     <Layout>
       <div className="flex h-full justify-center items-center flex-col">
-        <div className="flex justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
-          <div className="bg-white h-5/6 w-9/12 m-8 rounded flex flex-col overflow-auto px-8">
-            <h2 className="text-xl font-bold text-center mb-4 pt-4 ">{surveyTitle}</h2>
-            <p className="text-justify pt-2 px-4">
+        <div className="flex flex-col grid-flow-col justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
+          <div className="bg-white h-5/6 w-9/12  rounded flex flex-col overflow-auto px-8">
+            <h2 className="text-3xl font-bold text-center mb-4 pt-4 ">{surveyTitle}</h2>
+            <p className="text-justify pt-2 px-4 mb-16">
               Merhaba Arkadaşlar, <br />
               Sizlere daha iyi destek olabilmek adına hazırlamış olduğumuz Boost Eğitim Süreci Anketini doldurmanızı rica ederiz.
               Teşekkürler
-              <br /><br />
+              <br /><br /> <br />
               Merhaba, İsim.. Bu formu gönderdiğinizde, sahibi adınızı ve e-posta adresinizi görür.
-              <br /> <br />
+              <br /> <br /> <br />
               <strong className="text-red-700">Gerekli*</strong>
             </p>
+
             {selectedQuestions.map((question, index) => (
               <div key={index} className="m-2 p-2">
-                 <p>
+                 <p className="mb-16">
                   {index + 1}. {question.questionString}{question.required && "*"}
                 </p>
               </div>
             ))}
-          </div>
-        </div>
-        <Button primary rounded className="mt-8" onClick={navigateBack}>
-          GERİ DÖN
-        </Button>
-        <Button primary rounded className="mt-8" onClick={handleSendSurvey}>
+            
+        
+              </div>   
+               <div className="flex gap-x-8 m-2">
+                 <Button primary rounded className="mt-8" onClick={handleSendSurvey}>
           ANKETİ GÖNDER
+        </Button>    
+        <Button secondary rounded className="mt-8" onClick={navigateHome}>
+          ANA SAYFA
         </Button>
+          </div>
+        
+        </div>
+             
+       
       </div>
 
             {/* Popup bileşeni */}
