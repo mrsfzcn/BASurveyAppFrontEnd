@@ -47,7 +47,7 @@ function PreviewSurvey() {
         <div className="flex flex-col grid-flow-col justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
           <div className="bg-white h-5/6 w-9/12  rounded flex flex-col overflow-auto px-8">
             <h2 className="text-3xl font-bold text-center mb-4 pt-4 ">{surveyTitle}</h2>
-            <p className="text-justify pt-2 px-4 mb-16">
+            <p className="text-justify pt-2 px-4 mb-16 text-l">
               Merhaba Arkadaşlar, <br />
               Sizlere daha iyi destek olabilmek adına hazırlamış olduğumuz Boost Eğitim Süreci Anketini doldurmanızı rica ederiz.
               Teşekkürler
@@ -60,7 +60,7 @@ function PreviewSurvey() {
             {selectedQuestions.map((question, index) => (
               <div key={index} className="m-2 p-2">
                  <p className="mb-16">
-                  {index + 1}. {question.questionString}{question.required && "*"}
+                  {index + 1}. {question.questionString}{question.required && <span className="text-red-700 text-xl"> *</span>}
                 </p>
               </div>
             ))}

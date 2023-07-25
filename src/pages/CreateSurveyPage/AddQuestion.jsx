@@ -24,7 +24,7 @@ function AddQuestion() {
   const dropdownOptions = [
     { value: 'option1', label: 'Soru Cümlesine Göre' },
     { value: 'option2', label: 'Soru Etiketine Göre' },
-   
+    { value: 'option3', label: 'Soru Tipine Göre' },
   ];
 
   useEffect(() => {
@@ -95,6 +95,9 @@ function AddQuestion() {
       return question.questionString.toLowerCase().includes(searchTerm.toLowerCase());
     } else if (searchType === 'option2') { 
       return question.questionTags.some(tag => tag.tagString.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    else if (searchType === 'option3') { 
+      return question.questionType.toLowerCase().includes(searchTerm.toLowerCase());
     }
     return true; 
   });
