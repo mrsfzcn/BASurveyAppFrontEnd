@@ -10,7 +10,7 @@ function Sidebar() {
     {
       label: "Kullanıcı İşlemleri",
       content: [
-        { name: "Tüm Kullanıcılar", href: "/code" },
+        { name: "Tüm Kullanıcılar", href: "/kullanici" },
         {
           name: "Kullanıcı Ekle",
           href: "/kullanici/ekle",
@@ -61,16 +61,16 @@ function Sidebar() {
       label: "Etiket İşlemleri",
       content: [
         { name: "Etiket Ekle", href: "/" },
-        { name: "Etiket Güncelle", href: "/" },
+        { name: "Etiket Güncelle", href: "/etiket/guncelle" },
         { name: "Etiket Silme", href: "/" },
       ],
     },
   ];
 
   return (
-    <div className="flex flex-col gap-4 flex-[1_1_0%] bg-firstColor pl-4 pr-4   ">
+    <div className="flex flex-col gap-8 flex-[1_1_0%] bg-firstColor pl-4 pr-4   ">
       <div style={{ marginTop: "37px" }}>
-      <img src={Logo} alt="" />
+        <img src={Logo} alt="logo" />
       </div>
       <Accordion items={items} />
     </div>

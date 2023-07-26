@@ -5,7 +5,6 @@ import Layout from "../../components/Layout";
 import TagService from "../../services/TagService";
 import Alert from "../../components/Alert";
 import { useNavigate } from "react-router-dom";
-import ContentHeading from "../../components/ContentHeading";
 import BreadCrumbs from "../../components/BreadCrumbs";
 
 const UpdateTag = () => {
@@ -80,6 +79,7 @@ const UpdateTag = () => {
       href: "/etiket/guncelle",
     },
   ];
+
   return (
     <Layout>
       <div className="flex flex-col bg-white h-full">
@@ -99,8 +99,13 @@ const UpdateTag = () => {
                   onChange={onChange}
                   value={updateTag.newTagString}
                 />
-                <div className="w-1/2 flex justify-start"></div>
+                <div className="w-1/2 flex justify-center">
+                  {alert.type && (
+                    <Alert type={alert.type} message={alert.message} />
+                  )}
+                </div>
               </div>
+
               <div className="flex justify-center gap-7 flex-wrap">
                 <Button
                   className=""
@@ -126,8 +131,6 @@ const UpdateTag = () => {
             </div>
           </div>
         </form>
-        {/* burası düzenlenecek alan api isteği sonrası geri dönüş mesajının alert olarak paylaşılması */}
-        {alert.type && <Alert type={alert.type} message={alert.message} />}
       </div>
     </Layout>
   );

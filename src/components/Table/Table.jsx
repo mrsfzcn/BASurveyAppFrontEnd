@@ -32,9 +32,7 @@ const Table = ({
     return rowValues.includes(filterValue.toLowerCase());
   });
 
-  const handleRowClick = (value) => {
-    setSelectedCount(value);
-  };
+  const handleRowClick = (value) => {};
 
   const renderTableCells = (rowData) => {
     return Object.keys(rowData).map((key, colIndex) => {
