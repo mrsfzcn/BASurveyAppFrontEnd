@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import Dropdown from "../../components/Dropdown";
 import "./Table.css";
 import Input from "../Input";
-import { Link, useNavigate } from "react-router-dom";
 
 const Table = ({
   data,
@@ -14,13 +12,24 @@ const Table = ({
   editTableRows,
 }) => {
   const [selectedCount, setSelectedCount] = useState(null);
+  const [filterValue, setFilterValue] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPageOptions = [10, 20, 50, 100];
+  const itemsPerPage = selectedCount || itemsPerPageOptions[0];
 
-  const renderedRow = header.map((item, index) => {
-    return (
-      <th className="px-6 py-3" key={index}>
-        {item}
-      </th>
-    );
+  const handleFilterChange = (e) => {
+    setFilterValue(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleRowCountChange = (e) => {
+    setSelectedCount(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const filteredData = data.filter((rowData) => {
+    const rowValues = Object.values(rowData).join("").toLowerCase();
+    return rowValues.includes(filterValue.toLowerCase());
   });
 
   const handleRowClick = (value) => {
@@ -43,26 +52,39 @@ const Table = ({
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
   };
 
+  // Pagination
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <>
       <div className="flex flex-col">
         <div className="first-column">
-          <div className="filter-wrapper ">
+          <div className="filter-wrapper">
             <label>Göster: </label>
-            <select
-              value={selectedCount || ""}
-              onChange={(e) => setSelectedCount(e.target.value)}
-            >
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
+            <select value={itemsPerPage} onChange={handleRowCountChange}>
+              {itemsPerPageOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
             <label>Satır</label>
           </div>
           <div>
             <label>Ara :</label>
-            <Input />
+            <Input value={filterValue} onChange={handleFilterChange} />
           </div>
         </div>
 
@@ -71,39 +93,55 @@ const Table = ({
             <table className="table">
               <thead>
                 <tr>
-                  {renderedRow}
+                  {header.map((item, index) => (
+                    <th className="px-6 py-3" key={index}>
+                      {item}
+                    </th>
+                  ))}
                   {useLabel && <th>Anket Etiketleri</th>}
                   {useIcon && <th>işlemler</th>}
                 </tr>
               </thead>
               <tbody>
-                {data
-                  .slice(
-                    0,
-                    selectedCount ? parseInt(selectedCount) : data.length
-                  )
-                  .map((rowData, index) => (
-                    <tr
-                      key={index}
-                      onClick={() => handleRowClick(rowData.value)}
-                    >
-                      {renderTableCells(rowData)}
-                      {useIcon && (
-                        <td>
-                          <span className="actions">
-                            <button onClick={() => editTableRows(rowData)}>
-                              <BsFillPencilFill className="edit-btn" />
-                            </button>
-                            <button onClick={() => deleteTableRows(index,rowData)}>
-                              <BsFillTrashFill className="delete-btn" />
-                            </button>
-                          </span>
-                        </td>
-                      )}
-                    </tr>
-                  ))}
+                {currentItems.map((rowData, index) => (
+                  <tr key={index} onClick={() => handleRowClick(rowData.value)}>
+                    {renderTableCells(rowData)}
+                    {useIcon && (
+                      <td>
+                        <span className="actions">
+                          <button onClick={() => editTableRows(rowData)}>
+                            <BsFillPencilFill className="edit-btn" />
+                          </button>
+                          <button
+                            onClick={() => deleteTableRows(index, rowData)}
+                          >
+                            <BsFillTrashFill className="delete-btn" />
+                          </button>
+                        </span>
+                      </td>
+                    )}
+                  </tr>
+                ))}
               </tbody>
             </table>
+          </div>
+          <div className="footer">
+            <div className="extra-content">
+              Toplam {data.length}, Gösterilen veri sayısı:{" "}
+              {currentItems.length}
+            </div>
+
+            <ul className="pagination">
+              {pageNumbers.map((page) => (
+                <li
+                  key={page}
+                  className={page === currentPage ? "active" : ""}
+                  onClick={() => handlePageChange(page)}
+                >
+                  {page}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
@@ -112,3 +150,5 @@ const Table = ({
 };
 
 export default Table;
+
+//// tabloya tıkladıgımda sayfanın açıldığı ilk duruma dönüyor....
