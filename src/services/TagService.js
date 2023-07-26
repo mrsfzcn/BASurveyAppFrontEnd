@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const UPDATE_TAG = "http://localhost:8090/api/v1/maintags/tagname";
+const UPDATE_TAG = "http://localhost:8090/api/v1/maintags/updatetagbytagname";
 
 class TagService {
   async updateTag(updateTag) {

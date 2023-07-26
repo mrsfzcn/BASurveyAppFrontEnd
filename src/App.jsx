@@ -24,10 +24,7 @@ import AnketEkle from "./pages/surveys/AnketEkle";
 import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
-
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Router>
       <Routes>
@@ -35,7 +32,7 @@ function App() {
         <Route path="/qrcode" element={<Qrcode />} />
         <Route path="/code" element={<Code />} />
         <Route path="/adminhome" element={<AdminHomePage />} />
-        <Route path="/questionlist" element={<QuestionListPage/>}/>
+        <Route path="/questionlist" element={<QuestionListPage />} />
         <Route path="/sendsurvey" element={<SendSurvey />} />
         <Route path="/createsurvey" element={<CreateSurveyPage />} />
         <Route path="/addquestion" element={<AddQuestion />} />
