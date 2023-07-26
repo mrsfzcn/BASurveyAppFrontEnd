@@ -3,7 +3,6 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Layout from "../../components/Layout";
 import "./userRegistration.css";
-import Dropdown from "../../components/Dropdown";
 import AuthService from "../../services/AuthService";
 import Alert from "../../components/Alert";
 import BreadCrumbs from "../../components/BreadCrumbs";
@@ -17,7 +16,6 @@ const UserRegistration = () => {
     roles: [],
   });
   const [alert, setAlert] = useState({ type: "", message: "" });
-  const [selection, setSelection] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const options = [
     { label: "ADMIN", value: "ADMIN" },
@@ -28,7 +26,11 @@ const UserRegistration = () => {
   ];
   const handleSelectedOptionsChange = (updatedOptions) => {
     setSelectedOptions(updatedOptions);
-    setUser({ ...user, roles: [updatedOptions.value] });
+    const a=updatedOptions.map((i)=>
+       i.value
+    );
+    setUser({ ...user, roles: a})
+    
   };
   const handleCreate = (event) => {
     event.preventDefault();
@@ -54,10 +56,10 @@ const UserRegistration = () => {
       setAlert({ type: "error", message: "Rol seçiniz." });
       return;
     }
-
+    console.log(user);
     AuthService.register(user)
-      .then(() => {
-        setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
+      .then((response) => {
+        setAlert({ type: "success", message: "Etiket başarıyla güncellendi."+" Mail adresiniz: "+response.data.email });
       })
       .catch((error) => {
         setAlert({
@@ -67,6 +69,10 @@ const UserRegistration = () => {
         });
       });
   };
+  const handleRedirect = () => {
+    window.location.href= '/kullanici'
+  };
+
   const header = { header: "Kullanici Ekle", href: "/kullanici/ekle" };
 
   const subtitle = [
@@ -133,7 +139,7 @@ const UserRegistration = () => {
                     
                     {selectedOptions.map((option) => (
                       <span
-                        className="flex justify-center items-center border-2 px-2 py-1 rounded-md bg-[#64E9B1] text-black text-sm font-semibold"
+                        className="flex justify-center items-center  px-2 py-1 rounded-md bg-[#64E9B1] text-black text-sm font-semibold"
                         key={option.value}
                       >
                         {option.label}
@@ -147,10 +153,10 @@ const UserRegistration = () => {
                 </div>
 
                 <div className="flex justify-center gap-7 flex-wrap">
-                  <Button className="" primary rounded bold>
+                  <Button type="submit" primary rounded bold>
                     KAYDET
                   </Button>
-                  <Button className="" secondary rounded bold>
+                  <Button type="button" onClick={handleRedirect} secondary rounded bold>
                     VAZGEÇ
                   </Button>
                 </div>
