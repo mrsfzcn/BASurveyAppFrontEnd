@@ -4,17 +4,19 @@ import Layout from "../../components/Layout";
 import SurveyService from "../../services/SurveyService";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../../components/Alert";
+import BreadCrumbs from "../../components/BreadCrumbs";
+
 const TumAnketler = () => {
   const [surveys, setSurveys] = useState([]);
 
   const header = ["No", "Anket Adı", "Konu Başlığı"];
 
-  const deleteTableRows = async (index,rowData) => {
+  const deleteTableRows = async (index, rowData) => {
     const response = await SurveyService.delete(rowData.surveyOid);
     if (response.status === 200) {
-      alert(rowData.surveyOid + ". id'ye sahip anket başarıyla silindi")
-    }else{
-      alert("bir hata meydana geldi")
+      alert(rowData.surveyOid + ". id'ye sahip anket başarıyla silindi");
+    } else {
+      alert("bir hata meydana geldi");
     }
     console.log(response);
     const rows = [...surveys];
@@ -55,10 +57,27 @@ const TumAnketler = () => {
     };
   }, []);
 
+  const header2 = { header: "Tüm Anketler", href: "/anketler" };
+
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/adminhome",
+    },
+    {
+      title: "Anket İşlemleri",
+      href: "/anketler",
+    },
+    {
+      title: "Tüm Anketler",
+      href: "/anketler",
+    },
+  ];
+
   return (
     <Layout>
       <div className="flex flex-col gap-10 bg-slate-100 h-full">
-        <div className="h-10">dasda</div>
+        <BreadCrumbs header={header2} subtitle={subtitle} />
         <Table
           data={surveys}
           header={header}

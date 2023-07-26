@@ -1,87 +1,98 @@
-
-.table-wrapper{
-    
-    max-width: 100%;
+.table-wrapper {
+  max-width: 100%;
 }
 
-  
-
-.table{
-    display: flex;
-    overflow: hidden;
-    table-layout: fixed;
-    border-collapse: collapse;
-    white-space: nowrap;
-    
-    
-    width: 90%;
-    margin: auto;
-    overflow-x:auto ;
-    overflow-y: auto;
+.table-container {
+  height: 1000px;
 }
 
-.table thead{
-    background-color: #ccc;
-    color: #222;
-    position: sticky;
-    top: 0;
+.table {
+  display: flex;
+  overflow: hidden;
+  table-layout: fixed;
+  border-collapse: collapse;
+  white-space: nowrap;
+  width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.table thead {
+  background-color: #ccc;
+  color: #222;
+  position: sticky;
+  top: 0;
 }
 
 .table th,
-.table td{
-    padding: 0.5rem;
+.table td {
+  padding: 0.5rem;
 }
 
-
-
-.table td{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    justify-content: center;
-   
+.table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  justify-content: center;
 }
 
-.table tbody tr:hover{
-    background-color: #eee;
+.table tbody tr:hover {
+  background-color: #eee;
 }
 
-
-.actions svg{
-    cursor: pointer;
-    
-   
+.actions svg {
+  cursor: pointer;
 }
 
 .actions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
-.delete-btn{
-    color: #eb5353;
-    margin-top: 1rem;
+.delete-btn {
+  color: #eb5353;
+  margin-top: 1rem;
 }
 
-.edit-btn{
-    color: #64E9B1;
-    margin-top: 1rem;
+.edit-btn {
+  color: #64e9b1;
+  margin-top: 1rem;
 }
-
 
 .table-container {
-    max-height: 58vh; 
-    overflow-y: auto;
-    
-  }
-
-.first-column{
-    display: flex;
-    width: 90%;
-    margin: auto;
-    justify-content: space-between;
-    align-items: center;
+  max-height: 58vh;
+  overflow-y: auto;
 }
 
- 
+.first-column {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.extra-content {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+}
+
+.pagination li {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pagination li.active {
+  background-color: #ccc;
+}
