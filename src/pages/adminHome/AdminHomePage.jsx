@@ -61,18 +61,6 @@ function AdminHome() {
 
   return (
     <Layout>
-      <div className="flex">
-        <Dropdown options={options} value={selection} onChange={onChange} />
-        <MultiDropdown
-          options={options}
-          selectedOptions={selectedOptions}
-          onChange={handleSelectedOptionsChange}
-        />
-        Seçili seçenekler:
-        {selectedOptions.map((option) => (
-          <span key={option.value}>{option.label}, </span>
-        ))}
-      </div>
       <div className="question-container" onClick={handleQuestionClick}>
         <QuestionSvg />
       </div>
