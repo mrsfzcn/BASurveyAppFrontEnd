@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import { useNavigate } from "react-router-dom";
 import SurveyService from "../../services/SurveyService.js";
 import icon from "../../assets/icons/icon.png";
+import BreadCrumbs from "../../components/BreadCrumbs";
 import "./createsurvey.css";
 
 function CreateSurvey() {
@@ -51,10 +52,28 @@ function CreateSurvey() {
         }
       });
   };
+  const header = { header: "Anket Oluşturma", href: "/createsurvey" };
 
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/adminhome",
+    },
+    {
+      title: "Anket İşlemleri",
+      href: "/anketler",
+    },
+    {
+      title: "Anket Oluşturma",
+      href: "/createsurvey",
+    },
+  ];
   return (
     <Layout>
+           <div className="flex flex-col h-full">
+      <BreadCrumbs header={header} subtitle={subtitle} />
       <div className="flex h-full ">
+
         <div className="flex-[8_8_0%] flex  justify-center items-center ">
           <div className="flex justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
             <div className="flex bg-white justify-center items-center w-9/12 h-5/6 rounded">
@@ -82,13 +101,17 @@ function CreateSurvey() {
                     <img src={icon} alt="Icon" className="w-8 h-10" />
                   </Button>
                 </div>
-                <Button secondary rounded onClick={() => navigate("/adminhome")}>
+                <div className="flex justify-center">
+                                 <Button secondary rounded onClick={() => navigate("/adminhome")}>
                   VAZGEÇ
-                </Button>
+                </Button> 
+                </div>
+
               </form>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </Layout>
   );

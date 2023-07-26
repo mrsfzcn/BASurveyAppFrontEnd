@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState} from "react";
 import Layout from "../../components/Layout";
+import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import SurveyService from "../../services/SurveyService.js";
 import "./createsurvey.css";
@@ -40,10 +41,28 @@ function PreviewSurvey() {
     setIsPopupOpen(false); 
     navigate("/adminhome");
   };
+  const header = { header: "Anket Oluşturma", href: "/createsurvey" };
 
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/adminhome",
+    },
+    {
+      title: "Anket İşlemleri",
+      href: "/anketler",
+    },
+    {
+      title: "Anket Oluşturma",
+      href: "/createsurvey",
+    },
+  ];
   return (
-    <Layout>
+    <Layout>     
+       <div className="flex flex-col h-full">
+      <BreadCrumbs header={header} subtitle={subtitle} />
       <div className="flex h-full justify-center items-center flex-col">
+
         <div className="flex flex-col grid-flow-col justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
           <div className="bg-white h-5/6 w-9/12  rounded flex flex-col overflow-auto px-8">
             <h2 className="text-3xl font-bold text-center mb-4 pt-4 ">{surveyTitle}</h2>
@@ -91,8 +110,11 @@ function PreviewSurvey() {
               Tamam
             </Button>
           </div>
+          
         </div>
+        
       )}
+          </div>
     </Layout>
   );
 }

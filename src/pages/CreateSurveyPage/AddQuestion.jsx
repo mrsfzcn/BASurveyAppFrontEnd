@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Button from "../../components/Button";
+import BreadCrumbs from "../../components/BreadCrumbs";
 import Input from "../../components/Input";
 import Dropdown from "../../components/Dropdown"; 
 import { useNavigate } from "react-router-dom";
@@ -48,17 +49,19 @@ function AddQuestion() {
       ...prevSelectedQuestions,
       { ...question, required: false },
     ]);
+
+    setQuestions((prevQuestions) => prevQuestions.filter((q) => q.questionOid !== question.questionOid));
   }
-  
+
   function handleSelectedQuestionClick(question) {
     setSelectedQuestions((prevSelectedQuestions) =>
       prevSelectedQuestions.filter((q) => q.questionOid !== question.questionOid)
     );
-    setQuestions((questions) =>
-      questions.map((q) =>
-        q.questionOid === question.questionOid ? { ...q, selected: false, required: false } : q
-      )
-    );
+  
+    setQuestions((prevQuestions) => [
+      { ...question, selected: false, required: false },
+      ...prevQuestions
+    ]);
   }
 
   function toggleRequired(question) {
@@ -92,12 +95,12 @@ function AddQuestion() {
 
   const filteredQuestions = questions.filter((question) => {
     if (searchType === 'option1') { 
-      return question.questionString.toLowerCase().includes(searchTerm.toLowerCase());
+      return question.questionString && question.questionString.toLowerCase().includes(searchTerm.toLowerCase());
     } else if (searchType === 'option2') { 
-      return question.questionTags.some(tag => tag.tagString.toLowerCase().includes(searchTerm.toLowerCase()));
+      return question.questionTags && Array.isArray(question.questionTags) && question.questionTags.some(tag => tag && typeof tag === 'string' && tag.toLowerCase().includes(searchTerm.toLowerCase()));
     }
     else if (searchType === 'option3') { 
-      return question.questionType.toLowerCase().includes(searchTerm.toLowerCase());
+      return question.questionType && question.questionType.toLowerCase().includes(searchTerm.toLowerCase());
     }
     return true; 
   });
@@ -106,9 +109,30 @@ function AddQuestion() {
   function handleSearchTypeChange(selectedOption) {
     setSearchType(selectedOption.value);
   }
+
+  const header = { header: "Anket Oluşturma", href: "/createsurvey" };
+
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/adminhome",
+    },
+    {
+      title: "Anket İşlemleri",
+      href: "/anketler",
+    },
+    {
+      title: "Anket Oluşturma",
+      href: "/createsurvey",
+    },
+  ];
   return (
     <Layout>
+     <div className="flex flex-col h-full">
+      <BreadCrumbs header={header} subtitle={subtitle} />
+
       <div className="flex h-full justify-center items-center flex-col">
+ 
         <div className="bg-gray-300 w-11/12 h-5/6 flex items-center justify-center rounded">
       
           <div className="bg-white h-5/6 w-2/5 m-8 rounded flex flex-col overflow-auto">
@@ -153,11 +177,11 @@ function AddQuestion() {
                     className="h-full "
                   />
                   {/* Dropdown component'i */}
-                  <Dropdown
+                  <Dropdown 
                       options={dropdownOptions}
                       value={dropdownOptions.find(option => option.value === searchType)}
                       onChange={handleSearchTypeChange}
-            
+                    
                     />
 
                 </div>
@@ -196,7 +220,8 @@ function AddQuestion() {
             VAZGEÇ
           </Button>
         </div>
-      </div>
+      </div>     
+       </div>
     </Layout>
   );
 }
