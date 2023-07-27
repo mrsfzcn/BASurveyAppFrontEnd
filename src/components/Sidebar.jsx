@@ -60,8 +60,9 @@ function Sidebar() {
     {
       label: "Etiket İşlemleri",
       content: [
+        { name: "Etiket Ekle", href: "/" },
         { name: "Etiket Listesi", href: "/etiket" },
-        { name: "Etiket Güncelle", href: "/etiket/guncelle" },
+        { name: "Etiket Güncelle", href: "/" },
         { name: "Etiket Silme", href: "/" },
       ],
     },
