@@ -63,7 +63,7 @@ function Login() {
 
   return (
     <div className="main">
-      <div className="content">
+      <div className="content w-4/12 h-4/6">
       <img className="vektor5" src={vektor5} alt="vektor5" />
       <img className="vektor6" src={vektor6} alt="vektor6" />
       <img className="vektor7" src={vektor7} alt="vektor7" />
@@ -71,31 +71,25 @@ function Login() {
               <label id="email" className="username">
                 Kullanıcı Adı:
               </label>{" "}
-              <br />
               <input
-                className="placeholder-input"
+                className="login-input"
                 type="email"
                 id="email"
                 placeholder="Kullanıcı adınızı giriniz."
                 value={email}
                 onChange={handleEmailChange}
               />
-              <br />
-              <br />
-              <label className="password">Şifre:</label> <br />
+              <label className="password mt-5">Şifre:</label> 
               <input
-                className="placeholder-input"
+                className="login-input"
                 type="password"
                 id="password"
                 placeholder="Şifrenizi giriniz."
                 value={password}
                 onChange={handlePasswordChange}
               />
-              
               {error && <p>{error}</p>}
-              <br />
-              <br />
-              <div className="cbottom">
+              <div className="cbottom mt-5">
                 <button className="button" onClick={handleSubmit}>
                   GİRİŞ
                 </button>
