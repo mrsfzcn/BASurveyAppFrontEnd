@@ -148,7 +148,7 @@ const UserRegistration = () => {
                     </div>
                   </div>
                   {alert.type && (
-                    <Alert type={alert.type} message={alert.message} />
+                    <Alert type={alert.type} message={alert.message} closable={true} />
                   )}
                 </div>
 
