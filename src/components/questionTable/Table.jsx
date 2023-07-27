@@ -47,7 +47,7 @@ const Table = ({
   };
 
   const handleEditClick = (rowData) => {
-    navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
+    navigate(`/questionlist/guncelle/${rowData.questionOid}`, { state: rowData });
   };
 
   // Pagination
