@@ -33,7 +33,7 @@ function Sidebar() {
     {
       label: "Soru İşlemleri",
       content: [
-        { name: "Soruları Listele", href: "" },
+        { name: "Soruları Listele", href: "questionlist" },
         { name: "Soru Ekle", href: "" },
         { name: "Soru Etiketi İşlemleri", href: "" },
         { name: "Soru Tipi İşlemleri", href: "/" },

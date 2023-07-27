@@ -6,6 +6,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import { useParams } from "react-router-dom";
 import SurveyService from "../../services/SurveyService";
+
 const AnketDuzenle = () => {
   const location = useLocation();
   let params = useParams();
@@ -65,7 +66,6 @@ const AnketDuzenle = () => {
     navigate("/anketler");
   };
 
-  console.log(params);
   return (
     <Layout>
       <div className="flex flex-col bg-white h-full">

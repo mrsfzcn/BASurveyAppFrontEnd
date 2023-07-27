@@ -24,6 +24,7 @@ import AnketEkle from "./pages/surveys/AnketEkle";
 import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
+import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
 function App() {
   return (
     <Router>
@@ -32,7 +33,6 @@ function App() {
         <Route path="/qrcode" element={<Qrcode />} />
         <Route path="/code" element={<Code />} />
         <Route path="/adminhome" element={<AdminHomePage />} />
-        <Route path="/questionlist" element={<QuestionListPage />} />
         <Route path="/sendsurvey" element={<SendSurvey />} />
         <Route path="/createsurvey" element={<CreateSurveyPage />} />
         <Route path="/addquestion" element={<AddQuestion />} />
@@ -57,6 +57,12 @@ function App() {
           </Route>
           <Route path="ekle">
             <Route index element={<AnketEkle />} />
+          </Route>
+        </Route>
+        <Route path="/questionlist">
+          <Route index element={<QuestionListPage />} />
+          <Route path="guncelle/:id">
+            <Route index element={<QuestionUpdatePage />} />
           </Route>
         </Route>
       </Routes>
