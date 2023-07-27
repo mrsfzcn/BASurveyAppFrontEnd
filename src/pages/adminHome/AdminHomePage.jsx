@@ -9,11 +9,14 @@ import SurveySvg from "./surveySvg";
 import UserGroupSvg from "./userGroupSvg";
 import QuestionSvg from "./questionSvg";
 import MultiDropdown from "../../components/MultiDropdown";
+import { Navigate,useNavigate } from "react-router-dom";
 
 function AdminHome() {
   const [name, setName] = useState("");
   const [selection, setSelection] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -21,13 +24,13 @@ function AdminHome() {
 
   const handleUserClick = (event) => {
     const target = event.target;
-    console.log("User area clicked!");
+    navigate("/kullanici");
+    
   };
 
   const handleSurveyClick = (event) => {
     const target = event.target;
-
-    console.log("Survey area clicked!");
+    navigate("/anketler");
   };
   const handleReportingClick = (event) => {
     const target = event.target;
@@ -36,8 +39,8 @@ function AdminHome() {
   };
   const handleQuestionClick = (event) => {
     const target = event.target;
-
-    console.log("Question area clicked!");
+    navigate("/questionlist");
+    
   };
   const handleClassroomClick = (event) => {
     const target = event.target;
@@ -70,7 +73,7 @@ function AdminHome() {
       <div className="survey-container" onClick={handleSurveyClick}>
         <SurveySvg />
       </div>
-      <div className="user-container" onClick={handleUserClick}>
+      <div className="user-container"  onClick={handleUserClick}>
         <UserGroupSvg />
       </div>
       <div className="circle-reporting" onClick={handleReportingClick}>

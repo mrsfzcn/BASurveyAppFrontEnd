@@ -70,7 +70,9 @@ function Sidebar() {
   return (
     <div className="flex flex-col gap-8 flex-[1_1_0%] bg-firstColor pl-4 pr-4   ">
       <div style={{ marginTop: "37px" }}>
+      <a href="/adminhome">
         <img src={Logo} alt="logo" />
+        </a>
       </div>
       <Accordion items={items} />
     </div>
