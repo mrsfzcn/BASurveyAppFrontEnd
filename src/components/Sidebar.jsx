@@ -6,7 +6,6 @@ function Sidebar() {
   // content kısmı ise label'a tıkladıktan sonra açılan listedeki content elemanları
   // href oluşturduğunuz sayfanın linki
 
-  
   const items = [
     {
       label: "Kullanıcı İşlemleri",
@@ -61,7 +60,7 @@ function Sidebar() {
     {
       label: "Etiket İşlemleri",
       content: [
-        { name: "Etiket Ekle", href: "/" },
+        { name: "Etiket Listesi", href: "/etiket" },
         { name: "Etiket Güncelle", href: "/etiket/guncelle" },
         { name: "Etiket Silme", href: "/" },
       ],
@@ -71,8 +70,8 @@ function Sidebar() {
   return (
     <div className="flex flex-col gap-8 flex-[1_1_0%] bg-firstColor pl-4 pr-4   ">
       <div style={{ marginTop: "37px" }}>
-      <a href="/adminhome">
-        <img src={Logo} alt="logo" />
+        <a href="/adminhome">
+          <img src={Logo} alt="logo" />
         </a>
       </div>
       <Accordion items={items} />

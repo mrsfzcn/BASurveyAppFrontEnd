@@ -42,8 +42,8 @@ function App() {
         <Route path="/preview" element={<PreviewSurvey />} />
         <Route path="/*" element={<Navigate to="/" />} />
         <Route path="/etiket">
-          <Route index element={<TagsTable />} />
-          <Route path="guncelle">
+          <Route index element={<AddTag />} />
+          <Route path="guncelle/:id">
             <Route index element={<UpdateTag />} />
           </Route>
         </Route>
