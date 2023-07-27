@@ -16,7 +16,7 @@ const AnketDuzenle = () => {
   const [surveyTitle, setSurveyTitle] = useState();
   const [survayTag, setSurveyTag] = useState();
   const [courseTopic, setCourseTopic] = useState();
-
+  const navigate = useNavigate();
   if (!rowData === null) {
     setsurveyOid(rowData.surveyOid);
     setSurveyTitle(rowData.surveyTitle);
@@ -24,13 +24,17 @@ const AnketDuzenle = () => {
     setCourseTopic(rowData.courseTopic);
   }
 
+
+
   useEffect(() => {
     if (params.id) {
       SurveyService.surveyGetById(params.id)
         .then((response) => {
           setsurveyOid(response.data.oid);
           setSurveyTitle(response.data.surveyTitle);
-          setSurveyTag(response.data.surveyTags);
+          const rendered = response.data.surveyTags.map((tag)=> tag.name).join(", ");
+          setSurveyTag(rendered);
+          
           setCourseTopic(response.data.courseTopic);
         })
         .catch((error) => {
@@ -39,6 +43,8 @@ const AnketDuzenle = () => {
     }
   }, [params.id]);
 
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(surveyOid, surveyTitle, survayTag, courseTopic);
@@ -63,6 +69,7 @@ const AnketDuzenle = () => {
   ];
 
   const navigateMain = (e) => {
+    console.log("selam bebegım");
     navigate("/anketler");
   };
 

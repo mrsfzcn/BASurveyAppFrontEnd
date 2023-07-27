@@ -73,7 +73,7 @@ const UserRegistration = () => {
     window.location.href= '/kullanici'
   };
 
-  const header = { header: "Kullanici Ekle", href: "/kullanici/ekle" };
+  const header = { header: "Kullanıcı Ekle", href: "/kullanici/ekle" };
 
   const subtitle = [
     {
@@ -85,7 +85,7 @@ const UserRegistration = () => {
       href: "/kullanici",
     },
     {
-      title: "Kullanici Ekle",
+      title: "Kullanıcı Ekle",
       href: "/kullanici/ekle",
     },
   ];
