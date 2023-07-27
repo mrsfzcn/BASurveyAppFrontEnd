@@ -53,24 +53,23 @@ const QrCode = () => {
 
   return (
     <div className="main">
-      <div className="content">
+      <div className="content-code w-2/6">
         <img className="vektor5" src={vektor5} alt="vektor5" />
         <img className="vektor6" src={vektor6} alt="vektor6" />
         <img className="vektor7" src={vektor7} alt="vektor7" />
-        <div className="user-menu">
-          <img src={qrCode} alt="" />
-          <label id="email" className="username">
-            2FA QR CODE
-          </label>
-          <br />
+        <div className="flex flex-col gap-10 w-4/5 justify-center items-center p-10">
+          <div className="flex items-start justify-start w-full pb-5">
+            <div id="email" className="font-bold text-2xl">
+              2FA QR CODE
+            </div>
+          </div>
+          <img className="w-1/2 " src={qrCode} alt="" />
           <input
             type="text"
             className="placeholder-input"
             onChange={handleTwoFactoryChange}
           />
           {error && <p>{error}</p>}
-          <br />
-          <br />
           <div className="cbottom">
             <button className="button" onClick={handleSubmit}>
               Gönder

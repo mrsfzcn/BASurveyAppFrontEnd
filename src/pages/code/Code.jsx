@@ -53,17 +53,19 @@ const Code = () => {
 
   return (
     <>
-      <div className="main">
-        <div className="content">
-          <img className="vektor5" src={vektor5} alt="vektor5" />
-          <img className="vektor6" src={vektor6} alt="vektor6" />
-          <img className="vektor7" src={vektor7} alt="vektor7" />
-          <div className="user-menu flex flex-col justify-center items-center ">
-            <div className="flex flex-col w-full">
-              <label htmlFor="code" className="username">
-                2FA Code
-              </label>
+      <div className="container-code">
+        <img className="vektor5" src={vektor5} alt="vektor5" />
+        <img className="vektor6" src={vektor6} alt="vektor6" />
+        <img className="vektor7" src={vektor7} alt="vektor7" />
 
+        <div className="bg-[#e5e0e0e6] rounded-xl p-10 flex flex-col justify-evenly  gap-10 h-1/2 w-2/6">
+          <div className="flex flex-col w-full ">
+            <label htmlFor="code" className="username font-bold">
+              2FA Code
+            </label>
+          </div>
+          <div className="flex flex-col gap-16">
+            <div>
               <input
                 className="placeholder-input "
                 type="text"
@@ -74,12 +76,13 @@ const Code = () => {
               />
               {error && <p>{error}</p>}
             </div>
-            <div className="flex gap-2 flex-col ">
-              <button className="button" onClick={handleSubmit}>
+
+            <div className="flex flex-col gap-5 justify-center items-center">
+              <button className="code-button" onClick={handleSubmit}>
                 Gönder
               </button>
               <Link to="/login">
-                <button className="button">Giriş sayfasına geri dön</button>
+                <button className="code-button2">Giriş sayfasına geri dön</button>
               </Link>
             </div>
           </div>
