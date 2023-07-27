@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import ContentHeading from '../../components/ContentHeading';
 import Sidebar from '../../components/Sidebar';
-import "./UserEditPage.css"
+import "./UserEditPage.css";
+import { useNavigate } from "react-router-dom";
+import Layout from '../../components/Layout';
 
 const UserEditPage = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [mail, setMail] = useState("");
   const [role, setRole] = useState("");
-  const [userId] = useState(2); // Geçici olarak konulmuştur localstorege'a eklendiğinde kendiliğinden veriyi çekecektir.
-  // const userId1 = localStorage.getItem("userId");
+  //const [userId] = useState(2); // Geçici olarak konulmuştur localstorege'a eklendiğinde kendiliğinden veriyi çekecektir.
+  const userId = localStorage.getItem("userId");
   const [userEmail, setUserEmail] = useState(""); 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [initialUserData, setInitialUserData] = useState({
     name: "",
     surname: "",
@@ -67,6 +70,7 @@ const UserEditPage = () => {
     setSurname(initialUserData.surname);
     setMail(initialUserData.mail);
     setRole(initialUserData.role);
+    navigate("/kullanici");
   };
 
   const namehandleChange = (event) => {
@@ -92,7 +96,6 @@ const handleSubmit = async () => {
   const lastName = surname;
   const email = mail;
   const authorizedRole = role;
-
      axios.put(
       `http://localhost:8090/api/v1/user/update/${userEmail}`,
       {
@@ -112,15 +115,14 @@ const handleSubmit = async () => {
     console.log(name);
     console.log(firstName);
     console.log(lastName);
+    navigate("/kullanici");
     };
 
     
 
-  return (
+return (
+    <Layout>
     <div className='user-edit-page'>
-      <div className='sidebar'>
-        <Sidebar />
-      </div>
       <div className='outer-react'>
         <ContentHeading />
         <div className='inner-react'>
@@ -139,6 +141,7 @@ const handleSubmit = async () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

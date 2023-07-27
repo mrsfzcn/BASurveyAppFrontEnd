@@ -27,6 +27,10 @@ export default function List() {
   const navigate = useNavigate();
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
+  const [sortSurname, setSortSurname] = useState();
+  const [sortEposta, setSortEposta] = useState();
+  const [sortKullaniciRolu, setSortKullaniciRolu] = useState();
+  const [sortKayitTarihi, setSortKayitTarihi] = useState();
 
   useEffect(() => {
     fetchData();
@@ -76,27 +80,74 @@ export default function List() {
     setSeach(e.target.value);
   };
 
-  const handleSortName = () => {
-    const status = !sortName;
-    setSortName(status);
+  const handleSortName = () => {  
+     const status = !sortName;   
+     setSortName(status);    
+     const userListCopy = [...userList];    
+     if (status) {     
+      userListCopy.sort((a, b) => a.firstName.localeCompare(b.firstName));       
+    } else {     
+         userListCopy.sort((a, b) => b.firstName.localeCompare(a.firstName));     
+    }   
+    setUserList(userListCopy); };
 
-    if (status) {
-      const sortedList = userList.sort();
-      console.log("Sort");
-      console.log(sortName);
-      setUserList(sortedList);
-    } else {
-      const reversedList = userList.reverse();
-      setUserList(reversedList);
-      console.log("reverse");
-      console.log(sortName);
-    }
+  const handleSortSurname = () => {
+    const status = !sortSurname;
+    setSortSurname(status);
+
+    const userListCopy = [...userList];    
+    if (status) {     
+     userListCopy.sort((a, b) => a.lastName.localeCompare(b.lastName));       
+   } else {     
+        userListCopy.sort((a, b) => b.lastName.localeCompare(a.lastName));     
+   }   
+   setUserList(userListCopy); 
   };
+
+  const handleSortEposta = () => {
+    const status = !sortEposta;
+    setSortEposta(status);
+
+    const userListCopy = [...userList];    
+    if (status) {     
+     userListCopy.sort((a, b) => a.email.localeCompare(b.email));       
+   } else {     
+        userListCopy.sort((a, b) => b.email.localeCompare(a.email));     
+   }   
+   setUserList(userListCopy); 
+  };
+
+  const handleSortKullaniciRolu = () => {
+    const status = !sortKullaniciRolu;
+    setSortKullaniciRolu(status);
+
+    const userListCopy = [...userList];    
+    if (status) {     
+     userListCopy.sort((a, b) => a.authorizedRole.localeCompare(b.authorizedRole));       
+   } else {     
+        userListCopy.sort((a, b) => b.authorizedRole.localeCompare(a.authorizedRole));     
+   }   
+   setUserList(userListCopy); 
+  };
+
+  const handleSortKayitTarihi = () => {
+    const status = !sortKayitTarihi;
+    setSortKayitTarihi(status);
+
+    const userListCopy = [...userList];    
+    if (status) {     
+     userListCopy.sort((a, b) => a.createdDate.localeCompare(b.createdDate));       
+   } else {     
+        userListCopy.sort((a, b) => b.createdDate.localeCompare(a.createdDate));     
+   }   
+   setUserList(userListCopy); 
+  };
+
 
   const handleEditClick = async (oid) => {
     console.log(oid);
     localStorage.setItem("userId", oid);
-    navigate("/kullanıcı-düzenleme"); //editleme url'i gelecek
+    navigate("/edituser"); //editleme url'i gelecek
   };
 
   const handleDeleteClick = async (oid) => {
@@ -192,25 +243,25 @@ export default function List() {
                       </th>
                       <th style={{ width: "13rem", paddingBottom: "2rem" }}>
                         <span>Soyadı</span>
-                        <button className="bottomSort">
+                        <button className="bottomSort" onClick={handleSortSurname}>
                           <SortIcon />
                         </button>
                       </th>
                       <th style={{ width: "15rem", paddingBottom: "2rem" }}>
                         <span>Eposta</span>
-                        <button className="bottomSort">
+                        <button className="bottomSort" onClick={handleSortEposta}>
                           <SortIcon />
                         </button>
                       </th>
                       <th style={{ width: "13rem", paddingBottom: "2rem" }}>
                         <span>Kullanıcı Rolü</span>
-                        <button className="bottomSort">
+                        <button className="bottomSort" onClick={handleSortKullaniciRolu}>
                           <SortIcon />
                         </button>
                       </th>
                       <th style={{ width: "13rem", paddingBottom: "2rem" }}>
                         <span>Kayıt Tarihi</span>
-                        <button className="bottomSort">
+                        <button className="bottomSort" onClick={handleSortKayitTarihi}>
                           <SortIcon />
                         </button>
                       </th>
@@ -248,13 +299,13 @@ export default function List() {
               <div className="footer">
                 <div>
                   <p style={{ marginBottom: "2rem" }}>
-                    {userList.length} kullanıcıdan {currentItems.length}'sı
+                    {userList.length} kullanıcıdan {currentItems.length} tanesi
                     gösteriliyor.
                   </p>
                 </div>
                 <div>
                   {currentPage > 1 && (
-                    <button onClick={() => paginate(currentPage - 1)}>
+                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage - 1)}>
                       ÖNCEKİ
                     </button>
                   )}
@@ -264,7 +315,7 @@ export default function List() {
                     currentPage - 1 === index || currentPage === index ? (
                       <button
                         key={index}
-                        className="paginationButton"
+                        className={currentPage === index + 1 ? "paginationButton active" : "paginationButton"}
                         onClick={() => paginate(index + 1)}
                       >
                         {index + 1}
@@ -273,7 +324,7 @@ export default function List() {
                   )}
 
                   {currentPage < paginationLength && (
-                    <button onClick={() => paginate(currentPage + 1)}>
+                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage + 1)}>
                       SONRAKİ
                     </button>
                   )}

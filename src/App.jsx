@@ -24,6 +24,7 @@ import AnketEkle from "./pages/surveys/AnketEkle";
 import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
+import UserEditPage from "./pages/userEdit/UserEditPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -37,6 +38,7 @@ function App() {
         <Route path="/adminhome" element={<AdminHomePage />} />
         <Route path="/questionlist" element={<QuestionListPage/>}/>
         <Route path="/sendsurvey" element={<SendSurvey />} />
+        <Route path="/edituser" element={<UserEditPage />} />
         <Route path="/createsurvey" element={<CreateSurveyPage />} />
         <Route path="/addquestion" element={<AddQuestion />} />
         <Route path="/preview" element={<PreviewSurvey />} />
