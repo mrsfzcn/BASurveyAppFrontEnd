@@ -1,0 +1,36 @@
+.content-code {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: rgba(229, 224, 224, 0.9);
+  
+  }
+  .placeholder-input {
+    margin-bottom: 10px;
+    padding: 0px 0px 10px 0px;
+    border: none;
+    border-bottom: 2px solid #000;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    box-shadow: none;
+    font-size: 20px;
+    
+  }
+  .container-qrcode{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("../../assets/images/Login/loginbacground.png") no-repeat
+      center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: relative;
+  }
