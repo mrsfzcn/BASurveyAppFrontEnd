@@ -25,6 +25,8 @@ import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
+import UserEditPage from "./pages/userEdit/UserEditPage";
+
 function App() {
   return (
     <Router>
@@ -34,6 +36,7 @@ function App() {
         <Route path="/code" element={<Code />} />
         <Route path="/adminhome" element={<AdminHomePage />} />
         <Route path="/sendsurvey" element={<SendSurvey />} />
+        <Route path="/edituser" element={<UserEditPage />} />
         <Route path="/createsurvey" element={<CreateSurveyPage />} />
         <Route path="/addquestion" element={<AddQuestion />} />
         <Route path="/preview" element={<PreviewSurvey />} />
