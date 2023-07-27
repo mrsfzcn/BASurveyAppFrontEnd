@@ -3,7 +3,7 @@ import css from "classnames";
 import React from "react";
 import { useState } from "react";
 
-export default function Alert({ children, type, message }) {
+export default function Alert({ children, type, message, closable }) {
   const [isShow, setIsShow] = useState(true);
 
   const renderElAlert = function () {
@@ -17,9 +17,10 @@ export default function Alert({ children, type, message }) {
 
   return (
     <div className={css(style.alert, style[type], !isShow && style.hide)}>
-      <span className={style.closebtn} onClick={handleClose}>
+      {!closable && <span className={style.closebtn} onClick={handleClose}>
         &times;
-      </span>
+      </span>}
+      
       {children ? renderElAlert() : message}
     </div>
   );
