@@ -10,7 +10,7 @@ function Sidebar() {
     {
       label: "Kullanıcı İşlemleri",
       content: [
-        { name: "Tüm Kullanıcılar", href: "/code" },
+        { name: "Tüm Kullanıcılar", href: "/kullanici" },
         {
           name: "Kullanıcı Ekle",
           href: "/kullanici/ekle",
