@@ -1,11 +1,11 @@
 const BreadCrumbs = ({ header, subtitle }) => {
-  const generalStyle = "flex items-center mt-4 ml-8"; // Tailwind CSS classes
+  const generalStyle = "flex items-center mt-4 ml-8";
 
   const mainTextStyle =
-    "font-poppins text-base font-medium leading-6 text-gray-800"; // Tailwind CSS classes
+    "font-poppins text-base font-medium leading-6 text-gray-800";
 
   const fullTextStyle =
-    "font-poppins text-xs font-light leading-6 text-gray-800 ml-1"; // Tailwind CSS classes
+    "font-poppins text-xs font-light leading-6 text-gray-800 ml-1";
 
   const renderedSubtitle = subtitle.map((item, index) => (
     <span key={index}>
