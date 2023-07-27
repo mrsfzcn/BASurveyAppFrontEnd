@@ -58,6 +58,7 @@ const Table = ({
   );
 
   const handlePageChange = (page) => {
+    
     setCurrentPage(page);
   };
 
@@ -67,7 +68,7 @@ const Table = ({
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col  bg-white mr-10 ml-10 py-5">
         <div className="first-column">
           <div className="filter-wrapper">
             <label>Göster: </label>

@@ -71,7 +71,7 @@ function MultiDropdown({ options, selectedOptions, onChange }) {
         <GoChevronDown className="text-lg" />
       </Panel>
       {isOpen && (
-        <Panel className=" absolute top-full ">{renderedOptions}</Panel>
+        <Panel className=" absolute top-full z-10 ">{renderedOptions}</Panel>
       )}
     </div>
   );
