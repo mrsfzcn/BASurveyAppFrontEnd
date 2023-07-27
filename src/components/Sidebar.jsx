@@ -6,7 +6,7 @@ function Sidebar() {
   // content kısmı ise label'a tıkladıktan sonra açılan listedeki content elemanları
   // href oluşturduğunuz sayfanın linki
 
-  
+
   const items = [
     {
       label: "Kullanıcı İşlemleri",
@@ -16,10 +16,6 @@ function Sidebar() {
           name: "Kullanıcı Ekle",
           href: "/kullanici/ekle",
         },
-        {
-          name: "Kullanıcı Düzenle",
-          href: "",
-        },
       ],
     },
     {
@@ -27,7 +23,6 @@ function Sidebar() {
       content: [
         { name: "Tüm Anketler", href: "/" },
         { name: "Anket Ekle", href: "/createsurvey" },
-        { name: "Anket Düzenle", href: "/" },
         { name: "Anket Gönder", href: "/sendsurvey" },
       ],
     },
