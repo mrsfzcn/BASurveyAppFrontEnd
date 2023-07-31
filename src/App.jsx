@@ -26,6 +26,9 @@ import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
 import UserEditPage from "./pages/userEdit/UserEditPage";
+// import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
+import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
+import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 
 function App() {
   return (
@@ -66,6 +69,12 @@ function App() {
           <Route index element={<QuestionListPage />} />
           <Route path="guncelle/:id">
             <Route index element={<QuestionUpdatePage />} />
+          </Route>
+        </Route>
+        <Route path="/questiontypelist">
+          <Route index element={<QuestionType />} />
+          <Route path="guncelle/:id">
+            <Route index element={<UpdateType />} />
           </Route>
         </Route>
       </Routes>
