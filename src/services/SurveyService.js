@@ -2,11 +2,11 @@ import axios from "axios";
 
 const CREATE = "http://localhost:8090/api/v1/survey";
 const QUESTIONS = "http://localhost:8090/api/v1/questions/findallquestion";
-const ADD_QUESTIONS_TO_SURVEY =
-  "http://localhost:8090/api/v1/survey/add-questions-to-survey";
+const ADD_QUESTIONS_TO_SURVEY ="http://localhost:8090/api/v1/survey/add-questions-to-survey";
 const LIST = "http://localhost:8090/api/v1/survey/list";
 const DELETE = "http://localhost:8090/api/v1/survey/delete/";
 const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/findSurveyByid/";
+
 class SurveyService {
   create(survey) {
     const token = localStorage.getItem("token");
