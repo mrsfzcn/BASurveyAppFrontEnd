@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import "./questionListPage.css";
 import { Link, useNavigate } from "react-router-dom";
-import Table from '../../../components/questionTable/Table';
+import Table from '../../../components/Table/Table';
 import Layout from '../../../components/Layout'
 import QuestionService from '../../../services/QuestionService';
 import BreadCrumbs from '../../../components/BreadCrumbs'
@@ -11,7 +11,7 @@ function QuestionListPage() {
 
   const [surveys, setSurveys] = useState([]);
 
-  const header = ["No", "Soru", "Soru Etiketleri", "Soru Tipi", "İşlemler"];
+  const header = ["No", "Soru", "Soru Etiketleri", "Soru Tipi"];
 
   // To delete selected question
   const deleteTableRows = async (index, rowData) => {
@@ -68,7 +68,7 @@ function QuestionListPage() {
 
         <div className='flex flex-col  gap-10 bg-slate-100 h-full'>
         <BreadCrumbs header={header2} subtitle={subtitle} />
-        <Table  data={surveys} header={header} useIcon={true} useLabel={true} deleteTableRows={deleteTableRows} editTableRows={handleEditClick}/>
+        <Table  data={surveys} header={header} useIcon={true} useLabel={false} deleteTableRows={deleteTableRows} editTableRows={handleEditClick}/>
           </div>
         
         </Layout>
