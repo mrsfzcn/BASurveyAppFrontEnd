@@ -50,22 +50,53 @@ const Table = ({
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
   };
 
-  // Pagination
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const maxPages = 3; // Gösterilecek maksimum sayfa sayısı
+  const pageOffset = Math.floor(maxPages / 2);
+
+  let startPage = currentPage - pageOffset;
+  if (startPage < 1) {
+    startPage = 1;
+  }
+
+  let endPage = startPage + maxPages - 1;
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(endPage - maxPages + 1, 1);
+  }
+
   const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
+    { length: endPage - startPage + 1 },
+    (_, index) => startPage + index
   );
 
+  const goToFirstPage = () => {
+    setCurrentPage(1);
+  };
+
+  // Son sayfaya gitme işlemi
+  const goToLastPage = () => {
+    setCurrentPage(totalPages);
+  };
+
   const handlePageChange = (page) => {
-    
     setCurrentPage(page);
   };
 
+  const goToPrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-
   return (
     <>
       <div className="flex flex-col  bg-white mr-10 ml-10 py-5">
@@ -86,7 +117,6 @@ const Table = ({
             <Input value={filterValue} onChange={handleFilterChange} />
           </div>
         </div>
-
         <div className="table-wrapper mt-5">
           <div className="table-container">
             <table className="table">
@@ -129,8 +159,9 @@ const Table = ({
               Toplam {data.length}, Gösterilen veri sayısı:{" "}
               {currentItems.length}
             </div>
-
             <ul className="pagination">
+              <li onClick={goToFirstPage}>&laquo;&laquo;</li>{" "}
+              <li onClick={goToPrevPage}>&laquo;</li>{" "}
               {pageNumbers.map((page) => (
                 <li
                   key={page}
@@ -140,6 +171,8 @@ const Table = ({
                   {page}
                 </li>
               ))}
+              <li onClick={goToNextPage}>&raquo;</li>{" "}
+              <li onClick={goToLastPage}>&raquo;&raquo;</li>{" "}
             </ul>
           </div>
         </div>
@@ -149,5 +182,3 @@ const Table = ({
 };
 
 export default Table;
-
-//// tabloya tıkladıgımda sayfanın açıldığı ilk duruma dönüyor....

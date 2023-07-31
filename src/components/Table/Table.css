@@ -38,7 +38,7 @@
 }
 
 .table tbody tr:hover {
-  background-color: #eee;
+  background-color: lightgray;
 }
 
 .actions svg {
@@ -95,4 +95,8 @@
 
 .pagination li.active {
   background-color: #ccc;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f0f0f0;
 }
