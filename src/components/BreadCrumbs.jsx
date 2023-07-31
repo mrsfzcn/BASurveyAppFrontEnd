@@ -1,4 +1,8 @@
+import { useState } from "react";
+import { AiOutlineQuestion } from "react-icons/ai";
 const BreadCrumbs = ({ header, subtitle }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const generalStyle = "flex items-center mt-4 ml-8";
 
   const mainTextStyle =
@@ -19,8 +23,16 @@ const BreadCrumbs = ({ header, subtitle }) => {
   return (
     <div className={generalStyle}>
       <div className={mainTextStyle}>
-        <h6>
+        <h6
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
           <a href={header.href}>{header.header} | </a>
+          {showTooltip && (
+            <div className="absolute bg-white border border-gray-200 rounded p-2 shadow-md w-96 mt-2 z-10 font-thin text-sm ">
+              <p>{header.describe}</p>
+            </div>
+          )}
         </h6>
       </div>
       <div className={fullTextStyle}>
