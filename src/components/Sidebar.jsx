@@ -1,4 +1,4 @@
-import Logo from "../assets/images/bilgelogo.jpg";
+import Btlogo from "../assets/images/bilgeteknolojilogo";
 import Accordion from "./Accordion";
 
 function Sidebar() {
@@ -70,9 +70,9 @@ function Sidebar() {
 
   return (
     <div className="flex flex-col gap-8 flex-[1_1_0%] bg-firstColor pl-4 pr-4   ">
-      <div style={{ marginTop: "37px" }}>
+      <div style={{ marginTop: "0px" }}>
         <a href="/adminhome">
-          <img src={Logo} alt="logo" />
+        <Btlogo/>
         </a>
       </div>
       <Accordion items={items} />
