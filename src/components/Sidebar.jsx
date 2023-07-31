@@ -14,20 +14,15 @@ function Sidebar() {
         {
           name: "Kullanıcı Ekle",
           href: "/kullanici/ekle",
-        },
-        {
-          name: "Kullanıcı Düzenle",
-          href: "",
-        },
+        }
       ],
     },
     {
-      label: "Anket İşlemleri",
+      label: "Etiket İşlemleri",
       content: [
-        { name: "Tüm Anketler", href: "/anketler" },
-        { name: "Anket Ekle", href: "/createsurvey" },
-        { name: "Anket Düzenle", href: "/" },
-        { name: "Anket Gönder", href: "/sendsurvey" },
+        { name: "Etiket Ekle", href: "/etiket" },
+        { name: "Etiket Listesi", href: "/etiket" },
+        { name: "Etiket Silme", href: "/" },
       ],
     },
     {
@@ -50,19 +45,19 @@ function Sidebar() {
       ],
     },
     {
+      label: "Anket İşlemleri",
+      content: [
+        { name: "Tüm Anketler", href: "/anketler" },
+        { name: "Anket Ekle", href: "/createsurvey" },
+        { name: "Anket Gönder", href: "/sendsurvey" },
+      ],
+    },
+    {
       label: "Raporlama",
       content: [
         { name: "Sonuçlanmış Anketler", href: "/" },
         { name: "Sınıfa Göre Anket Sonuçları", href: "/" },
         { name: "Kişiye Göre Anket Sonuçları", href: "/" },
-      ],
-    },
-    {
-      label: "Etiket İşlemleri",
-      content: [
-        { name: "Etiket Ekle", href: "/etiket" },
-        { name: "Etiket Listesi", href: "/etiket" },
-        { name: "Etiket Silme", href: "/" },
       ],
     },
   ];
