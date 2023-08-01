@@ -3,6 +3,7 @@ import axios from "axios";
 const UPDATE_TYPE = "http://localhost:8090/api/v1/questiontypes/updatequestiontypebytypestring"; 
 const CREATE_TYPE = "http://localhost:8090/api/v1/questiontypes/createquestiontype";
 const GET_ALL_TYPE = "http://localhost:8090/api/v1/questiontypes/getallquestiontype";
+const DELETE = `http://localhost:8090/api/v1/questiontypes/delete/`;
 
 class QuestionTypeService {
   async updateType(updateType) {
@@ -28,6 +29,14 @@ class QuestionTypeService {
       },
     });
   }
+  async delete(id) {
+    const config = {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    };
+    return await axios.delete(DELETE + id, config);
+    }
 }
 
 export default new QuestionTypeService();
