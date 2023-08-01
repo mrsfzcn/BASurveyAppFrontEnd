@@ -14,7 +14,7 @@ import CreateSurveyPage from "./pages/CreateSurveyPage/createsurvey";
 import AdminHomePage from "./pages/adminHome/AdminHomePage";
 import QuestionListPage from "./pages/questionPage/questionList/QuestionListPage";
 import AddTag from "./pages/tag/AddTag";
-import TagsTable from "./pages/tag/TagsTable";
+
 import UserRegistration from "./pages/user/UserRegistration";
 import TumKullanicilar from "./pages/user/TumKullanicilar";
 import AddQuestion from "./pages/CreateSurveyPage/AddQuestion";

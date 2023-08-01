@@ -3,13 +3,13 @@ import { AiOutlineQuestion } from "react-icons/ai";
 const BreadCrumbs = ({ header, subtitle }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const generalStyle = "flex items-center mt-4 ml-8";
+  const generalStyle = "flex items-center mt-3 ml-4";
 
   const mainTextStyle =
-    "font-poppins text-base font-medium leading-6 text-gray-800";
+    "text-xs tablet:text-base tracking-wide font-medium leading-3 text-gray-800";
 
   const fullTextStyle =
-    "font-poppins text-xs font-light leading-6 text-gray-800 ml-1";
+    "text-[10px] tablet:text-sm font-light tablet:font-normal tracking-normal leading-3 text-gray-900 ml-1";
 
   const renderedSubtitle = subtitle.map((item, index) => (
     <span key={index}>
@@ -29,7 +29,7 @@ const BreadCrumbs = ({ header, subtitle }) => {
         >
           <a href={header.href}>{header.header} | </a>
           {showTooltip && (
-            <div className="absolute bg-white border border-gray-200 rounded p-2 shadow-md w-96 mt-2 z-10 font-thin text-sm ">
+            <div className="absolute bg-white border border-gray-200 rounded p-2 shadow-md w-72 tablet:w-96 mt-2 z-10 font-thin text-sm ">
               <p>{header.describe}</p>
             </div>
           )}
