@@ -6,6 +6,8 @@ const ADD_QUESTIONS_TO_SURVEY ="http://localhost:8090/api/v1/survey/add-question
 const LIST = "http://localhost:8090/api/v1/survey/list";
 const DELETE = "http://localhost:8090/api/v1/survey/delete/";
 const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/findSurveyByid/";
+const GET_ALL_TAG = "http://localhost:8090/api/v1/maintags/";
+const ASSIGN=  "http://localhost:8090/api/v1/survey/assign";
 
 class SurveyService {
   create(survey) {
@@ -16,6 +18,15 @@ class SurveyService {
       },
     };
     return axios.post(CREATE, survey, config);
+  }
+  assign(survey) {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    return axios.put(ASSIGN,survey,config);
   }
 
   getQuestions() {
@@ -66,6 +77,33 @@ class SurveyService {
     };
 
     return axios.post(ADD_QUESTIONS_TO_SURVEY, addQuestion, config);
+  }
+  async getAllTag() {
+    try {
+      const response = await axios.get(GET_ALL_TAG, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data; 
+    } catch (error) {
+      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      return []; 
+    }
+  }
+
+  async getAllSurveys() {
+    try {
+      const response = await axios.get(LIST, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data; 
+    } catch (error) {
+      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      return []; 
+    }
   }
 }
 
