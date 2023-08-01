@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import ContentHeading from '../../components/ContentHeading';
-import Sidebar from '../../components/Sidebar';
+import Sidebar from '../../components/sidebar/Sidebar'
 import "./UserEditPage.css";
 import { useNavigate } from "react-router-dom";
 import Layout from '../../components/Layout';

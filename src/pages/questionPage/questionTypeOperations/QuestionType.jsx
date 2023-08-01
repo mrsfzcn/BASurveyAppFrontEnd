@@ -75,6 +75,35 @@ function QuestionType() {
     navigate(`/questiontypelist/guncelle/` + rowData.questionType, { state: rowData });
   };
 
+  const deleteTableRows = async (index, rowData) => {
+    console.log(rowData);
+    
+    // Kullanıcıya silmeyi onaylamak için bir pencere gösteriyoruz
+    const userConfirmed = window.confirm(
+      rowData.questionTypeId + ". id'ye sahip soru tipini silmek istediğinize emin misiniz?"
+    );
+  
+    // Kullanıcı onaylamışsa, veriyi silme işlemini gerçekleştiriyoruz
+    if (userConfirmed) {
+      try {
+        const response = await QuestionTypeService.delete(rowData.questionTypeId);
+        console.log(response);
+        if (response.status === 200) {
+          setAlert({ type: "success", message: rowData.questionTypeId + ". id'ye sahip soru tipi başarıyla silindi" });
+          const updatedTypes = [...types];
+          updatedTypes.splice(index, 1);
+          setTypes(updatedTypes);
+          setUpdateType(true);
+        } else {
+          setAlert({ type: "error", message: "Bir hata meydana geldi." });
+        }
+      } catch (error) {
+        console.log(error);
+        setAlert({ type: "error", message: "Bir hata meydana geldi." });
+      }
+    }
+  };
+  
   
 
   return (
@@ -108,6 +137,7 @@ function QuestionType() {
             header={header2}
             useIcon={true}
             editTableRows={handleEditClick}
+            deleteTableRows={deleteTableRows}
           />
         </div>
       </div>
