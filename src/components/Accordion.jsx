@@ -1,7 +1,6 @@
 // Accordion.js
 import React, { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-
 function Accordion({ items }) {
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
@@ -14,7 +13,10 @@ function Accordion({ items }) {
     const content = isExpanded && (
       <ul className="flex flex-col border-black bg-secondColor rounded-sm px-2 py-1">
         {item.content.map((contentItem) => (
-          <li className="mt-2 mb-1 text-base" key={contentItem.href}>
+          <li
+            className="mt-2 mb-1 text-sm tablet:text-base"
+            key={contentItem.href}
+          >
             <a href={contentItem.href}>{contentItem.name}</a>
           </li>
         ))}
@@ -28,7 +30,11 @@ function Accordion({ items }) {
     return (
       <div key={index}>
         <div
-          className="flex items-center justify-between gap-2  px-2 py-2 bg-secondColor text-gray-900 font-semibold rounded-sm"
+          className="flex items-center justify-between gap-2 rounded-sm
+          text-sm tablet:text-[15px] 
+          px-1.5 py-3 
+          bg-secondColor text-gray-900 
+          font-medium tablet:font-semibold "
           onClick={() => handleClick(index)}
         >
           {item.label}
@@ -39,7 +45,11 @@ function Accordion({ items }) {
     );
   });
 
-  return <div className="flex flex-col gap-6 mt-10">{rendered}</div>;
+  return (
+    <div className="flex flex-col gap-4 tablet:gap-5  mobile:mt-10 tablet:mt-4">
+      {rendered}
+    </div>
+  );
 }
 
 export default Accordion;

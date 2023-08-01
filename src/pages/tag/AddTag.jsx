@@ -82,7 +82,6 @@ function AddTag() {
       try {
         const response = await TagService.getAllTag();
         if (response.status === 200) {
-          // Group tags by 'tagName' and collect 'tagClass' names in an array
           const groupedTags = response.data.reduce((acc, tag) => {
             if (!acc[tag.tagName]) {
               acc[tag.tagName] = [];
@@ -91,7 +90,6 @@ function AddTag() {
             return acc;
           }, {});
 
-          // Convert the grouped tags to an array of objects with 'tagName' and 'tagClasses'
           const formattedTags = Object.entries(groupedTags).map(
             ([tagName, tagClasses]) => ({
               tagName,

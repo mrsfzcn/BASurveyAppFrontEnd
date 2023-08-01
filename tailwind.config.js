@@ -13,8 +13,7 @@ export default {
       tablet: "640px",
       laptop: "1024px",
       desktop: "1280px",
-
-      xldektop: "2560px",
+      xldesktop: "1920px",
     },
   },
   plugins: [],

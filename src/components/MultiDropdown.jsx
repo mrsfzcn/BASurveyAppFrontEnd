@@ -65,10 +65,8 @@ function MultiDropdown({ options, selectedOptions, onChange }) {
         className="flex justify-between items-center cursor-pointer font-semibold "
         onClick={handleClick}
       >
-        {selectedOptions.length === 0
-          ? "Seçim yapınız"
-          : "Seçim yapınız"}
-        <GoChevronDown className="text-lg" />
+        {selectedOptions.length === 0 ? "Seçim yapınız" : "Seçim yapınız"}
+        <GoChevronDown className="text-xs" />
       </Panel>
       {isOpen && (
         <Panel className=" absolute top-full z-10 ">{renderedOptions}</Panel>
