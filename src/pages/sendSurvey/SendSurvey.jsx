@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Layout from "../../components/Layout";
+import BreadCrumbs from "../../components/BreadCrumbs";
 import "./SendSurvey.css";
 import Dropdown from "../../components/Dropdown";
 import SurveyService from "../../services/SurveyService";
@@ -9,6 +11,12 @@ import SurveyService from "../../services/SurveyService";
 const SendSurvey = () => {
   const [surveyDays, setSurveyDays] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [selection, setSelection] = useState(null);
+  const [studentOptions, setStudentOptions] = useState([]);
+  const [surveyOptions, setSurveyOptions] = useState([]);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [data, setData] = useState({
     surveyname: "Anket Adı",
     surveytitle: "Konu Başlığı",
@@ -18,10 +26,6 @@ const SendSurvey = () => {
     selectedDate: null, 
   });
 
-  const [selection, setSelection] = useState(null);
-  const [studentOptions, setStudentOptions] = useState([]);
-  const [surveyOptions, setSurveyOptions] = useState([]);
-  const [selectedClass, setSelectedClass] = useState(null);
 
   const numberOptions = []; 
   for (let i = 1; i <= 10; i++) {
@@ -30,14 +34,13 @@ const SendSurvey = () => {
 
   useEffect(() => {
     SurveyService.getAllTag()
-    .then((tags) => {
-      const studentTags = tags.filter((tag) => tag.tagClass === "STUDENT");
-      setStudentOptions(studentTags.map((tag) => ({ label: tag.tagName, value: tag.tagName })));
-      console.log(studentTags);
-    })
-    .catch((error) => {
-      console.error("Tag verileri alınırken bir hata oluştu:", error);
-    });
+      .then((tags) => {
+        setStudentOptions(tags.map((tag) => ({ label: tag.tagString, value: tag.oid })));
+        console.log(tags);
+      })
+      .catch((error) => {
+        console.error("Tag verileri alınırken bir hata oluştu:", error);
+      });
   }, []);
   
   useEffect(() => {
@@ -56,9 +59,6 @@ const SendSurvey = () => {
     setData({ ...data, surveynameis: option.label, titleanswer: option.courseTopic });
   };
 
-  const handleClassChange = (event) => {
-    setData({ ...data, classtosend: event.target.value });
-  };
 
   const handleDaysChange = (event) => {
     setSurveyDays(event.target.value);
@@ -78,15 +78,47 @@ const SendSurvey = () => {
       setError("Geçmiş tarihleri seçemezsiniz!");
     }
   };
+
   const handleCreate = (event) => {
     event.preventDefault();
-    console.log(data);
+    const selectedDateFormatted = new Date(data.selectedDate).toLocaleDateString('en-GB');
+    const assignSurveyData = {
+      surveyId: selection.value,
+      studentTagId: selectedClass.value,
+      days: surveyDays,  
+      startDate: selectedDateFormatted,  
+    };
+    SurveyService.assign(assignSurveyData)
+    .then((response) =>{
+      setIsPopupOpen(true); 
+      console.log(response);
+      console.log(assignSurveyData);
+    })
   };
+  const closePopup = () => {
+    setIsPopupOpen(false); 
+    navigate("/adminhome");
+  };
+  const header = { header: "Anket Oluşturma", href: "/createsurvey" };
 
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/adminhome",
+    },
+    {
+      title: "Anket İşlemleri",
+      href: "/anketler",
+    },
+    {
+      title: "Anket Oluşturma",
+      href: "/createsurvey",
+    },
+  ];
   return (
     <Layout>
       <div className="flex flex-col bg-[#E5E5E5] h-full">
-        <div className="p-5 text-start">Bitmesi bekleniyor</div>
+      <BreadCrumbs header={header} subtitle={subtitle} />
         <div className="outerclass flex justify-center align-center">
           <div className="innerclass bg-[#F1F1F1] flex  justify-center align-center m-auto ">
             <div className="insideclass bg-[#FEFEFE] m-auto h-auto flex flex-col justify-center gap-14 ">
@@ -185,6 +217,19 @@ const SendSurvey = () => {
             </div>
           </div>
         </div>
+        {isPopupOpen && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+          <div className="bg-white p-8 rounded shadow">
+            <p className="text-xl font-bold mb-4">Başarı!</p>
+            <p>Anket {selection.label } sınıfına başarı ile gönderildi!</p>
+            <Button primary rounded className="mt-4" onClick={closePopup}>
+              Tamam
+            </Button>
+          </div>
+          
+        </div>
+        
+      )}
       </div>
     </Layout>
   );
