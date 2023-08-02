@@ -25,6 +25,7 @@ import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
+import QuestionAddPage from "./pages/questionPage/QuestionAddPage"
 import UserEditPage from "./pages/userEdit/UserEditPage";
 // import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
@@ -67,6 +68,9 @@ function App() {
         </Route>
         <Route path="/questionlist">
           <Route index element={<QuestionListPage />} />
+          <Route path="add">
+            <Route index element={<QuestionAddPage />} />
+          </Route>
           <Route path="guncelle/:id">
             <Route index element={<QuestionUpdatePage />} />
           </Route>
