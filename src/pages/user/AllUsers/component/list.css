@@ -155,16 +155,31 @@
   margin-top: 2rem;
 }
 
+.beforeAndNextButton {
+  /* Diğer düğmeler için geçerli stil */
+  background-color: #f8f2f2;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #171616;
+  border: 2px solid rgb(28, 26, 26);
+  margin: 0 10px;
+}
+
 .paginationButton {
-  width: 23px;
-  height: 23px;
-  margin-bottom: 2rem;
-  flex-shrink: 0;
-  background: #212a3e;
-  color: whitesmoke;
-  border-radius: 50%;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
+  /* Diğer düğmeler için geçerli stil */
+  background-color: #f8f2f2;
+  padding: 10px 15px;
+  border-radius: 5px;
+  color: #171616;
+  margin: 0 5px;
+}
+
+.paginationButton:focus,
+.paginationButton.active {
+  /* Seçili düğme için özel stil */
+  background-color: rgb(32, 30, 30);
+  color: white;
+  border: 2px solid white;
 }
 
 .editButton {

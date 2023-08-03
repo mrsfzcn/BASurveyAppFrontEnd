@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
-function HeaderAccordion({ items }) {
+function HeaderAccordion({ items, mobile }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
@@ -22,7 +22,7 @@ function HeaderAccordion({ items }) {
         <div>{item.icon}</div>
 
         <div className="text-start">
-          <a className="text-start font-semibold" href="/login">
+          <a className="text-start font-semibold" href="">
             {item.label}
           </a>
         </div>
@@ -33,10 +33,13 @@ function HeaderAccordion({ items }) {
   return (
     <div className="relative">
       <div
-        className="flex items-center justify-center xldektop:w-14 xldektop:h-14 w-10 h-10 border-black rounded-full bg-secondColor text-gray-900 font-semibold cursor-pointer"
+        className="flex items-center justify-between 
+        tablet:justify-center
+        tablet:w-10 tablet:h-10 w-full h-10 border-black tablet:rounded-full  bg-secondColor text-gray-900 font-semibold cursor-pointer"
         onClick={handleClick}
       >
-        <AiOutlineUser size={24} />
+        {mobile && <p className="m-2 text-sm">Kullanıcı Bilgileri</p>}
+        <AiOutlineUser size={isOpen ? "22" : "18"} className="m-2" />
       </div>
       {isOpen && (
         <div className="absolute mt-3 right-0 w-44 z-10 xldektop:w-56">

@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import Layout from "../../components/Layout";
-import TagService from "../../services/TagService";
-import Alert from "../../components/Alert";
+import Button from "../../../components/Button";
+import Input from "../../../components/Input";
+import Layout from "../../../components/Layout";
+import Alert from "../../../components/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
-import BreadCrumbs from "../../components/BreadCrumbs";
+import BreadCrumbs from "../../../components/BreadCrumbs";
+import QuestionTypeService from "../../../services/QuestionTypeService";
 
-const UpdateTag = () => {
+
+const UpdateType = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const rowData = location.state;
   const [updateTag, setUpdateTag] = useState({
-    tagString: rowData.tagName,
+    tagString: rowData.questionType,
     newTagString: "",
   });
 
@@ -34,11 +35,11 @@ const UpdateTag = () => {
         return;
       }
 
-      const response = await TagService.updateTag(updateTag);
+      const response = await QuestionTypeService.updateType(updateTag);
 
       if (response.status === 200) {
         setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
-        navigate("/etiket");
+        navigate("/questiontypelist");
       } else {
         setAlert({
           type: "error",
@@ -56,16 +57,16 @@ const UpdateTag = () => {
 
   //vazgeç butonuna basarsa kullanılan method
   const navigateMain = (e) => {
-    navigate("/etiket");
+    navigate("/questiontypelist");
   };
 
   //
 
   const header = {
-    header: "Etiket Güncelle",
-    href: "/etiket/guncelle",
+    header: "Soru Tipi Güncelle",
+    href: "/questiontypelist/guncelle",
     describe:
-      "Etiket Güncelleme sayfasıdır. Bu sayfada etiket güncelleyebilirsiniz.",
+      "Soru Tipi Güncelleme sayfasıdır. Bu sayfada etiket güncelleyebilirsiniz.",
   };
 
   const subtitle = [
@@ -74,12 +75,12 @@ const UpdateTag = () => {
       href: "/",
     },
     {
-      title: "Etiket İşlemleri",
-      href: "/etiket",
+      title: "Soru Tipi İşlemleri",
+      href: "/questiontypelist",
     },
     {
-      title: "Etiket Güncelle",
-      href: "/etiket/guncelle",
+      title: "Soru Tipi Güncelle",
+      href: "/questiontypelist/guncelle",
     },
   ];
 
@@ -94,7 +95,7 @@ const UpdateTag = () => {
           <div className="class2 bg-[#F1F1F1] flex justify-center align-center m-auto ">
             <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-14 ">
               <div className="flex flex-col gap-14 justify-center items-center">
-                <Input half disabled value={rowData.tagName} />
+                <Input half disabled value={rowData.questionType} />
                 <Input
                   placeholder="Yeni Etiketi Giriniz"
                   half
@@ -132,4 +133,4 @@ const UpdateTag = () => {
   );
 };
 
-export default UpdateTag;
+export default UpdateType;

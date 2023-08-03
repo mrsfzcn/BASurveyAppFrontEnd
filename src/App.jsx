@@ -14,7 +14,7 @@ import CreateSurveyPage from "./pages/CreateSurveyPage/createsurvey";
 import AdminHomePage from "./pages/adminHome/AdminHomePage";
 import QuestionListPage from "./pages/questionPage/questionList/QuestionListPage";
 import AddTag from "./pages/tag/AddTag";
-import TagsTable from "./pages/tag/TagsTable";
+
 import UserRegistration from "./pages/user/UserRegistration";
 import TumKullanicilar from "./pages/user/TumKullanicilar";
 import AddQuestion from "./pages/CreateSurveyPage/AddQuestion";
@@ -25,6 +25,12 @@ import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
+import QuestionAddPage from "./pages/questionPage/QuestionAddPage"
+import UserEditPage from "./pages/userEdit/UserEditPage";
+// import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
+import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
+import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
+
 function App() {
   return (
     <Router>
@@ -34,13 +40,14 @@ function App() {
         <Route path="/code" element={<Code />} />
         <Route path="/adminhome" element={<AdminHomePage />} />
         <Route path="/sendsurvey" element={<SendSurvey />} />
+        <Route path="/edituser" element={<UserEditPage />} />
         <Route path="/createsurvey" element={<CreateSurveyPage />} />
         <Route path="/addquestion" element={<AddQuestion />} />
         <Route path="/preview" element={<PreviewSurvey />} />
         <Route path="/*" element={<Navigate to="/" />} />
         <Route path="/etiket">
-          <Route index element={<TagsTable />} />
-          <Route path="guncelle">
+          <Route index element={<AddTag />} />
+          <Route path="guncelle/:id">
             <Route index element={<UpdateTag />} />
           </Route>
         </Route>
@@ -61,8 +68,17 @@ function App() {
         </Route>
         <Route path="/questionlist">
           <Route index element={<QuestionListPage />} />
+          <Route path="add">
+            <Route index element={<QuestionAddPage />} />
+          </Route>
           <Route path="guncelle/:id">
             <Route index element={<QuestionUpdatePage />} />
+          </Route>
+        </Route>
+        <Route path="/questiontypelist">
+          <Route index element={<QuestionType />} />
+          <Route path="guncelle/:id">
+            <Route index element={<UpdateType />} />
           </Route>
         </Route>
       </Routes>
