@@ -18,7 +18,6 @@ export const items = [
     content: [
       { name: "Tüm Anketler", href: "/anketler" },
       { name: "Anket Ekle", href: "/createsurvey" },
-      { name: "Anket Düzenle", href: "/" },
       { name: "Anket Gönder", href: "/sendsurvey" },
     ],
   },

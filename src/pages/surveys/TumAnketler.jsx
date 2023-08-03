@@ -8,7 +8,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 const TumAnketler = () => {
   const [surveys, setSurveys] = useState([]);
 
-  const header = ["No", "Anket Adı", "Konu Başlığı"];
+  const header = ["No", "Anket Adı", "Konu Başlığı","Anket etiketleri"];
   const [deleteSurvey, setDeleteSurvey] = useState(false);
   const deleteTableRows = async (index, rowData) => {
     const shouldDelete = window.confirm("Bu anketi silmek istediğinize emin misiniz?");
@@ -43,7 +43,7 @@ const TumAnketler = () => {
     const fetchSurveys = async () => {
       try {
         const response = await SurveyService.list();
-        console.log(response);
+       
         if (response.status === 200) {
           // API yanıtındaki "surveyTags" alanını düzenle
           const formattedSurveys = response.data.map((survey) => ({
@@ -91,7 +91,6 @@ const TumAnketler = () => {
           data={surveys}
           header={header}
           useIcon={true}
-          useLabel={true}
           deleteTableRows={deleteTableRows}
           editTableRows={handleEditClick}
         />
