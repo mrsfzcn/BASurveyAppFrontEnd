@@ -9,6 +9,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import MultiDropdown from "../../components/MultiDropdown";
 import { BsTextarea } from "react-icons/bs";
 import CustomComboBox from './CustomComboBox';
+import CustomComboBoxPlus from './CustomComboBoxPlus';
 import QuestionPlusIcon from './QuestionPlusIcon';
 
 const QuestionAddPage = () => {
@@ -30,7 +31,12 @@ const QuestionAddPage = () => {
         { value: 'option1', label: 'ali' },
         { value: 'option2', label: 'ay' },
         { value: 'option3', label: 'can' },
-        { value: 'option4', label: 'cankkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk' },
+        { value: 'option4', label: 'cankkk' },
+        { value: 'option5', label: 'can' },
+        { value: 'option6', label: 'can' },
+        { value: 'option7', label: 'can' },
+        { value: 'option8', label: 'can' },
+        { value: 'option9', label: 'can' },{ value: 'option10', label: 'can' },
         // Daha fazla seçeneği buraya ekleyebilirsiniz
     ];
 
@@ -59,21 +65,19 @@ const QuestionAddPage = () => {
         },
     ];
 
-    const handleButtonClick = () => {
-        console.log('Butona Basıldı');
-      };
+   
 
     return (
         <Layout>
             <div className="flex flex-col bg-[#E5E5E5] h-full">
                 <BreadCrumbs header={header} subtitle={subtitle} />
                 <div className="  flex justify-center align-center" style={{
-                    height: '100%',
+                    height: '90%',
                 }} >
                     <div className="  bg-[#F1F1F1] flex  justify-center align-center m-auto "
                         style={{
                             width: '41%',
-                            height: '81%',
+                            height: '76.8vh',
                             borderRadius: '1rem',
                             position: 'absolute',
                             flexDirection: 'column',
@@ -176,17 +180,10 @@ const QuestionAddPage = () => {
                                     left: '5.8vw',
                                     position: 'absolute',
                                 }}>
-                                    <CustomComboBox options={options} placeholder="Giriniz" />
+                                    < CustomComboBoxPlus options={options} placeholder="Giriniz" />
                                 </div>
                             </div>
-                            <button onClick={handleButtonClick} style={{
-                                top: '4vh',
-                                left: '29vw',
-                                cursor: 'pointer', 
-                                position: 'absolute',
-                            }}>
-                            <QuestionPlusIcon />
-                            </button>
+                           
                         </div>
                         <button
                             style={{
