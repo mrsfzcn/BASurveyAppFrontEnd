@@ -25,12 +25,12 @@ import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
-import QuestionAddPage from "./pages/questionPage/QuestionAddPage"
+import QuestionAddPage from "./pages/questionPage/QuestionAddPage";
 import UserEditPage from "./pages/userEdit/UserEditPage";
 // import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
 import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
-
+import PrivateRoutes from "./utils/PrivateRoute";
 function App() {
   return (
     <Router>
@@ -38,47 +38,49 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/qrcode" element={<Qrcode />} />
         <Route path="/code" element={<Code />} />
-        <Route path="/adminhome" element={<AdminHomePage />} />
-        <Route path="/sendsurvey" element={<SendSurvey />} />
-        <Route path="/edituser" element={<UserEditPage />} />
-        <Route path="/createsurvey" element={<CreateSurveyPage />} />
-        <Route path="/addquestion" element={<AddQuestion />} />
-        <Route path="/preview" element={<PreviewSurvey />} />
-        <Route path="/*" element={<Navigate to="/" />} />
-        <Route path="/etiket">
-          <Route index element={<AddTag />} />
-          <Route path="guncelle/:id">
-            <Route index element={<UpdateTag />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/adminhome" element={<AdminHomePage />} exact />
+          <Route path="/sendsurvey" element={<SendSurvey />} />
+          <Route path="/edituser" element={<UserEditPage />} />
+          <Route path="/createsurvey" element={<CreateSurveyPage />} />
+          <Route path="/addquestion" element={<AddQuestion />} />
+          <Route path="/preview" element={<PreviewSurvey />} />
+          <Route path="/*" element={<Navigate to="/" />} />
+          <Route path="/etiket">
+            <Route index element={<AddTag />} />
+            <Route path="guncelle/:id">
+              <Route index element={<UpdateTag />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="/kullanici">
-          <Route index element={<TumKullanicilar />} />
-          <Route path="ekle">
-            <Route index element={<UserRegistration />} />
+          <Route path="/kullanici">
+            <Route index element={<TumKullanicilar />} />
+            <Route path="ekle">
+              <Route index element={<UserRegistration />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="/anketler">
-          <Route index element={<TumAnketler />} />
-          <Route path="guncelle/:id">
-            <Route index element={<AnketDuzenle />} />
+          <Route path="/anketler">
+            <Route index element={<TumAnketler />} />
+            <Route path="guncelle/:id">
+              <Route index element={<AnketDuzenle />} />
+            </Route>
+            <Route path="ekle">
+              <Route index element={<AnketEkle />} />
+            </Route>
           </Route>
-          <Route path="ekle">
-            <Route index element={<AnketEkle />} />
+          <Route path="/questionlist">
+            <Route index element={<QuestionListPage />} />
+            <Route path="add">
+              <Route index element={<QuestionAddPage />} />
+            </Route>
+            <Route path="guncelle/:id">
+              <Route index element={<QuestionUpdatePage />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="/questionlist">
-          <Route index element={<QuestionListPage />} />
-          <Route path="add">
-            <Route index element={<QuestionAddPage />} />
-          </Route>
-          <Route path="guncelle/:id">
-            <Route index element={<QuestionUpdatePage />} />
-          </Route>
-        </Route>
-        <Route path="/questiontypelist">
-          <Route index element={<QuestionType />} />
-          <Route path="guncelle/:id">
-            <Route index element={<UpdateType />} />
+          <Route path="/questiontypelist">
+            <Route index element={<QuestionType />} />
+            <Route path="guncelle/:id">
+              <Route index element={<UpdateType />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
