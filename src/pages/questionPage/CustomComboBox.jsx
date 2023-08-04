@@ -50,7 +50,7 @@ const CustomComboBox = ({ options, placeholder }) => {
             top: '6vh',
             left: '0',
             width: '100%',
-            maxHeight: '7,8125%', 
+            maxHeight: '17vh', 
             overflowY: 'auto',
             background: '#FFF',
             border: '1px solid #ccc',

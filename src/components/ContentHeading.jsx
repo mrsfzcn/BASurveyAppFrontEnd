@@ -32,7 +32,7 @@ const ContentHeading = () => {
           <h6>Kullanıcı Düzenle |</h6>
         </div>
         <div style={fullTextStyle}>
-          <p>Ana Sayfa > Kullanıcı işlemleri > Kullanıcı Düzenle</p>
+          <p>Ana Sayfa &gt; Kullanıcı işlemleri &gt; Kullanıcı Düzenle</p>
         </div>
       </div>
     );
