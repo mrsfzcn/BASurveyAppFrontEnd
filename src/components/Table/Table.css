@@ -19,8 +19,9 @@
 }
 
 .table thead {
-  background-color: #ccc;
   color: #222;
+  background-color: lightgray;
+  opacity: calc(0.9);
   position: sticky;
   top: 0;
 }
@@ -28,6 +29,7 @@
 .table th,
 .table td {
   padding: 0.5rem;
+  border-bottom: 0.2px lightgray solid;
 }
 
 .table td {
@@ -76,10 +78,11 @@
 
 .extra-content {
   display: flex;
-  width: 90%;
+  width: 100%;
   margin: auto;
   justify-content: space-between;
   align-items: center;
+  padding-left: 35px;
 }
 
 .pagination {
@@ -99,4 +102,8 @@
 
 .table tbody tr:nth-child(odd) {
   background-color: #f0f0f0;
+}
+
+.footer {
+  display: flex;
 }

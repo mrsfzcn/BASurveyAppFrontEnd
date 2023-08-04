@@ -12,19 +12,27 @@ function HeaderAccordion({ items, mobile }) {
     console.log(index);
   };
 
+  const handleClickLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   const render = items.map((item, index) => {
     return (
       <li
-        className="flex items-center gap-4 xldektop:gap-8 mb-3  "
+        className="flex items-center gap-4 xldektop:gap-8 mb-3  hover:bg-thirdColor hover:text-gray-600 rounded-md cursor-pointer"
         key={index}
         onClick={() => handleSelect(index)}
       >
         <div>{item.icon}</div>
-
-        <div className="text-start">
-          <a className="text-start font-semibold" href="">
-            {item.label}
-          </a>
+        <div className="text-start ">
+          {item.label === "Çıkış" ? (
+            <a onClick={handleClickLogout} className="text-start font-semibold">
+              {item.label}
+            </a>
+          ) : (
+            <a className="text-start font-semibold">{item.label}</a>
+          )}
         </div>
       </li>
     );

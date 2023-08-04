@@ -70,6 +70,8 @@ function AddTag() {
       .then((response) => {
         setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
         setUpdateTag(true);
+        e.target.reset();
+        setSelectedOptions([]);
       })
       .catch((error) => {
         setAlert({ type: "error", message: "Bir hata meydana geldi." });

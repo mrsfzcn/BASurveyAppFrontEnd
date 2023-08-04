@@ -44,8 +44,8 @@ function QuestionType() {
 
     QuestionTypeService.createType(type)
       .then((response) => {
-        setAlert({ type: "success", message: "Soru Tipi başarıyla güncellendi." });
         setUpdateType(true);
+        e.target.reset();
       })
       .catch((error) => {
         setAlert({ type: "error", message: "Bir hata meydana geldi." });

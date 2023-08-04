@@ -7,7 +7,7 @@ const Table = ({
   data,
   header,
   useIcon,
-  useLabel,
+  // useLabel,
   deleteTableRows,
   editTableRows,
 }) => {
@@ -16,6 +16,7 @@ const Table = ({
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPageOptions = [10, 20, 50, 100];
   const itemsPerPage = selectedCount || itemsPerPageOptions[0];
+  const [filterColumn, setFilterColumn] = useState("");
 
   const handleFilterChange = (e) => {
     setFilterValue(e.target.value);
@@ -27,9 +28,25 @@ const Table = ({
     setCurrentPage(1);
   };
 
+  const handleColumnChange = (e) => {
+    setFilterColumn(e.target.value);
+    setCurrentPage(1);
+  };
+
   const filteredData = data.filter((rowData) => {
-    const rowValues = Object.values(rowData).join("").toLowerCase();
-    return rowValues.includes(filterValue.toLowerCase());
+    const rowValues = Object.values(rowData).map((value) =>
+      value.toString().toLowerCase()
+    );
+    const filterText = filterValue.toLowerCase();
+    if (filterColumn) {
+      const columnIndex = header.indexOf(filterColumn);
+      if (columnIndex !== -1) {
+        return rowValues[columnIndex].includes(filterText);
+      }
+      return false;
+    } else {
+      return rowValues.join("").includes(filterText);
+    }
   });
 
   const handleRowClick = (value) => {};
@@ -97,9 +114,10 @@ const Table = ({
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <>
-      <div className="flex flex-col  bg-white mr-10 ml-10 py-5">
+      <div className="flex flex-col  bg-[#F1F1F1] rounded-sm mr-10 ml-10 py-5">
         <div className="first-column">
           <div className="filter-wrapper">
             <label>Göster: </label>
@@ -113,6 +131,15 @@ const Table = ({
             <label>Satır</label>
           </div>
           <div>
+            <label>Buna göre: </label>
+            <select value={filterColumn} onChange={handleColumnChange}>
+              <option value="">Hepsi</option>
+              {header.map((column) => (
+                <option key={column} value={column}>
+                  {column}
+                </option>
+              ))}
+            </select>
             <label>Ara :</label>
             <Input value={filterValue} onChange={handleFilterChange} />
           </div>
@@ -127,7 +154,7 @@ const Table = ({
                       {item}
                     </th>
                   ))}
-                  {useLabel && <th>Anket Etiketleri</th>}
+                  {/* {useLabel && <th>Anket Etiketleri</th>} */}
                   {useIcon && <th>işlemler</th>}
                 </tr>
               </thead>
@@ -158,22 +185,22 @@ const Table = ({
             <div className="extra-content">
               Toplam {data.length}, Gösterilen veri sayısı:{" "}
               {currentItems.length}
+              <ul className="pagination">
+                <li onClick={goToFirstPage}>&laquo;&laquo;</li>{" "}
+                <li onClick={goToPrevPage}>&laquo;</li>{" "}
+                {pageNumbers.map((page) => (
+                  <li
+                    key={page}
+                    className={page === currentPage ? "active" : ""}
+                    onClick={() => handlePageChange(page)}
+                  >
+                    {page}
+                  </li>
+                ))}
+                <li onClick={goToNextPage}>&raquo;</li>{" "}
+                <li onClick={goToLastPage}>&raquo;&raquo;</li>{" "}
+              </ul>
             </div>
-            <ul className="pagination">
-              <li onClick={goToFirstPage}>&laquo;&laquo;</li>{" "}
-              <li onClick={goToPrevPage}>&laquo;</li>{" "}
-              {pageNumbers.map((page) => (
-                <li
-                  key={page}
-                  className={page === currentPage ? "active" : ""}
-                  onClick={() => handlePageChange(page)}
-                >
-                  {page}
-                </li>
-              ))}
-              <li onClick={goToNextPage}>&raquo;</li>{" "}
-              <li onClick={goToLastPage}>&raquo;&raquo;</li>{" "}
-            </ul>
           </div>
         </div>
       </div>
