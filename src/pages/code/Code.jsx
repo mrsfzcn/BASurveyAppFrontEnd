@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./code.css";
 import AuthService from "../../services/AuthService";
 import TokenService from "../../services/TokenService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import vektor5 from "../../assets/images/Login/Vector5.png";
 import vektor6 from "../../assets/images/Login/Vector6.png";
 import vektor7 from "../../assets/images/Login/Vector7.png";
-import Input from "../../components/Input";
+import { encrypt } from "../../utils/encrypt";
+import { decrypt } from "../../utils/encrypt";
+import backgroundImage from "../../assets/images/Login/loginbacground.png";
 const Code = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const [code, setCode] = useState({
     twoFactoryKey: "",
     token: localStorage.getItem("token") || "",
@@ -38,6 +41,7 @@ const Code = () => {
       .then((response) => {
         if (response.data === true) {
           const decodedToken = TokenService.decodeToken(code.token);
+          localStorage.setItem("auth", encrypt("true"));
           if (decodedToken && decodedToken.role === "ADMIN") {
             navigate("/adminhome");
           }
@@ -51,44 +55,95 @@ const Code = () => {
       });
   };
 
+  useEffect(() => {
+    const authItem = localStorage.getItem("auth");
+    if (authItem && decrypt(authItem) === "true") {
+      navigate("/adminhome");
+    }
+  }, []);
+
+  const codePage = location.state?.codePage;
+
+  useEffect(() => {
+    if (!codePage) {
+      navigate("/login");
+    }
+  }, [navigate, codePage]);
+
+  if (!codePage) {
+    return null;
+  }
   return (
-    <>
-      <div className="container-code">
-        <img className="vektor5" src={vektor5} alt="vektor5" />
-        <img className="vektor6" src={vektor6} alt="vektor6" />
-        <img className="vektor7" src={vektor7} alt="vektor7" />
+    <div
+      className="h-screen  flex items-center justify-center bg-center bg-no-repeat bg-cover"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      <div
+        className="flex flex-col 
+  gap-8 items-center 
+  justify-center 
+  flex-shrink-0 bg-opacity-90
+   bg-white 
+   rounded-3xl 
+   w-5/6 h-1/2 
+   laptop:w-6/12 laptop:h-4/6
+   xldesktop:w-4/12 xldesktop:h-3/6
+   "
+      >
+        <img
+          className="hidden xldesktop:block xldesktop:absolute top-0 left-0 z-0"
+          src={vektor5}
+          alt="vektor5"
+        />
+        <img
+          className="hidden xldesktop:block xldesktop:absolute top-52 right-0 z-0"
+          src={vektor6}
+          alt="vektor6"
+        />
+        <img
+          className="hidden xldesktop:block xldesktop:absolute left-28 bottom-0 z-0"
+          style={{ right: "712.5px" }}
+          src={vektor7}
+          alt="vektor7"
+        />
 
-        <div className="bg-[#e5e0e0e6] rounded-xl p-10 flex flex-col justify-evenly  gap-10 h-1/2 w-2/6">
-          <div className="flex flex-col w-full ">
-            <label htmlFor="code" className="username font-bold">
-              2FA Code
-            </label>
-          </div>
-          <div className="flex flex-col gap-16">
-            <div>
-              <input
-                className="placeholder-input "
-                type="text"
-                id="code"
-                placeholder="2FA Code"
-                value={code.twoFactoryKey}
-                onChange={handleTwoFactoryChange}
-              />
-              {error && <p>{error}</p>}
-            </div>
+        <div className="flex flex-col z-10 space-y-6 w-8/10 xldesktop:w-4/6 ">
+          <label htmlFor="code" className="username font-bold">
+            2FA Code
+          </label>
 
-            <div className="flex flex-col gap-5 justify-center items-center">
-              <button className="code-button" onClick={handleSubmit}>
-                Gönder
-              </button>
-              <Link to="/login">
-                <button className="code-button2">Giriş sayfasına geri dön</button>
-              </Link>
-            </div>
-          </div>
+          <input
+            className="mb-2 pb-2 border-b-2 border-black bg-transparent outline-none shadow-none text-lg"
+            type="text"
+            id="code"
+            placeholder="2FA Code"
+            value={code.twoFactoryKey}
+            onChange={handleTwoFactoryChange}
+          />
+          {error && <p>{error}</p>}
+        </div>
+
+        <div className="flex flex-col z-10 space-y-6 w-full xldesktop:w-4/6 pl-6 pr-6 ">
+          <button
+            className=" w-full h-12 
+           border-none 
+           rounded-lg 
+           bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white font-poppins text-base z-10"
+            onClick={handleSubmit}
+          >
+            Gönder
+          </button>
+          <button
+            className=" w-full h-12 
+               border-none 
+               rounded-lg 
+               bg-secondColor text-black font-poppins font-bold text-base z-10 "
+          >
+            <a href="/login">Giriş Sayfasına Geri dön</a>
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
