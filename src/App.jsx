@@ -30,7 +30,7 @@ import UserEditPage from "./pages/userEdit/UserEditPage";
 // import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
 import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
-import PrivateRoutes from "./utils/PrivateRoute";
+import PrivateRoutes from "./utils/PrivateRoutes";
 function App() {
   return (
     <Router>
