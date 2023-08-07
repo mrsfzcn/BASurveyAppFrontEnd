@@ -43,13 +43,18 @@ function QuestionType() {
     }
 
     QuestionTypeService.createType(type)
-      .then((response) => {
+    .then((response) => {
+      if (response.data === false) {
+        setAlert({ type: "error", message: "Bu soru tipi daha önce eklenmiş. Lütfen farklı bir soru tipi giriniz." });
+      } else {
+        setAlert({ type: "success", message: "Soru Tipi başarıyla güncellendi." });
         setUpdateType(true);
         e.target.reset();
-      })
-      .catch((error) => {
-        setAlert({ type: "error", message: "Bir hata meydana geldi." });
-      });
+      }
+    })
+    .catch((error) => {
+      setAlert({ type: "error", message: "Bir hata meydana geldi." });
+    });
   };
 
   useEffect(() => {
