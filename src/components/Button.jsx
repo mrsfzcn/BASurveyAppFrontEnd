@@ -2,7 +2,7 @@ function classNames(...classNamesList) {
     return classNamesList.filter(Boolean).join(" ");
   }
   
-  function Button({ children, primary, secondary, rounded,circle, bold,fat, ...rest }) {
+  function Button({ children, primary, secondary, rounded,circle, bold,fat,gray, ...rest }) {
     const classes = classNames(
       rest.className,
       "px-5 py-1  md:w-30 xl:w-40",
@@ -11,7 +11,8 @@ function classNames(...classNamesList) {
       bold && "font-bold",
       rounded && "rounded-lg",
       fat && "px-12 py-4",
-      circle && "rounded-full"
+      circle && "rounded-full",
+      gray && "bg-slate-300"
       //Ek özellik istendiği zaman buraya , ile ayırıp ekleme yapabiliyoruz
       //Tailwindcss
     );

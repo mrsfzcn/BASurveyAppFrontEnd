@@ -4,12 +4,14 @@ import Layout from "../../components/Layout";
 import SurveyService from "../../services/SurveyService";
 import { Link, useNavigate } from "react-router-dom";
 import BreadCrumbs from "../../components/BreadCrumbs";
+import Button from "../../components/Button";
 
 const TumAnketler = () => {
   const [surveys, setSurveys] = useState([]);
-
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const header = ["No", "Anket Adı", "Konu Başlığı","Anket etiketleri"];
   const [deleteSurvey, setDeleteSurvey] = useState(false);
+  const [deleteMessage,setDeleteMessage] = useState("");
   const deleteTableRows = async (index, rowData) => {
     const shouldDelete = window.confirm("Bu anketi silmek istediğinize emin misiniz?");
     if (shouldDelete) {
@@ -17,7 +19,9 @@ const TumAnketler = () => {
         const response = await SurveyService.delete(rowData.surveyOid);
         console.log(response);
         if (response.status === 200) {
-          alert(rowData.surveyOid + ". id'ye sahip anket başarıyla silindi");
+          console.log(rowData);
+          setDeleteMessage(rowData.surveyTitle + " başarıyla silindi.")
+          setIsPopupOpen(true); 
           const rows = [...surveys];
           rows.splice(index, 1);
           setSurveys(rows);
@@ -27,9 +31,13 @@ const TumAnketler = () => {
         }
       } catch (error) {
         console.log(error);
-        alert("Bir hata meydana geldi");
+        setDeleteMessage("Cevaplanmış anketler silinemez")
+        setIsPopupOpen(true); 
       }
     }
+  };
+  const closePopup = () => {
+    setIsPopupOpen(false); 
   };
   const navigate = useNavigate();
 
@@ -43,6 +51,7 @@ const TumAnketler = () => {
     const fetchSurveys = async () => {
       try {
         const response = await SurveyService.list();
+        console.log(response);
        
         if (response.status === 200) {
           // API yanıtındaki "surveyTags" alanını düzenle
@@ -94,6 +103,19 @@ const TumAnketler = () => {
           deleteTableRows={deleteTableRows}
           editTableRows={handleEditClick}
         />
+         {isPopupOpen && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+          <div className="bg-white p-8 rounded shadow flex flex-col justify-center align-center gap-5">
+            
+            <p>{deleteMessage}</p>
+            <Button gray rounded onClick={closePopup}>
+              Tamam
+            </Button>
+          </div>
+          
+        </div>
+        
+      )}
       </div>
     </Layout>
   );

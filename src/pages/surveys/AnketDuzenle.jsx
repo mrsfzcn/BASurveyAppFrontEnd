@@ -69,7 +69,6 @@ const AnketDuzenle = () => {
   ];
 
   const navigateMain = (e) => {
-    console.log("selam bebegım");
     navigate("/anketler");
   };
 
