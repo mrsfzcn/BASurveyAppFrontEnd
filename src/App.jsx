@@ -31,6 +31,7 @@ import UserEditPage from "./pages/userEdit/UserEditPage";
 import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
 import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import RegenerateQrCode from "./pages/regenerateqrcode/RegenerateQrCode";
 function App() {
   return (
     <Router>
@@ -38,6 +39,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/qrcode" element={<Qrcode />} />
         <Route path="/code" element={<Code />} />
+        <Route path="/regenerate-qr-code" element={<RegenerateQrCode />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/adminhome" element={<AdminHomePage />} exact />
           <Route path="/sendsurvey" element={<SendSurvey />} />

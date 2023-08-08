@@ -1,43 +1,28 @@
 import React, { useState, useEffect } from "react";
-import "./code.css";
+import { useLocation } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import TokenService from "../../services/TokenService";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import vektor5 from "../../assets/images/Login/Vector5.png";
 import vektor6 from "../../assets/images/Login/Vector6.png";
 import vektor7 from "../../assets/images/Login/Vector7.png";
-import { encrypt } from "../../utils/encrypt";
 import { decrypt } from "../../utils/encrypt";
+import { encrypt } from "../../utils/encrypt";
 import backgroundImage from "../../assets/images/Login/loginbacground.png";
-const Code = () => {
-  const [error, setError] = useState("");
+const RegenerateQrCode = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [error, setError] = useState("");
+  const qrCode = location.state?.qrCode;
   const [code, setCode] = useState({
     twoFactoryKey: "",
     token: localStorage.getItem("token") || "",
   });
 
-  const [regenerateQrCode, setRegenerateQrCode] = useState({
-    token: localStorage.getItem("token") || "",
-  });
-
-  const [newQrCode, setNewQrCode] = useState("");
+  const data = location.state;
 
   const handleTwoFactoryChange = (e) => {
     setCode({ ...code, twoFactoryKey: e.target.value });
-  };
-
-  const handleRegenerateQrCode = (e) => {
-    e.preventDefault();
-    AuthService.regenerateQrCode(regenerateQrCode).then((response) => {
-      if (response.status === 200) {
-        alert("QR Code başarıyla yenilendi.");
-        setNewQrCode(response.data.qrCode);
-        navigate(`/regenerate-qr-code`, { state: response.data.qrCode });
-      }
-    });
   };
 
   const handleSubmit = (e) => {
@@ -79,17 +64,6 @@ const Code = () => {
     }
   }, []);
 
-  const codePage = location.state?.codePage;
-
-  useEffect(() => {
-    if (!codePage) {
-      navigate("/login");
-    }
-  }, [navigate, codePage]);
-
-  if (!codePage) {
-    return null;
-  }
   return (
     <div
       className="h-screen  flex items-center justify-center bg-center bg-no-repeat bg-cover"
@@ -124,50 +98,37 @@ const Code = () => {
           alt="vektor7"
         />
 
-        <div className="flex flex-col z-10 space-y-6 w-8/10 xldesktop:w-4/6 ">
-          <label htmlFor="code" className="username font-bold">
-            2FA Code
-          </label>
-
+        <div className="flex flex-col z-10 items-center gap-2 w-8/10 xldesktop:w-4/6 ">
+          <img className="w-4/6 mb-2 " src={data} alt="" />
           <input
-            className="mb-2 pb-2 border-b-2 border-black bg-transparent outline-none shadow-none text-lg"
             type="text"
-            id="code"
-            placeholder="2FA Code"
-            value={code.twoFactoryKey}
+            className="mb-3 pb-2 border-b-2 border-black bg-transparent outline-none shadow-none text-lg w-4/6"
             onChange={handleTwoFactoryChange}
           />
           {error && <p>{error}</p>}
-          <p
-            className="text-red-600 font-semibold"
-            onClick={handleRegenerateQrCode}
-          >
-            Yeniden Qr Code Oluştur
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 tablet:gap-10 z-10  w-full xldesktop:w-4/6 pl-6 pr-6 tablet:pl-0 tablet:pr-0">
-          <button
-            className=" w-full h-12 
+          <div className="flex items-center gap-2 tablet:gap-10 z-10  w-full xldesktop:w-4/6 pl-6 pr-6 tablet:pl-0 tablet:pr-0">
+            <button
+              className=" w-full h-12 
            border-none 
            rounded-lg 
            bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white font-poppins text-base z-10"
-            onClick={handleSubmit}
-          >
-            Gönder
-          </button>
-          <button
-            className=" w-full h-12 
+              onClick={handleSubmit}
+            >
+              Gönder
+            </button>
+            <button
+              className=" w-full h-12 
                border-none 
                rounded-lg 
                bg-secondColor text-black font-poppins font-bold text-base z-10 "
-          >
-            <a href="/login"> Geri dön</a>
-          </button>
+            >
+              <a href="/login"> Geri dön</a>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Code;
+export default RegenerateQrCode;

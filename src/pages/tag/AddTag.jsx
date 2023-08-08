@@ -12,7 +12,12 @@ import Alert from "../../components/Alert";
 function AddTag() {
   const navigate = useNavigate();
   //Breadcrumb
-  const header = { header: "Etiketler", href: "/etiket" };
+  const header = {
+    header: "Etiketler",
+    href: "/etiket",
+    describe:
+      "Etiketler sayfasına hoşgeldiniz buradan etiket ekleyebilir, silebilir ve güncelleyebilirsiniz.",
+  };
   const subtitle = [
     {
       title: "Anasayfa",
