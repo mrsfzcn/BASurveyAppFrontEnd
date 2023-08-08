@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Layout from "../../components/Layout";
@@ -11,34 +11,149 @@ import { BsTextarea } from "react-icons/bs";
 import CustomComboBox from './CustomComboBox';
 import CustomComboBoxPlus from './CustomComboBoxPlus';
 import QuestionPlusIcon from './QuestionPlusIcon';
+import QuestionTypeService from "../../services/QuestionTypeService";
+import QuestionService from "../../services/QuestionService";
 
-const QuestionAddPage = () => {
+const QuestionAddPage = ({props}) => {
+    const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
+    const [questionTagsOptions, setQuestionTagsOptions] = useState([]);  
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [alert, setAlert] = useState({ type: "", message: "" });
+    const [customComboBoxData, setCustomComboBoxData] = useState([]);
+    const [error, setError] = useState(false);
+    const [createQuestion, setCreateQuestion] = useState({
+        questionString: "",
+        order: null,
+        questionTypeOid: null,
+        tagOids: [],
+      });
+     
+     
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await QuestionTypeService.getAllType();
+            const types = response.data;
+      
+            setQuestionTypeOptions(types.map((type) => ({ label: type.questionType, value: type.questionTypeId })));
+            
+          } catch (error) {
+            console.error("Tag verileri alınırken bir hata oluştu:", error);
+          }
+        };
 
+        const fetchDataTags = async () => {
+            try {
+                const response = await QuestionService.getAllQuestionTags();
+                const types = response.data;
+          
+                setQuestionTagsOptions(types.map((type) => ({ label: type.tagString, value: type.tagStringId })));
+                
+              } catch (error) {
+                console.error("Tag verileri alınırken bir hata oluştu:", error);
+              }
 
+        };
+        fetchDataTags();
+        fetchData();
+      }, []);
+      const handleCustomComboBoxData = (option) => {
+       setSelectedOption(option);
+      setCreateQuestion({ ...createQuestion, questionTypeOid: option.value})
+      };
+      const handleCustomComboBoxPlusData = (data) => {
+        setCustomComboBoxData(data);
+        const a=data.map((i)=>
+         i.value
+      );
+      setCreateQuestion({ ...createQuestion, tagOids: a})
+      };
+
+      const handleCreate =  (event) => {
+        event.preventDefault();
+        if(createQuestion.questionString.length > 1 ){
+        const newDataArray = [
+            {
+              questionString: createQuestion.questionString,
+              order: createQuestion.order,
+              questionTypeOid: createQuestion.questionTypeOid,
+              tagOids: createQuestion.tagOids,
+            },
+          ];
+          console.log(newDataArray)
+        QuestionService.createQuestions(newDataArray)
+          .then((response) => {
+            setAlert({ type: "success", message: "Soru başarıyla eklendi." });
+            setCreateQuestion({ ...createQuestion, questionString: "" });
+            document.getElementById("myTextarea").value = "";
+            setTimeout(() => {
+                setAlert({ type: "", message: "" }); 
+              }, 3000);
+          })
+          .catch((error) => {
+            console.error("Hata:", error);
+            console.log(createQuestion.questionString);
+            setAlert({
+              type: "error",
+              message:
+                "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
+            });
+            setTimeout(() => {
+                setAlert({ type: "", message: "" }); 
+              }, 3000);
+          });
+        }else{
+            if(createQuestion.questionString.length <= 1 ){
+                setError(true);         
+                setAlert({
+                    type: "error",
+                    message:
+                      "Soru alanı boş olamaz",
+                  });
+                  setTimeout(() => {
+                    setError(false);
+                      setAlert({ type: "", message: "" });
+                    }, 3000); 
+            }
+        }
+      };
+     const handleChange=(e)=>{
+        console.log(e.target.value)
+        const text = e.target.value;
+        if (text.length <= 450) {
+            setAlert({ type: "", message: "" });
+        if (e.target.value.length >= 1 ) {
+            const updatedQuestion = { ...createQuestion, questionString: text };
+            setCreateQuestion(updatedQuestion);
+            setError(false);
+            console.log(e.target.value)
+          } else {
+            setError(true);
+            setAlert({
+                type: "error",
+                message:
+                  "Soru alanı boş olamaz",
+              });
+            setTimeout(() => {
+                setError(false);
+                setAlert({ type: "", message: "" });
+              }, 2000);    
+          } }
+          else{setError(true);
+            setAlert({
+              type: "error",
+              message: "Soru en fazla 450 karakter olmalıdır.",
+            });
+            }   
+     }
+     
+      
     const handleRedirect = () => {
         window.location.href = '/questionlist'
     };
 
     const header = { header: "Soru Ekle", href: "/questionlist/add" };
-    const soruTipleri = [
-        { value: 'tip1', label: 'Tip 1' },
-        { value: 'tip2', label: 'Tip 2' },
-        { value: 'tip3', label: 'Tip 3' },
-
-    ];
-
-    const options = [
-        { value: 'option1', label: 'ali' },
-        { value: 'option2', label: 'ay' },
-        { value: 'option3', label: 'can' },
-        { value: 'option4', label: 'cankkk' },
-        { value: 'option5', label: 'can' },
-        { value: 'option6', label: 'can' },
-        { value: 'option7', label: 'can' },
-        { value: 'option8', label: 'can' },
-        { value: 'option9', label: 'can' },{ value: 'option10', label: 'can' },
-        // Daha fazla seçeneği buraya ekleyebilirsiniz
-    ];
+    
 
     const [isFocused, setIsFocused] = React.useState(false);
 
@@ -64,9 +179,11 @@ const QuestionAddPage = () => {
             href: "/questionlist/add",
         },
     ];
-
-   
-
+    const borderColor = error
+    ? '#ff3333' 
+    : isFocused
+    ? '#00a4e4' 
+    : '#ccc';  
     return (
         <Layout>
             <div className="flex flex-col bg-[#E5E5E5] h-full">
@@ -87,7 +204,7 @@ const QuestionAddPage = () => {
                         }}
                     >
 
-                        <div style={{
+                        <div  style={{
                             width: '11vw',
                             height: '100%',
                             top: '5rem',
@@ -106,12 +223,12 @@ const QuestionAddPage = () => {
                         </div>
                         <div className="flex justify-center align-center m-auto" style={{ right: '1%', position: 'absolute', height: '28%', width: '100%', top: "7rem", }}>
                             <textarea
-                                name="text" rows="12" cols="50"
+                                name="text" rows="12" cols="50" id="myTextarea"
                                 style={{
                                     width: '89%',
                                     borderRadius: '.1rem',
                                     padding: '.9rem', 
-                                    border: '1px solid #ccc', 
+                                    border: `1px solid ${borderColor}`,
                                     boxSizing: 'border-box',
                                     fontSize: '1rem',
                                     lineHeight: '1.5rem',
@@ -121,14 +238,15 @@ const QuestionAddPage = () => {
                                     resize: 'none', 
                                     overflow: 'auto', 
                                     outline: 'none',
-                                    borderColor: isFocused ? '#00a4e4' : '#ccc', 
+                                   
                                     transition: 'border-color 0.2s ease-in-out', 
-
-
                                 }}
                                 placeholder="Metin giriniz..."
                                 onFocus={handleFocus} 
                                 onBlur={handleBlur} 
+                                required
+                                onChange={handleChange
+                                  }
                             />
                         </div>
                         <div className="flex  items-center mt-4 justify-end align-center m-auto" style={{
@@ -153,7 +271,7 @@ const QuestionAddPage = () => {
                                     left: '5.8vw',
                                     position: 'absolute',
                                 }}>
-                                    <CustomComboBox options={options} placeholder="Seçiniz" />
+                                    <CustomComboBox options={questionTypeOptions} placeholder="Seçiniz" onGetCustomData={handleCustomComboBoxData}/>
                                 </div>
                             </div>
 
@@ -180,7 +298,7 @@ const QuestionAddPage = () => {
                                     left: '5.8vw',
                                     position: 'absolute',
                                 }}>
-                                    < CustomComboBoxPlus options={options} placeholder="Giriniz" />
+                                    < CustomComboBoxPlus options={questionTagsOptions} placeholder="Giriniz" onGetCustomPlusData={handleCustomComboBoxPlusData}/>
                                 </div>
                             </div>
                            
@@ -201,11 +319,16 @@ const QuestionAddPage = () => {
                                 cursor: 'pointer', 
                                 position: 'absolute',
                             }}
+                            onClick={handleCreate}
                         >
                             Ekle
                         </button>
+                        
                     </div>
                 </div>
+                {alert.type && (
+                    <Alert type={alert.type} message={alert.message} closable={true} />
+                  )}
             </div>
         </Layout>
     );

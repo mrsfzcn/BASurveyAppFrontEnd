@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const CustomComboBox = ({ options, placeholder }) => {
+const CustomComboBox = ({ options, placeholder ,onGetCustomData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -14,7 +14,9 @@ const CustomComboBox = ({ options, placeholder }) => {
     setSelectedOption(option);
     setSearchTerm(option.label);
     setIsOpen(false);
+    onGetCustomData(option);
   };
+  
 
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
