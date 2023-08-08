@@ -1,5 +1,13 @@
 export const items = [
   {
+    label: "Etiket İşlemleri",
+    content: [
+      { name: "Etiket Ekle", href: "/etiket" },
+      { name: "Etiket Listesi", href: "/etiket" },
+      { name: "Etiket Silme", href: "/" },
+    ],
+  },
+  {
     label: "Kullanıcı İşlemleri",
     content: [
       { name: "Tüm Kullanıcılar", href: "/kullanici" },
@@ -11,14 +19,6 @@ export const items = [
         name: "Kullanıcı Düzenle",
         href: "",
       },
-    ],
-  },
-  {
-    label: "Anket İşlemleri",
-    content: [
-      { name: "Tüm Anketler", href: "/anketler" },
-      { name: "Anket Ekle", href: "/createsurvey" },
-      { name: "Anket Gönder", href: "/sendsurvey" },
     ],
   },
   {
@@ -41,19 +41,19 @@ export const items = [
     ],
   },
   {
+    label: "Anket İşlemleri",
+    content: [
+      { name: "Tüm Anketler", href: "/anketler" },
+      { name: "Anket Ekle", href: "/createsurvey" },
+      { name: "Anket Gönder", href: "/sendsurvey" },
+    ],
+  },
+  {
     label: "Raporlama",
     content: [
       { name: "Sonuçlanmış Anketler", href: "/" },
       { name: "Sınıfa Göre Anket Sonuçları", href: "/" },
       { name: "Kişiye Göre Anket Sonuçları", href: "/" },
-    ],
-  },
-  {
-    label: "Etiket İşlemleri",
-    content: [
-      { name: "Etiket Ekle", href: "/etiket" },
-      { name: "Etiket Listesi", href: "/etiket" },
-      { name: "Etiket Silme", href: "/" },
     ],
   },
 ];
