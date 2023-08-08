@@ -6,8 +6,22 @@ const CustomComboBox = ({ options, placeholder ,onGetCustomData}) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
+    const inputValue = e.target.value;
+    setSearchTerm(inputValue);
     setIsOpen(true);
+    if (inputValue !== '') {
+      const matchingOption = options.find(
+        (option) => option.label.toLowerCase() === inputValue.toLowerCase()
+      );
+
+      if (!matchingOption) {
+        setSelectedOption(null);
+        onGetCustomData(null);
+      }
+    }else{
+      setSelectedOption(null);
+        onGetCustomData(null);
+    }
   };
 
   const handleOptionSelect = (option) => {
