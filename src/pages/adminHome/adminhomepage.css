@@ -1,11 +1,12 @@
 body {
     background-color: white; /* Yeni arkaplan rengi */
   }
+@media screen and (min-width: 1281px) {
 .user-container {  
     position: absolute;
     overflow: hidden;
-    margin-top: 100px;
-    margin-left: 200px;
+    margin-top: 110px;
+    margin-left: 350px;
     display: block; /* Yatay hizalama için */
     cursor: pointer;
     z-index: 1;
@@ -13,8 +14,8 @@ body {
 
   .circle-reporting {
     position: relative;
-    margin-top: 400px;
-    margin-left: 690px;
+    margin-top: 410px;
+    margin-left: 840px;
     transform: translate(-50%, -50%);
     width: 321px;
     height: 321px;
@@ -44,8 +45,8 @@ body {
   .survey-container {
     position: absolute;
     overflow: hidden;
-    margin-top: 100px;
-    margin-left: 720px;
+    margin-top: 110px;
+    margin-left: 870px;
     cursor: pointer;
     z-index: 1;
   }
@@ -57,8 +58,8 @@ body {
    
     position: absolute;
     overflow: hidden;
-    margin-top: 440px;
-    margin-left: 720px;
+    margin-top: 450px;
+    margin-left: 870px;
     cursor: pointer;
     z-index: 1;
   }
@@ -66,8 +67,83 @@ body {
   .question-container {
     position: absolute;
     overflow: hidden;
-    margin-top: 440px;
-    margin-left: 200px;
+    margin-top: 450px;
+    margin-left: 350px;
     cursor: pointer;
     z-index: 1;
+  }
+  }
+
+  @media screen and (max-width: 1600px) {
+    .user-container {  
+      position: absolute;
+      overflow: hidden;
+      margin-top: 50px;
+      margin-left: 150px;
+      display: block; /* Yatay hizalama için */
+      cursor: pointer;
+      z-index: 1;
+    }
+  
+    .circle-reporting {
+      position: relative;
+      margin-top: 350px;
+      margin-left: 640px;
+      transform: translate(-50%, -50%);
+      width: 321px;
+      height: 321px;
+      background-color: #66318B;
+      border-radius: 50%;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: bottom;
+      font-family: "Poppins", sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 36px;
+      letter-spacing: 0em;
+      flex-direction: column;
+      cursor: pointer;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 1) ;
+    }
+    
+    .svg-reporting {
+      margin-top: 20px;
+      margin-left: 26px;
+      
+    }
+  
+    .survey-container {
+      position: absolute;
+      overflow: hidden;
+      margin-top: 50px;
+      margin-left: 670px;
+      cursor: pointer;
+      z-index: 1;
+    }
+  
+    
+    
+  
+    .classroom-container {
+     
+      position: absolute;
+      overflow: hidden;
+      margin-top: 390px;
+      margin-left: 670px;
+      cursor: pointer;
+      z-index: 1;
+    }
+  
+    .question-container {
+      position: absolute;
+      overflow: hidden;
+      margin-top: 390px;
+      margin-left: 150px;
+      cursor: pointer;
+      z-index: 1;
+    }
+    
   }

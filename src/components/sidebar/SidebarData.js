@@ -24,7 +24,7 @@ export const items = [
   {
     label: "Soru İşlemleri",
     content: [
-      { name: "Soruları Listele", href: "questionlist" },
+      { name: "Soruları Listele", href: "/questionlist" },
       { name: "Soru Ekle", href: "/questionlist/add" },
       { name: "Soru Etiketi İşlemleri", href: "" },
       { name: "Soru Tipi İşlemleri", href: "/questiontypelist" },
