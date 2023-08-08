@@ -58,8 +58,13 @@ const QuestionAddPage = ({props}) => {
         fetchData();
       }, []);
       const handleCustomComboBoxData = (option) => {
-       setSelectedOption(option);
-      setCreateQuestion({ ...createQuestion, questionTypeOid: option.value})
+        if(option === null ){
+            setSelectedOption(null);
+            setCreateQuestion({ ...createQuestion, questionTypeOid: null });
+        }else{
+            setSelectedOption(option);
+            setCreateQuestion({ ...createQuestion, questionTypeOid: option.value})
+        }      
       };
       const handleCustomComboBoxPlusData = (data) => {
         setCustomComboBoxData(data);
@@ -70,8 +75,11 @@ const QuestionAddPage = ({props}) => {
       };
 
       const handleCreate =  (event) => {
+
         event.preventDefault();
-        if(createQuestion.questionString.length > 1 ){
+        if(createQuestion.questionString.length > 1 &&
+            createQuestion.questionTypeOid !== null
+             ){
         const newDataArray = [
             {
               questionString: createQuestion.questionString,
@@ -92,7 +100,7 @@ const QuestionAddPage = ({props}) => {
           })
           .catch((error) => {
             console.error("Hata:", error);
-            console.log(createQuestion.questionString);
+            console.log(newDataArray)
             setAlert({
               type: "error",
               message:
@@ -109,6 +117,17 @@ const QuestionAddPage = ({props}) => {
                     type: "error",
                     message:
                       "Soru alanı boş olamaz",
+                  });
+                  setTimeout(() => {
+                    setError(false);
+                      setAlert({ type: "", message: "" });
+                    }, 3000); 
+            }
+            if(createQuestion.questionTypeOid === null &&(createQuestion.questionString.length > 1)){                     
+                setAlert({
+                    type: "error",
+                    message:
+                      "Soru tipi seçimi yapınız. Aradığınız soru tipinin üzerine tıklayarak seçmelisiniz",
                   });
                   setTimeout(() => {
                     setError(false);
@@ -205,8 +224,7 @@ const QuestionAddPage = ({props}) => {
                     >
 
                         <div  style={{
-                            width: '11vw',
-                            height: '100%',
+                            width: '11vw',                           
                             top: '5rem',
                             right: '27.6vw',
                             fontFamily: 'Poppins',
@@ -326,9 +344,14 @@ const QuestionAddPage = ({props}) => {
                         
                     </div>
                 </div>
+                <div  style={{ position: 'absolute',
+                               top: '92vh', 
+                               right: '1rem', 
+                               zindex: 9999,  }}>
                 {alert.type && (
                     <Alert type={alert.type} message={alert.message} closable={true} />
                   )}
+                  </div>
             </div>
         </Layout>
     );
