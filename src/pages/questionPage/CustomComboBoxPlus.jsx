@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import QuestionPlusIcon from './QuestionPlusIcon';
 import CrossIcon from './CrossIcon';
 import LabelIcon from './LabelIcon';
-const CustomComboBoxPlus = ({ options, placeholder }) => {
+import QuestionAddPage from './QuestionAddPage';
+const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -28,14 +29,19 @@ const CustomComboBoxPlus = ({ options, placeholder }) => {
     }
       setSelectedOption(null);
       setSearchTerm('')
-      console.log(selectedData)
+     
     }
   };
 
   const handleRemoveSelectedData = (selectedItem) => {
     setSelectedData((prevSelectedData) => prevSelectedData.filter((item) => item.value !== selectedItem.value));
-    console.log(selectedData)
+
   };
+
+  useEffect(() => {
+    // selectedData state'i güncellendiğinde onGetCustomData fonksiyonunu çağırarak güncel veriyi gönderin
+    onGetCustomPlusData(selectedData);
+  }, [selectedData]);
 
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
@@ -128,8 +134,9 @@ const CustomComboBoxPlus = ({ options, placeholder }) => {
               </span>
             </div>
           ))}
+          
         </div>
-      )}
+      )}     
     </div>
   );
 };
