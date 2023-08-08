@@ -137,7 +137,7 @@ const QuestionAddPage = ({props}) => {
         }
       };
      const handleChange=(e)=>{
-        console.log(e.target.value)
+        
         const text = e.target.value;
         if (text.length <= 450) {
             setAlert({ type: "", message: "" });
@@ -145,7 +145,7 @@ const QuestionAddPage = ({props}) => {
             const updatedQuestion = { ...createQuestion, questionString: text };
             setCreateQuestion(updatedQuestion);
             setError(false);
-            console.log(e.target.value)
+            
           } else {
             setError(true);
             setAlert({
