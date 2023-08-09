@@ -107,23 +107,23 @@ const RegenerateQrCode = () => {
           />
           {error && <p>{error}</p>}
           <div className="flex items-center gap-2 tablet:gap-10 z-10  w-full xldesktop:w-4/6 pl-6 pr-6 tablet:pl-0 tablet:pr-0">
+          <button
+              className=" w-full h-12 
+               border-none 
+               rounded-lg 
+               bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white  font-poppins font-bold text-base z-10 "
+            >
+              <a href="/login"> Geri dön</a>
+            </button>
             <button
               className=" w-full h-12 
            border-none 
            rounded-lg 
-           bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white font-poppins text-base z-10"
+           bg-secondColor text-black font-poppins text-base z-10"
               onClick={handleSubmit}
             >
               Gönder
-            </button>
-            <button
-              className=" w-full h-12 
-               border-none 
-               rounded-lg 
-               bg-secondColor text-black font-poppins font-bold text-base z-10 "
-            >
-              <a href="/login"> Geri dön</a>
-            </button>
+            </button>           
           </div>
         </div>
       </div>
