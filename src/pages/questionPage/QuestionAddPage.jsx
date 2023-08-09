@@ -77,7 +77,7 @@ const QuestionAddPage = ({ props }) => {
     };
 
     const handleCreate = (event) => {
-        setIsEmptyTagOids(false);
+        
         
         if (createQuestion.questionString.length > 1 &&
             createQuestion.questionTypeOid !== null
@@ -100,6 +100,7 @@ const QuestionAddPage = ({ props }) => {
                         setAlert({ type: "success", message: "Soru başarıyla eklendi." });
                         setCreateQuestion({ ...createQuestion, questionString: "" });
                         document.getElementById("myTextarea").value = "";
+                        setIsEmptyTagOids(false)
                         setTimeout(() => {
                             setAlert({ type: "", message: "" });
                         }, 3000);
@@ -118,6 +119,7 @@ const QuestionAddPage = ({ props }) => {
                     });
             }
         } else {
+            setIsEmptyTagOids(false)
             if (createQuestion.questionString.length <= 1) {
                 setError(true);
                 setAlert({
