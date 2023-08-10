@@ -124,7 +124,10 @@ const Code = () => {
           alt="vektor7"
         />
 
-        <div className="flex flex-col z-10 space-y-6 w-8/10 xldesktop:w-4/6 ">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col z-10 space-y-6 w-8/10 xldesktop:w-4/6 "
+        >
           <label htmlFor="code" className="username font-bold">
             2FA Code
           </label>
@@ -144,27 +147,22 @@ const Code = () => {
           >
             Yeniden Qr Code Oluştur
           </p>
-        </div>
 
-        <div className="flex items-center gap-2 tablet:gap-10 z-10  w-full xldesktop:w-4/6 pl-6 pr-6 tablet:pl-0 tablet:pr-0">         
-        <button
-            className=" w-full h-12 
-               border-none 
-               rounded-lg 
-               bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white font-poppins font-bold text-base z-10 "
-          >
-            <a href="/login"> Geri dön</a>
-          </button>
-          <button
-            className=" w-full h-12 
-           border-none 
-           rounded-lg 
-           bg-secondColor text-black font-poppins text-base z-10"
-            onClick={handleSubmit}
-          >
-            Gönder
-          </button>
-        </div>
+          <div className="flex items-center gap-2 tablet:gap-10 z-10  w-full xldesktop:w-4/6 pl-6 pr-6 tablet:pl-0 tablet:pr-0">
+            <button
+              type="button"
+              className=" w-full h-12 border-none rounded-lg bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white font-poppins font-bold text-base z-10 "
+            >
+              <Link to="/login">Geri dön</Link>
+            </button>
+            <button
+              type="submit"
+              className=" w-full h-12 border-none rounded-lg bg-secondColor text-black font-poppins text-base z-10"
+            >
+              Gönder
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
