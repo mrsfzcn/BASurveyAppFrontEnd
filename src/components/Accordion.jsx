@@ -34,7 +34,8 @@ function Accordion({ items }) {
           text-sm tablet:text-[15px] 
           px-1.5 py-3 
           bg-secondColor text-gray-900 
-          font-medium tablet:font-semibold "
+          font-medium tablet:font-semibold
+          cursor-pointer"
           onClick={() => handleClick(index)}
         >
           {item.label}
