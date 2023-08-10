@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const UPDATE_TYPE = "http://localhost:8090/api/v1/questiontypes/updatequestiontypebytypestring"; 
-const CREATE_TYPE = "http://localhost:8090/api/v1/questiontypes/createquestiontype";
-const GET_ALL_TYPE = "http://localhost:8090/api/v1/questiontypes/getallquestiontype";
+const UPDATE_TYPE = "http://localhost:8090/api/v1/questiontypes/update-question-type-by-type-string";
+const CREATE_TYPE = "http://localhost:8090/api/v1/questiontypes/create-question-type";
+const GET_ALL_TYPE = "http://localhost:8090/api/v1/questiontypes/get-all-question-type";
 const DELETE = `http://localhost:8090/api/v1/questiontypes/delete/`;
 
 class QuestionTypeService {

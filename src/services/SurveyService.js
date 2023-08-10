@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const CREATE = "http://localhost:8090/api/v1/survey";
-const QUESTIONS = "http://localhost:8090/api/v1/questions/findallquestion";
+const QUESTIONS = "http://localhost:8090/api/v1/questions/find-all-question";
 const ADD_QUESTIONS_TO_SURVEY ="http://localhost:8090/api/v1/survey/add-questions-to-survey";
 const LIST = "http://localhost:8090/api/v1/survey/list";
 const DELETE = "http://localhost:8090/api/v1/survey/delete/";
-const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/findSurveyByid/";
-const GET_ALL_TAG = "http://localhost:8090/api/v1/studenttag/studenttags";
+const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/find-survey-by-id/";
+const GET_ALL_TAG = "http://localhost:8090/api/v1/student-tag/student-tags";
 const ASSIGN=  "http://localhost:8090/api/v1/survey/assign";
 
 class SurveyService {

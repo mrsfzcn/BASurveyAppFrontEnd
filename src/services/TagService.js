@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const UPDATE_TAG = "http://localhost:8090/api/v1/maintags/updatetagbytagname";
-const CREATE_TAG = "http://localhost:8090/api/v1/maintags/";
-const GET_ALL_TAG = "http://localhost:8090/api/v1/maintags/";
+const UPDATE_TAG = "http://localhost:8090/api/v1/main-tags/update-tag-by-tag-name";
+const CREATE_TAG = "http://localhost:8090/api/v1/main-tags/";
+const GET_ALL_TAG = "http://localhost:8090/api/v1/main-tags/";
 class TagService {
   async updateTag(updateTag) {
     return await axios.put(UPDATE_TAG, updateTag, {
