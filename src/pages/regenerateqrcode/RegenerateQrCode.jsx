@@ -98,7 +98,10 @@ const RegenerateQrCode = () => {
           alt="vektor7"
         />
 
-        <div className="flex flex-col z-10 items-center gap-2 w-8/10 xldesktop:w-4/6 ">
+        <form
+          className="flex flex-col z-10 items-center gap-2 w-8/10 xldesktop:w-4/6 "
+          onSubmit={handleSubmit}
+        >
           <img className="w-4/6 mb-2 " src={data} alt="" />
           <input
             type="text"
@@ -107,7 +110,7 @@ const RegenerateQrCode = () => {
           />
           {error && <p>{error}</p>}
           <div className="flex items-center gap-2 tablet:gap-10 z-10  w-full xldesktop:w-4/6 pl-6 pr-6 tablet:pl-0 tablet:pr-0">
-          <button
+            <button
               className=" w-full h-12 
                border-none 
                rounded-lg 
@@ -120,12 +123,11 @@ const RegenerateQrCode = () => {
            border-none 
            rounded-lg 
            bg-secondColor text-black font-poppins text-base z-10"
-              onClick={handleSubmit}
             >
               Gönder
-            </button>           
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

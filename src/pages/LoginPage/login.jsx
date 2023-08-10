@@ -74,7 +74,7 @@ function Login() {
       className="h-screen flex items-center justify-center bg-center bg-no-repeat bg-cover"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div
+      <form
         className="flex flex-col 
       gap-8 items-center 
       justify-center 
@@ -138,7 +138,7 @@ function Login() {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
