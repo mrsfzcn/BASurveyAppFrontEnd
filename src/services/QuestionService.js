@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const GETALL = `http://localhost:8090/api/v1/questions/findallquestion`;
-const DELETE = `http://localhost:8090/api/v1/questions/deletequestionbyid/`;
-const GET_QUESTION_BY_ID = "http://localhost:8090/api/v1/questions/findById/";
-const GET_ALL_QUESTION_TAGS = "http://localhost:8090/api/v1/questiontags";
+const GETALL = `http://localhost:8090/api/v1/questions/find-all-question`;
+const DELETE = `http://localhost:8090/api/v1/questions/delete-question-by-id/`;
+const GET_QUESTION_BY_ID = "http://localhost:8090/api/v1/questions/find-by-id/";
+const GET_ALL_QUESTION_TAGS = "http://localhost:8090/api/v1/question-tags";
 const CREATE_QUESTION = "http://localhost:8090/api/v1/questions";
 
 class QuestionService {

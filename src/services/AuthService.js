@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const LOGIN = "http://localhost:8090/api/v1/auth/authenticate";
-const VERIFYCODE = "http://localhost:8090/api/v1/auth/verifycode";
+const VERIFYCODE = "http://localhost:8090/api/v1/auth/verify-code";
 const REGISTER = "http://localhost:8090/api/v1/auth/register";
 const REGENERATE_QR_CODE =
   "http://localhost:8090/api/v1/auth/regenerate-qr-code";
