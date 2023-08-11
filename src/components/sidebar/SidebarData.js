@@ -1,43 +1,30 @@
 export const items = [
   {
-    label: "Etiket İşlemleri",
-    content: [
-      { name: "Etiket Ekle", href: "/etiket" },
-      { name: "Etiket Listesi", href: "/etiket" },
-      { name: "Etiket Silme", href: "/" },
-    ],
-  },
-  {
     label: "Kullanıcı İşlemleri",
     content: [
       { name: "Tüm Kullanıcılar", href: "/kullanici" },
-      {
-        name: "Kullanıcı Ekle",
-        href: "/kullanici/ekle",
-      },
-      {
-        name: "Kullanıcı Düzenle",
-        href: "",
-      },
+      { name: "Kullanıcı Ekle", href: "/kullanici/ekle" },
     ],
+  },
+  {
+    label: "Etiket İşlemleri",
+    content: [{ name: "Tüm Etiketler", href: "/etiket" }],
   },
   {
     label: "Soru İşlemleri",
     content: [
-      { name: "Soruları Listele", href: "/questionlist" },
-      { name: "Soru Ekle", href: "/questionlist/add" },
-      { name: "Soru Etiketi İşlemleri", href: "" },
+      { name: "Tüm Sorular", href: "/questionlist" },
       { name: "Soru Tipi İşlemleri", href: "/questiontypelist" },
+      { name: "Soru Ekle", href: "/questionlist/add" },
     ],
   },
   {
     label: "Sınıf İşlemleri",
     content: [
-      { name: "Öğrenci Listleme", href: "/" },
-      { name: "Eğitmen Listeleme", href: "/" },
-      { name: "Sınıf Etiketi Oluşturma", href: "/" },
-      { name: "Sınıfa Eğitmen Atama", href: "/" },
-      { name: "Sınıfa Öğrenci Atama", href: "/" },
+      { name: "Öğrenci Listleme", href: "" },
+      { name: "Eğitmen Listeleme", href: "" },
+      { name: "Sınıfa Eğitmen Atama", href: "" },
+      { name: "Sınıfa Öğrenci Atama", href: "" },
     ],
   },
   {
@@ -48,12 +35,13 @@ export const items = [
       { name: "Anket Gönder", href: "/sendsurvey" },
     ],
   },
+
   {
     label: "Raporlama",
     content: [
-      { name: "Sonuçlanmış Anketler", href: "/" },
-      { name: "Sınıfa Göre Anket Sonuçları", href: "/" },
-      { name: "Kişiye Göre Anket Sonuçları", href: "/" },
+      { name: "Sonuçlanmış Anketler", href: "" },
+      { name: "Sınıfa Göre Anket Sonuçları", href: "" },
+      { name: "Kişiye Göre Anket Sonuçları", href: "" },
     ],
   },
 ];
