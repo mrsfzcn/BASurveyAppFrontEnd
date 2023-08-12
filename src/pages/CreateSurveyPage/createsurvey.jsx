@@ -11,6 +11,8 @@ import "./createsurvey.css";
 function CreateSurvey() {
   const [surveyTitle, setSurveyTitle] = useState("");
   const [courseTopic, setCourseTopic] = useState("");
+  const [errorTitle, setErrorTitle] = useState(""); 
+  const [errorTopic, setErrorTopic] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,12 +26,21 @@ function CreateSurvey() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
+    setErrorTitle("");
+    setErrorTopic("");
 
-    if (!surveyTitle || !courseTopic) {
-      setError("Lütfen tüm alanları doldurunuz!");
+    if (!surveyTitle && !courseTopic) {
+      setErrorTitle("Lütfen Anket Adı alanını doldurunuz!");
+      setErrorTopic("Lütfen Anket Konu Başlığı alanını doldurunuz!");
+      return;
+    } else if (!surveyTitle) {
+      setErrorTitle("Lütfen Anket Adı alanını doldurunuz!");
+      return;
+    } else if (!courseTopic) {
+      setErrorTopic("Lütfen Anket Konu Başlığı alanını doldurunuz!");
       return;
     }
+
 
     const createSurveyData = {
       surveyTitle,
@@ -85,6 +96,7 @@ function CreateSurvey() {
                   onChange={handleTitleChange}
                   className="w-full"
                 />
+                  {errorTitle && <p className="text-red-500">{errorTitle}</p>}
                 <Input
                   type="text"
                   placeholder="Konu başlığını yazınız"
@@ -92,7 +104,8 @@ function CreateSurvey() {
                   onChange={handleTopicChange}
                   className="w-full"
                 />
-                {error && <p>{error}</p>}
+                   {errorTopic && <p className="text-red-500">{errorTopic}</p>}
+                   {error && <p className="text-red-500 mt-4">{error}</p>}
                 <div className="flex justify-center items-center">
                   <label htmlFor="submitButton" className="mr-2 text-lg font-bold font-poppins">
                     Soru ekle/düzenle
@@ -102,7 +115,7 @@ function CreateSurvey() {
                   </Button>
                 </div>
                 <div className="flex justify-center">
-                                 <Button secondary rounded onClick={() => navigate("/adminhome")}>
+              <Button secondary rounded onClick={() => navigate("/anketler")}>
                   VAZGEÇ
                 </Button> 
                 </div>

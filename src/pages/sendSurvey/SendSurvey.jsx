@@ -97,7 +97,7 @@ const SendSurvey = () => {
   };
   const closePopup = () => {
     setIsPopupOpen(false); 
-    navigate("/adminhome");
+    navigate("/anketler");
   };
   const header = { header: "Anket Oluşturma", href: "/createsurvey" };
 
@@ -129,27 +129,23 @@ const SendSurvey = () => {
                 <div className="flex flex-col justify-center gap-10">
                   <div className="flex flex-row gap-5 justify-between items-center p-7 mt-0">
                 
-                   <select
-                            className="border rounded-md p-2 outline-none"
-                            value={selection ? selection.label : ""}
-                            onChange={(e) => {
-                              const selectedSurvey = surveyOptions.find(survey => survey.label === e.target.value);
-                              onChange(selectedSurvey ? selectedSurvey : { label: e.target.value, courseTopic: "" });
-                            }}
-                          >
-                            <option value="">Seçiniz</option>
-                            {surveyOptions.map((survey) => (
-                              <option key={survey.value} value={survey.label}>
-                                {survey.label}
-                              </option>
-                            ))}
-                          </select>
-
-                           
-                    <Button className="bg-[#e0e0e0] " rounded bold>
-                      Bul
-                    </Button>
+                  <select id="underline_select" className="flex text-lg m-auto h-auto py-2.5 px-0 w-full text-sm text-black-500 bg-transparent border-0 border-b-2 border-black-200 appearance-none dark:text-black-400 dark:border-black-700 focus:outline-none focus:ring-0 focus:border-black-200 peer"
+                  
+                  value={selection ? selection.label : ""}
+                  onChange={(e) => {
+                    const selectedSurvey = surveyOptions.find(survey => survey.label === e.target.value);
+                    onChange(selectedSurvey ? selectedSurvey : { label: e.target.value, courseTopic: "" });
+                  }}
+                >
+                  <option value="">Anket Seçiniz</option>
+                  {surveyOptions.map((survey) => (
+                    <option key={survey.value} value={survey.label}>
+                      {survey.label}
+                    </option>
+                  ))}
+                </select>
                   </div>
+                  
                   <div className="flex flex-col gap-5">
                     <div className="flex ">
                       <p className=" w-32 text-left font-semibold">{data.surveyname}</p>
@@ -221,7 +217,7 @@ const SendSurvey = () => {
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
           <div className="bg-white p-8 rounded shadow">
             <p className="text-xl font-bold mb-4">Başarı!</p>
-            <p>Anket {selection.label } sınıfına başarı ile gönderildi!</p>
+            <p>{selection.label } anketi sınıfına başarı ile gönderildi!</p>
             <Button primary rounded className="mt-4" onClick={closePopup}>
               Tamam
             </Button>

@@ -84,7 +84,7 @@ const AnketDuzenle = () => {
             <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-14 ">
               <div className="flex flex-col gap-14 justify-center items-center">
                 <div className="flex items-center justify-between w-[600px] ">
-                  <label className="font-semibold w-[150px] ">Anket Id</label>
+                  <label className="font-semibold w-[150px] ">Anket No</label>
                   <Input disabled value={surveyOid} full />
                 </div>
                 <div className="flex items-center   w-[600px] ">
