@@ -4,8 +4,8 @@ import Layout from "../../components/Layout";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import SurveyService from "../../services/SurveyService.js";
-import "./createsurvey.css";
-import icon from "../../assets/icons/icons8-arrow-30.png";
+import "./createsurvey.css"
+import icon from "../../assets/icons/icon.png";
 
 function PreviewSurvey() {
   const location = useLocation();
