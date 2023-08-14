@@ -103,11 +103,22 @@ const QuestionAddPage = ({ props }) => {
                         setIsEmptyTagOids(false)
                         setTimeout(() => {
                             setAlert({ type: "", message: "" });
-                        }, 3000);
+                        }, 5000);
+                        console.log(response.data)
                     })
                     .catch((error) => {
                         console.error("Hata:", error);
                         console.log(newDataArray)
+                        if (error.response.data.exceptionCode === 9007) {
+                            setAlert({
+                                type: "error",
+                                message:
+                                error.response.data.customMessage,
+                            });
+                            setTimeout(() => {
+                                setAlert({ type: "", message: "" });
+                            }, 5000);
+                        } else {
                         setAlert({
                             type: "error",
                             message:
@@ -115,7 +126,8 @@ const QuestionAddPage = ({ props }) => {
                         });
                         setTimeout(() => {
                             setAlert({ type: "", message: "" });
-                        }, 3000);
+                        }, 5000);
+                    }
                     });
             }
         } else {
@@ -130,7 +142,7 @@ const QuestionAddPage = ({ props }) => {
                 setTimeout(() => {
                     setError(false);
                     setAlert({ type: "", message: "" });
-                }, 3000);
+                }, 5000);
             }
             if (createQuestion.questionTypeOid === null && (createQuestion.questionString.length > 1)) {
                 setAlert({
@@ -165,7 +177,7 @@ const QuestionAddPage = ({ props }) => {
                 setTimeout(() => {
                     setError(false);
                     setAlert({ type: "", message: "" });
-                }, 2000);
+                }, 5000);
             }
         }
         else {
