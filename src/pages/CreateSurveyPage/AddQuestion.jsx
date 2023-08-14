@@ -20,7 +20,7 @@ function AddQuestion() {
   const navigate = useNavigate();
 
   const navigateMain = (e) =>{
-    navigate("/adminhome");
+    navigate("/anketler");
   }
   const dropdownOptions = [
     { value: 'option1', label: 'Soru Cümlesine Göre' },

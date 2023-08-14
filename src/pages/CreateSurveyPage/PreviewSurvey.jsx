@@ -5,6 +5,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import SurveyService from "../../services/SurveyService.js";
 import "./createsurvey.css";
+import icon from "../../assets/icons/icons8-arrow-30.png";
 
 function PreviewSurvey() {
   const location = useLocation();
@@ -16,7 +17,7 @@ function PreviewSurvey() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const navigateHome = () => {
-    navigate("/adminhome");
+    navigate("/anketler");
   };
 
   const handleSendSurvey = () => {
@@ -36,6 +37,10 @@ function PreviewSurvey() {
      
       });
   };
+  const navigateBack = () => {
+    navigate(-1);
+};
+
 
   const closePopup = () => {
     setIsPopupOpen(false); 
@@ -63,8 +68,16 @@ function PreviewSurvey() {
       <BreadCrumbs header={header} subtitle={subtitle} />
       <div className="flex h-full justify-center items-center flex-col">
 
-        <div className="flex flex-col grid-flow-col justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
+      <div className="flex flex-col grid-flow-col justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded relative">  
+  <div className="absolute top-0 left-2 py-8">
+    <Button secondary circle fat onClick={navigateBack}>
+    <img src={icon} alt="Icon" className="w-4 h-6" />
+    </Button>
+  </div>  
+              
           <div className="bg-white h-5/6 w-9/12  rounded flex flex-col overflow-auto px-8">
+            
+
             <h2 className="text-3xl font-bold text-center mb-4 pt-4 ">{surveyTitle}</h2>
             <p className="text-justify pt-2 px-4 mb-16 text-l">
               Merhaba Arkadaşlar, <br />
@@ -88,11 +101,13 @@ function PreviewSurvey() {
               </div>   
                <div className="flex gap-x-8 m-2">
                  <Button primary rounded className="mt-8" onClick={handleSendSurvey}>
-          ANKETİ GÖNDER
+          ANKET OLUŞTUR 
         </Button>    
+
         <Button secondary rounded className="mt-8" onClick={navigateHome}>
-          ANA SAYFA
+          VAZGEÇ
         </Button>
+
           </div>
         
         </div>
