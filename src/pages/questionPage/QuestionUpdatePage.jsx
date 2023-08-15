@@ -212,7 +212,7 @@ export default function QuestionUpdatePage() {
           className="class1 flex justify-center align-center"
         >
           <div className="class2 bg-[#F1F1F1] flex justify-center align-center m-auto ">
-            <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-14 ">
+            <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col gap-14 ">
               <div className="flex flex-col gap-14 justify-center items-center">
                 <div className="flex items-center justify-between w-[600px] ">
                   <label className="font-semibold w-[150px] ">Soru Id</label>
@@ -247,7 +247,7 @@ export default function QuestionUpdatePage() {
                   Soru Etiketi
                   </label>
 
-                  <div className="flex items-center" style={{ paddingLeft: '5vw', position: 'relative', height: '100%', left: '10.8vw' }}>
+                  <div className="flex items-center" style={{ paddingLeft: '5vw', position: 'relative', height: '100%', left: '12.1vw' }}>
 
                       <div style={{
                           top: '0.1vh',
