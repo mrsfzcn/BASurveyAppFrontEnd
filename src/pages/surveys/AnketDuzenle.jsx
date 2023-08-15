@@ -48,7 +48,24 @@ const AnketDuzenle = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(surveyOid, surveyTitle, survayTag, courseTopic);
-    // BACKEND TARAFINDA DÜZELENME YAPILMASI ŞART !!
+    const updateSurveyData = {
+      surveyOid,
+      surveyTitle,
+      courseTopic,
+    };
+    SurveyService.update(updateSurveyData)
+    .then(() => {
+      navigate("/anketler")
+      console.log(surveyOid)
+    })
+    .catch((error) => {
+      console.log(error.response);
+      if (error.response && error.response.data && error.response.data.customMessage) {
+        console.log("Error:"+ error.response.data.customMessage)
+      } else {
+        console.log("Bir hata oluştu...")
+      }
+    });
   };
 
   const header = { header: "Anket Güncelle", href: "/anketler/guncelle" };
