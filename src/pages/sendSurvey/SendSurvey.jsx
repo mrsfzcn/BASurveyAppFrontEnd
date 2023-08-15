@@ -94,6 +94,11 @@ const SendSurvey = () => {
       console.log(response);
       console.log(assignSurveyData);
     })
+    .catch((AxiosError)=>{
+      if(AxiosError.response.data.exceptionCode===9019){
+        setError("Seçilen sınıfta öğrenci bulunmamaktadır!")
+      }
+    })
   };
   const closePopup = () => {
     setIsPopupOpen(false); 
@@ -193,9 +198,9 @@ const SendSurvey = () => {
                               value={data.selectedDate || ""}
                               onChange={handleDateChange}
                             />
-                          {error && <p>{error}</p>}
+                       
                         </div> 
-       
+                     {error && <p className="text-red-600 font-bold">{error}</p>}
                   </div>
   
  
