@@ -18,6 +18,8 @@ function AddQuestion() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState('option1'); 
   const navigate = useNavigate();
+  const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] =
+  useState(false);
 
   const navigateMain = (e) =>{
     navigate("/anketler");
@@ -27,6 +29,12 @@ function AddQuestion() {
     { value: 'option2', label: 'Soru Etiketine Göre' },
     { value: 'option3', label: 'Soru Tipine Göre' },
   ];
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setIsCancelConfirmationOpen(true);
+};
+
 
   useEffect(() => {
     SurveyService.getQuestions()
@@ -216,9 +224,43 @@ function AddQuestion() {
           <Button primary rounded className="mt-8" onClick={handlePreviewClick}>
             ÖNİZLEME
           </Button>
-          <Button secondary rounded className="mt-8" onClick={navigateMain}>
-            VAZGEÇ
-          </Button>
+        <Button secondary rounded className="mt-8" onClick={(e) => handleCancel(e)}>
+  VAZGEÇ
+</Button>
+        {isCancelConfirmationOpen && (
+                      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+                        <div className="bg-white p-8 rounded shadow">
+                          <p className="text-xl font-bold mb-4">
+                            Emin misiniz?
+                          </p>
+                          <p>
+                            Ankete soru ekleme işleminden vazgeçmek istediğinize
+                            emin misiniz?
+                          </p>
+                          <p>Tüm Anketler Sayfasına Yönlendirileceksiniz.</p>
+                          <Button
+                            primary
+                            rounded
+                            className="mt-4"
+                            onClick={() => {
+                              setIsCancelConfirmationOpen(false);
+                              navigate("/anketler");
+                            }}
+                          >
+                            Onayla
+                          </Button>
+                          <Button
+                            secondary
+                            rounded
+                            className="mt-4 mr-2"
+                            onClick={() => setIsCancelConfirmationOpen(false)}
+                          >
+                            İptal
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
         </div>
       </div>     
        </div>

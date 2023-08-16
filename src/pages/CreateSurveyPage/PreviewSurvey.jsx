@@ -5,7 +5,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import SurveyService from "../../services/SurveyService.js";
 import "./createsurvey.css"
-import icon from "../../assets/icons/icon.png";
+import icon from "../../assets/icons/icons8-arrow-30.png";
 
 function PreviewSurvey() {
   const location = useLocation();
@@ -15,10 +15,14 @@ function PreviewSurvey() {
   const navigate = useNavigate();
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] =
+  useState(false);
 
-  const navigateHome = () => {
-    navigate("/anketler");
-  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setIsCancelConfirmationOpen(true);
+};
 
   const handleSendSurvey = () => {
     const surveyData = {   
@@ -104,9 +108,42 @@ function PreviewSurvey() {
           ANKET OLUŞTUR 
         </Button>    
 
-        <Button secondary rounded className="mt-8" onClick={navigateHome}>
-          VAZGEÇ
-        </Button>
+        <Button secondary rounded className="mt-8" onClick={(e) => handleCancel(e)}>
+  VAZGEÇ
+</Button>
+        {isCancelConfirmationOpen && (
+                      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+                        <div className="bg-white p-8 rounded shadow">
+                          <p className="text-xl font-bold mb-4">
+                            Emin misiniz?
+                          </p>
+                          <p>
+                            Ankete soru ekleme işleminden vazgeçmek istediğinize
+                            emin misiniz?
+                          </p>
+                          <p>Tüm Anketler Sayfasına Yönlendirileceksiniz.</p>
+                          <Button
+                            primary
+                            rounded
+                            className="mt-4"
+                            onClick={() => {
+                              setIsCancelConfirmationOpen(false);
+                              navigate("/anketler");
+                            }}
+                          >
+                            Onayla
+                          </Button>
+                          <Button
+                            secondary
+                            rounded
+                            className="mt-4 mr-2"
+                            onClick={() => setIsCancelConfirmationOpen(false)}
+                          >
+                            İptal
+                          </Button>
+                        </div>
+                      </div>
+                    )}
 
           </div>
         
