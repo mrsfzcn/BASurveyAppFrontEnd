@@ -9,6 +9,7 @@ const DELETE = "http://localhost:8090/api/v1/survey/delete/";
 const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/find-survey-by-id/";
 const GET_ALL_TAG = "http://localhost:8090/api/v1/student-tag/student-tags";
 const ASSIGN=  "http://localhost:8090/api/v1/survey/assign";
+const DEFAULT_SURVEY ="http://localhost:8090/api/v1/survey/";
 
 class SurveyService {
   create(survey) {
@@ -113,6 +114,19 @@ class SurveyService {
     } catch (error) {
       console.error("Tag verileri alınırken bir hata oluştu:", error);
       return []; 
+    }
+  }
+  async getSurveyQuestions(id){
+    try{
+        const response = await axios.get(`${DEFAULT_SURVEY}${id}/questions`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data; 
+    } catch(error){
+      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      return [];
     }
   }
 }

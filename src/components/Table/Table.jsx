@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import { BsFillTrashFill, BsFillPencilFill, BsFillClipboardFill } from "react-icons/bs";
 import "./Table.css";
 import Input from "../Input";
 
@@ -7,7 +7,9 @@ const Table = ({
   data,
   header,
   useIcon,
+  useSurveyIcons,
   // useLabel,
+  showTableData,
   deleteTableRows,
   editTableRows,
 }) => {
@@ -121,7 +123,7 @@ const Table = ({
         <div className="first-column">
           <div className="filter-wrapper">
             <label>Göster: </label>
-            <select value={itemsPerPage} onChange={handleRowCountChange}>
+            <select value={itemsPerPage} onChange={handleRowCountChange} className="mx-2">
               {itemsPerPageOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
@@ -132,7 +134,7 @@ const Table = ({
           </div>
           <div>
             <label>Buna göre: </label>
-            <select value={filterColumn} onChange={handleColumnChange}>
+            <select value={filterColumn} onChange={handleColumnChange} className="mx-3">
               <option value="">Hepsi</option>
               {header.map((column) => (
                 <option key={column} value={column}>
@@ -145,7 +147,7 @@ const Table = ({
           </div>
         </div>
         <div className="table-wrapper mt-5">
-          <div className="table-container">
+          <div className="min-h-[550px]">
             <table className="table">
               <thead>
                 <tr>
@@ -155,7 +157,8 @@ const Table = ({
                     </th>
                   ))}
                   {/* {useLabel && <th>Anket Etiketleri</th>} */}
-                  {useIcon && <th>işlemler</th>}
+                  {useIcon && <th>İşlemler</th>}
+                  {useSurveyIcons && <th>İşlemler</th>}
                 </tr>
               </thead>
               <tbody>
@@ -176,6 +179,23 @@ const Table = ({
                         </span>
                       </td>
                     )}
+                    {useSurveyIcons && (
+                      <td>
+                        <span className="actions">
+                          <button onClick={() => showTableData(rowData)}>
+                            <BsFillClipboardFill className="show-btn" />
+                          </button>
+                          <button onClick={() => editTableRows(rowData)}>
+                            <BsFillPencilFill className="edit-btn" />
+                          </button>
+                          <button
+                            onClick={() => deleteTableRows(index, rowData)}
+                          >
+                            <BsFillTrashFill className="delete-btn" />
+                          </button>
+                        </span>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -185,7 +205,7 @@ const Table = ({
             <div className="extra-content">
               Toplam {data.length}, Gösterilen veri sayısı:{" "}
               {currentItems.length}
-              <ul className="pagination">
+              <ul className="pagination flex gap-1 pr-[35px]">
                 <li onClick={goToFirstPage}>&laquo;&laquo;</li>{" "}
                 <li onClick={goToPrevPage}>&laquo;</li>{" "}
                 {pageNumbers.map((page) => (

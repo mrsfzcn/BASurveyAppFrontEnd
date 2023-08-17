@@ -2,9 +2,7 @@
   max-width: 100%;
 }
 
-.table-container {
-  height: 1000px;
-}
+
 
 .table {
   display: flex;
@@ -51,16 +49,20 @@
   display: flex;
   justify-content: center;
   gap: 15px;
+  margin-top: 0.6rem;
+  margin-bottom: 0.4rem;
 }
 
 .delete-btn {
   color: #eb5353;
-  margin-top: 1rem;
 }
 
 .edit-btn {
   color: #64e9b1;
-  margin-top: 1rem;
+  
+}
+.show-btn{
+  color: rgb(52, 72, 102);
 }
 
 .table-container {
