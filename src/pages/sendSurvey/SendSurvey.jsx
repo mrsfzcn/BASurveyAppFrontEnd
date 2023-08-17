@@ -285,7 +285,7 @@ const SendSurvey = () => {
                             Emin misiniz?
                           </p>
                           <p>
-                            Anket oluşturma işleminden vazgeçmek istediğinize
+                            Anket gönderme işleminden vazgeçmek istediğinize
                             emin misiniz?
                           </p>
                           <p>Tüm Anketler Sayfasına Yönlendirileceksiniz.</p>
@@ -321,7 +321,8 @@ const SendSurvey = () => {
           <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
             <div className="bg-white p-8 rounded shadow">
               <p className="text-xl font-bold mb-4">Başarı!</p>
-              <p>{selection.label} anketi sınıfına başarı ile gönderildi!</p>
+              <p>{selection.label} anketi {selectedClass.label} sınıfına başarı ile gönderildi!</p>
+
               <Button primary rounded className="mt-4" onClick={closePopup}>
                 Tamam
               </Button>
