@@ -59,7 +59,11 @@ const UserRegistration = () => {
     console.log(user);
     AuthService.register(user)
       .then((response) => {
-        setAlert({ type: "success", message: "Etiket başarıyla güncellendi."+" Mail adresiniz: "+response.data.email });
+        const selectedRoles = selectedOptions.map((option) => option.label).join(', ');
+        setAlert({
+          type: "success",
+          message: `${selectedRoles} rolüne sahip kullanıcı eklendi. Mail adresi: ${response.data.email}`,
+        });
       })
       .catch((error) => {
         setAlert({
