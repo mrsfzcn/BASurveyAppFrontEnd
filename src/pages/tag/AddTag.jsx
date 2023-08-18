@@ -2,7 +2,6 @@ import Layout from "../../components/Layout";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Table from "../../components/Table/Table";
 import React, { useState, useEffect } from "react";
-import SurveyService from "../../services/SurveyService";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -41,6 +40,9 @@ function AddTag() {
     { label: "TRAINER", value: "TRAINER" },
   ];
   const [alert, setAlert] = useState({ type: "", message: "" });
+  const [deleteMessage,setDeleteMessage] = useState("");
+  const [deleteTag, setDeleteTag] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const header2 = ["Etiket Adı", "Etiket Sınıfı"];
   const [selectedOptions, setSelectedOptions] = useState([]);
   const handleEditClick = (rowData) => {
@@ -48,16 +50,30 @@ function AddTag() {
     navigate(`/etiket/guncelle/` + rowData.tagName, { state: rowData });
   };
 
+
   const deleteTableRows = async (index, rowData) => {
-    const response = await SurveyService.delete(rowData.surveyOid);
-    if (response.status === 200) {
-      alert(rowData.surveyOid + ". id'ye sahip anket başarıyla silindi");
-    } else {
-      alert("bir hata meydana geldi");
+    const shouldDelete = window.confirm("Bu etiketi silmek istediğinize emin misiniz?");
+    if (shouldDelete) {
+      try {
+        const tagString = rowData.tagName
+        const response = await TagService.deleteTag(tagString);
+        console.log(response);
+        if (response.status === 200) {
+          setDeleteMessage(rowData.tagName + " başarıyla silindi.")
+          setIsPopupOpen(true); 
+          const rows = [...tags];
+          rows.splice(index, 1);
+          setTags(rows);
+          setDeleteTag(true);
+        } else {
+          alert("Bir hata meydana geldi");
+        }
+      } catch (error) {
+        console.log(error);
+        setDeleteMessage("Cevaplanmış anketler silinemez")
+        setIsPopupOpen(true); 
+      }
     }
-    const rows = [...surveys];
-    rows.splice(index, 1);
-    setSurveys(rows);
   };
 
   const handleSubmit = (e) => {
@@ -84,6 +100,7 @@ function AddTag() {
   };
 
   useEffect(() => {
+    setDeleteTag(false)
     setUpdateTag(false);
     const fetchTags = async () => {
       try {
@@ -114,9 +131,10 @@ function AddTag() {
     return () => {
       console.log("useEffect clean up");
     };
-  }, [updateTag]);
+  }, [updateTag, deleteTag]);
 
   const handleSelectedOptionsChange = (updatedOptions) => {
+    console.log(updatedOptions);
     setSelectedOptions(updatedOptions);
     const a = updatedOptions.map((i) => i.value);
     setTag({ ...tag, tagClass: a });
@@ -169,6 +187,7 @@ function AddTag() {
             header={header2}
             useIcon={true}
             editTableRows={handleEditClick}
+            deleteTableRows={deleteTableRows}
           />
         </div>
       </div>
