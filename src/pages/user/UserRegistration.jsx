@@ -96,9 +96,9 @@ const UserRegistration = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col bg-[#E5E5E5] h-full">
+      <div className="flex flex-col bg-[#E5E5E5] h-full ">
         <BreadCrumbs header={header} subtitle={subtitle} />
-        <div className="class1  flex justify-center align-center">
+        <div className="class1 flex justify-center align-center">
           <div className="class2  bg-[#F1F1F1] flex  justify-center align-center m-auto ">
             <div className="class3  bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-12 ">
               <form
@@ -130,14 +130,14 @@ const UserRegistration = () => {
                       setUser({ ...user, password: e.target.value })
                     }
                   />
-                  <div className="w-1/2 flex justify-start items-center gap-5 ">
+                  <div className="w-1/2 flex justify-start items-center gap-5 mobile:flex mobile:flex-col">
                     {/* <Dropdown options={options} onChange={onChange} value={selection}/> */}
                     <MultiDropdown
                       options={options}
                       selectedOptions={selectedOptions}
                       onChange={handleSelectedOptionsChange}
                     />
-                    <div className="flex flex-wrap gap-4 items-center justify-center">
+                    <div className="flex flex-wrap gap-4 items-center justify-center ">
 
                     
                     

@@ -269,7 +269,9 @@ const QuestionAddPage = ({ props }) => {
                     height: '90%',
                 }} >
 
-                    <div className="  bg-[#F1F1F1] flex  justify-center align-center m-auto "
+                    <div className="  bg-[#F1F1F1] flex  justify-center align-center m-auto 
+                    
+                    mobile:w-full mobile:w-full"
                         style={{
                             width: '41%',
                             height: '76.8vh',
@@ -282,7 +284,7 @@ const QuestionAddPage = ({ props }) => {
                         }}
                     >
 
-                        <div style={{
+                        <div  style={{
                             width: '11vw',
                             top: '5rem',
                             right: '27.6vw',
@@ -290,11 +292,11 @@ const QuestionAddPage = ({ props }) => {
                             fontSize: '1rem',
                             lineHeight: '1.5rem',
                             textAlign: 'left',
-                            position: 'absolute'
+                            position: 'absolute',
 
                         }}>
-                            <p >
-                                Soru metninizi giriniz:
+                            <p className="mobile:text-xs mobile:bg-red-200 mobile:flex mobile:flex-row">
+                                Soru Metni:
                             </p>
 
                         </div>
