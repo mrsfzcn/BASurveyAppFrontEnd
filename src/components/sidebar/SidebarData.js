@@ -24,7 +24,7 @@ export const items = [
       { name: "Öğrenci Listleme", href: "" },
       { name: "Eğitmen Listeleme", href: "" },
       { name: "Sınıfa Eğitmen Atama", href: "" },
-      { name: "Sınıfa Öğrenci Atama", href: "" },
+      { name: "Sınıfa Öğrenci Atama", href: "/assignstudentclass" },
     ],
   },
   {

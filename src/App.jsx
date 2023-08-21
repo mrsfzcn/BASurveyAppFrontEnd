@@ -32,6 +32,7 @@ import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionTy
 import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import RegenerateQrCode from "./pages/regenerateqrcode/RegenerateQrCode";
+import AssignStudentToClass from "./pages/AssignStudentClass/assignstudentclass"
 function App() {
   return (
     <Router>
@@ -45,6 +46,7 @@ function App() {
           <Route path="/sendsurvey" element={<SendSurvey />} />
           <Route path="/edituser" element={<UserEditPage />} />
           <Route path="/createsurvey" element={<CreateSurveyPage />} />
+          <Route path="/assignstudentclass" element={<AssignStudentToClass />} />
           <Route path="/addquestion" element={<AddQuestion />} />
           <Route path="/preview" element={<PreviewSurvey />} />
           <Route path="/*" element={<Navigate to="/" />} />
@@ -84,6 +86,7 @@ function App() {
               <Route index element={<UpdateType />} />
             </Route>
           </Route>
+
         </Route>
       </Routes>
     </Router>
