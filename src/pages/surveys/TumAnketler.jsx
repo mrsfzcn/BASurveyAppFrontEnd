@@ -5,8 +5,8 @@ import SurveyService from "../../services/SurveyService";
 import { Link, useNavigate } from "react-router-dom";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
-import {RiDeleteBin6Line} from "react-icons/ri"
-
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { AiOutlineClose } from "react-icons/ai";
 
 const TumAnketler = () => {
   const [surveys, setSurveys] = useState([]);
@@ -16,9 +16,13 @@ const TumAnketler = () => {
   const [deleteMessage, setDeleteMessage] = useState("");
   const [isQuestionPopupOpen, setIsQuestionPopupOpen] = useState(false);
   const [surveyQuestions, setSurveyQuestions] = useState([]);
+  const [selectedSurveyId, setSelectedSurveyId] = useState(0);
   const [selectedSurvey, setSelectedSurvey] = useState("");
   const [deletedQuestionCount, setDeletedQuestionCount] = useState(0);
   const [selectedSurveyTopic, setSelectedSurveyTopic] = useState("");
+  const [deleteData, setDeleteData] = useState([]);
+  const [errorPopup, setErrorPopup] = useState(false);
+
   const deleteTableRows = async (index, rowData) => {
     const shouldDelete = window.confirm(
       "Bu anketi silmek istediğinize emin misiniz?"
@@ -47,6 +51,7 @@ const TumAnketler = () => {
   };
   const closePopup = () => {
     setIsPopupOpen(false);
+    setErrorPopup(false);
   };
   const navigate = useNavigate();
   const handleEditClick = (rowData) => {
@@ -63,6 +68,7 @@ const TumAnketler = () => {
       setIsQuestionPopupOpen(true);
       setSelectedSurvey(rowData.surveyTitle);
       setSelectedSurveyTopic(rowData.courseTopic);
+      setSelectedSurveyId(rowData.surveyOid);
       console.log(rowData);
       console.log(response);
     } catch (error) {
@@ -72,12 +78,33 @@ const TumAnketler = () => {
   const closeShowPopup = () => {
     setIsQuestionPopupOpen(false);
   };
-  const handleRemoveQuestion = (index) => {
+  const handleRemoveQuestion = (index, item) => {
     const updatedQuestions = [...surveyQuestions];
     updatedQuestions[index].deleted = !updatedQuestions[index].deleted;
     setSurveyQuestions(updatedQuestions);
-    setDeletedQuestionCount(deletedQuestionCount + (updatedQuestions[index].deleted ? 1 : -1));
-  }
+    setDeletedQuestionCount(
+      deletedQuestionCount + (updatedQuestions[index].deleted ? 1 : -1)
+    );
+    if (deleteData.includes(item.questionIds)) {
+      setDeleteData((prev) =>
+        prev.filter((value) => value !== item.questionIds)
+      );
+    } else {
+      setDeleteData((prev) => [...prev, item.questionIds]);
+    }
+  };
+  const handleRemoveSurveyQuestions = async () => {
+    try {
+      await SurveyService.removeSurveyQuestions(selectedSurveyId, deleteData);
+      setDeleteMessage(deleteData.length + " adet soru çıkarılmıştır.");
+      setIsQuestionPopupOpen(false);
+      setIsPopupOpen(true);
+    } catch (error) {
+      setErrorPopup(true);
+      setIsQuestionPopupOpen(false);
+    }
+    setDeleteData([]);
+  };
   useEffect(() => {
     setDeleteSurvey(false);
     const fetchSurveys = async () => {
@@ -137,7 +164,7 @@ const TumAnketler = () => {
         {isPopupOpen && (
           <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800 ">
             <div className="bg-white p-8 rounded shadow flex flex-col justify-center align-center gap-5">
-              <p>{deleteMessage}</p>
+              <div className="font-semibold text-lg">{deleteMessage}</div>
               <Button gray rounded onClick={closePopup}>
                 Tamam
               </Button>
@@ -152,22 +179,55 @@ const TumAnketler = () => {
                 <div className="text-center text-xl">{selectedSurveyTopic}</div>
               </div>
               <div className="flex flex-col gap-8 ">
-                
                 {surveyQuestions.map((item, index) => (
-                  
-                  <div className={`flex gap-4 ${item.deleted ? 'line-through text-red-500' : ''}`} key={item.id}>
-                   {index + 1} - {item.questionString} <RiDeleteBin6Line onClick={() => handleRemoveQuestion(index)} className="w-6 h-6 text-red-500 cursor-pointer" />
+                  <div
+                    className={`flex gap-4 justify-between${
+                      item.deleted
+                        ? " justify-between line-through text-red-500"
+                        : ""
+                    }`}
+                    key={index}
+                  >
+                    {index + 1} - {item.questionString}{" "}
+                    <RiDeleteBin6Line
+                      onClick={() => handleRemoveQuestion(index, item)}
+                      className="w-6 h-6 text-red-500 cursor-pointer"
+                    />
                   </div>
                 ))}
               </div>
               <div className="flex gap-10 justify-center mb-4">
-              <Button className="w-1/4 rounded font-semibold" gray onClick={closeShowPopup}>
+                <Button
+                  className="w-1/4 rounded font-semibold"
+                  gray
+                  onClick={closeShowPopup}
+                >
                   Kapat
                 </Button>
-                <Button className="w-1/4 rounded font-semibold" secondary >
+                <Button
+                  className="w-1/4 rounded font-semibold"
+                  secondary
+                  onClick={handleRemoveSurveyQuestions}
+                >
                   Çıkart ({deletedQuestionCount})
                 </Button>
-                
+              </div>
+            </div>
+          </div>
+        )}
+        {errorPopup && (
+          <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800 ">
+            <div className="bg-white p-8 rounded shadow flex flex-col justify-center align-center gap-5 w-1/4">
+              <div className="flex justify-end">
+                <AiOutlineClose
+                  className="text-red-600 cursor-pointer"
+                  onClick={closePopup}
+                />
+              </div>
+              <div className="font-semibold text-lg text-red-600 pr-1">
+                {" "}
+                {selectedSurvey} adlı anket atanmıştır. Atama yapılan
+                anketlerden soru çıkarılamaz !
               </div>
             </div>
           </div>
