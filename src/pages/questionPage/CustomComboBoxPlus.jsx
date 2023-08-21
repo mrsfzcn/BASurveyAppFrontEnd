@@ -20,7 +20,8 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
     setIsOpen(false);
   };
 
-  const handleQuestionPlusIconClick = () => {
+  const handleQuestionPlusIconClick = (e) => {
+    e.preventDefault();
     if (selectedOption) {
       const alreadyExists = selectedData.some((dataItem) => dataItem.value === selectedOption.value);
     if (!alreadyExists) {
