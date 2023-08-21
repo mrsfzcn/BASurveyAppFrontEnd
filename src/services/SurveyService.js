@@ -112,7 +112,7 @@ class SurveyService {
       });
       return response.data; 
     } catch (error) {
-      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      console.error("Anket verileri alınırken bir hata oluştu:", error);
       return []; 
     }
   }
@@ -125,10 +125,28 @@ class SurveyService {
       });
       return response.data; 
     } catch(error){
-      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      console.error("Anket soruları alınırken bir hata oluştu:", error);
       return [];
     }
+  }
+   removeSurveyQuestions(id, data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: { questionIds: data},
+    };
+    try{
+      const response = axios.delete(`${DEFAULT_SURVEY}${id}/questions`, config);
+      return response;
+    }catch(error){
+      console.log(error);
+      return [];
+    }
+    
   }
 }
 
 export default new SurveyService();
+
+
