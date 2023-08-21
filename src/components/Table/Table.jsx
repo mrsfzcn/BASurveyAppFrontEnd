@@ -119,9 +119,9 @@ const Table = ({
 
   return (
     <>
-      <div className="flex flex-col  bg-[#F1F1F1] rounded-sm mr-10 ml-10 py-5">
-        <div className="first-column">
-          <div className="filter-wrapper">
+      <div className="flex flex-col  bg-[#F1F1F1] rounded-sm mr-10 ml-10 py-5 mobile:w-full mobile:m-0 mobile:justify-center ">
+        <div className="first-column ">
+          <div className="filter-wrapper ">
             <label>Göster: </label>
             <select value={itemsPerPage} onChange={handleRowCountChange} className="mx-2">
               {itemsPerPageOptions.map((option) => (
@@ -132,7 +132,7 @@ const Table = ({
             </select>
             <label>Satır</label>
           </div>
-          <div>
+          <div className=""  >
             <label>Buna göre: </label>
             <select value={filterColumn} onChange={handleColumnChange} className="mx-3">
               <option value="">Hepsi</option>
@@ -142,17 +142,20 @@ const Table = ({
                 </option>
               ))}
             </select>
-            <label>Ara :</label>
+            <div>
+            <label >Ara :</label>
             <Input value={filterValue} onChange={handleFilterChange} />
+
+            </div>
           </div>
         </div>
-        <div className="table-wrapper mt-5">
-          <div className="min-h-[550px]">
+        <div className="table-wrapper mt-5 mobile:mt-0 mobile:w-10/12">
+          <div className="min-h-[550px] mobile:min-h-[330px] ">
             <table className="table">
               <thead>
                 <tr>
                   {header.map((item, index) => (
-                    <th className="px-6 py-3" key={index}>
+                    <th className="px-6 py-3 mobile:px-1 mobile:py-1" key={index}>
                       {item}
                     </th>
                   ))}
@@ -201,8 +204,8 @@ const Table = ({
               </tbody>
             </table>
           </div>
-          <div className="footer">
-            <div className="extra-content">
+          <div className="footer mobile:w-full ">
+            <div className="extra-content mobile:flex mobile:flex-col">
               Toplam {data.length}, Gösterilen veri sayısı:{" "}
               {currentItems.length}
               <ul className="pagination flex gap-1 pr-[35px]">

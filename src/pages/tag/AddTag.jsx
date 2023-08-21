@@ -147,7 +147,7 @@ function AddTag() {
         <div className="flex flex-col items-center justify-center gap-2 mt-4">
           <form
             onSubmit={handleSubmit}
-            className="flex items-center justify-center gap-8 w-3/4"
+            className="flex items-center justify-center gap-8 w-3/4 mobile:flex-col"
           >
             <div className="flex flex-col gap-4 w-1/2 ">
               <Input
@@ -156,10 +156,10 @@ function AddTag() {
                 required
                 onChange={(e) => setTag({ ...tag, tagName: e.target.value })}
               />
-              <div className="flex gap-2">
+              <div className="flex gap-2 mobile:flex-col">
                 {selectedOptions.map((option) => (
                   <p
-                    className="flex justify-center items-center  px-2 py-1 rounded-md bg-[#64E9B1] text-black text-sm font-semibold"
+                    className="flex justify-center items-center  px-2 py-1 rounded-md bg-[#64E9B1] text-black text-sm font-semibold mobile:flex-col"
                     key={option.value}
                   >
                     {option.label}
