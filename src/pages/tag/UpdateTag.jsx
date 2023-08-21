@@ -142,7 +142,9 @@ const UpdateTag = () => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col gap-4">
+            <span className ="flex flex-row items-center gap-4">
+            <p className="text-base font-medium mr-2">Etiket Sınıfı :</p>
+            <div className="">
               <MultiDropdown
                 options={options}
                 selectedOptions={selectedOptions}
@@ -151,7 +153,7 @@ const UpdateTag = () => {
 
 
             </div>
-          
+            </span>
                 <div className="w-1/2 flex justify-center">
                   {alert.type && (
                     <Alert type={alert.type} message={alert.message} />
