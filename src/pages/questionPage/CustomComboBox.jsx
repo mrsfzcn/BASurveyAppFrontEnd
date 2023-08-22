@@ -37,61 +37,34 @@ const CustomComboBox = ({ options, placeholder ,onGetCustomData}) => {
   );
 
   return (
-    <div style={{ position: 'relative' }}>
-      <input
-        type="text"
-        value={searchTerm}
-        placeholder={placeholder}
-        onChange={handleInputChange}
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
-        style={{
-          width: '60%',
-          height: '50%',
-          padding: '0.5rem',
-          borderRadius: '0.25rem',
-          border: '1px solid #ccc',
-          fontFamily: 'Poppins',
-          fontSize: '1rem',
-          lineHeight: '1.5rem',
-          textAlign: 'left',
-          outline: 'none',
-          cursor: 'pointer',
-        }}
-      />
-      {isOpen && (
-        <ul
-          style={{
-            position: 'absolute',
-            top: '6vh',
-            left: '0',
-            width: '100%',
-            maxHeight: '17vh', 
-            overflowY: 'auto',
-            background: '#FFF',
-            border: '1px solid #ccc',
-            borderRadius: '0.25rem',
-            listStyle: 'none',
-            padding: '0.25rem',
-            zIndex: '100',
-          }}
+    <div className="relative">
+  <input
+    type="text"
+    value={searchTerm}
+    placeholder={placeholder}
+    onChange={handleInputChange}
+    onFocus={() => setIsOpen(true)}
+    onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+    className="w-52 h-11 py-2 px-2 rounded border border-gray-300 font-poppins text-base leading-6 text-left outline-none cursor-pointer
+    mobile:w-40 mobile:ml-2
+    "
+  />
+  {isOpen && (
+    <ul
+      className="absolute top-15 left-0 w-3/4 max-h-40 overflow-y-auto bg-white border border-gray-300 rounded list-none p-1 z-10 mobile:w-44 "
+    >
+      {filteredOptions.map((option) => (
+        <li
+          key={option.value}
+          onClick={() => handleOptionSelect(option)}
+          className="py-2 px-2 cursor-pointer"
         >
-          {filteredOptions.map((option) => (
-            <li
-              key={option.value}
-              onClick={() => handleOptionSelect(option)}
-              style={{
-                padding: '0.5rem',
-                cursor: 'pointer',
-                
-              }}
-            >
-              {option.label}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+          {option.label}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
   );
 };
 

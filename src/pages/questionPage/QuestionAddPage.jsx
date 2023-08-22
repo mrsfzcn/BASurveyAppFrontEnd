@@ -226,197 +226,108 @@ const QuestionAddPage = ({ props }) => {
         : isFocused
             ? '#00a4e4'
             : '#ccc';
-    return (
-        <Layout>
-            {showConfirmPopup && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)', 
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 9999, 
-                    }}>
-                    <div className="bg-[#F1F1F1] "
-                        style={{
-                            padding: '20px',
-                            borderRadius: '8px',
-                            textAlign: 'center',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                        }}
-                    >
-                        <p>!!! Soru etiketi eklemediniz. Etiketsiz kaydetmek istediğinize emin misiniz?<br/>
-                             Eğer "Evet" diyip "Ekle" butonuna basarsanız etiket eklememiş olacaksınız. <br/>
-                            Etiket eklemek için "Hayır" diyip seçim yapın sonra artı ikonuna tıklayın. <br/>
-                            "Ekle" butonu ile kaydedin
-                        </p>
-                        <Button type="submit" primary style={{marginRight: '10px', marginTop:'20px'}} rounded bold onClick={() => {
-                            setIsEmptyTagOids(true);
-                            setShowConfirmPopup(false);
-                        }}>Evet</Button>
-                        <Button type="submit" secondary rounded bold onClick={() => setShowConfirmPopup(false)}>Hayır</Button>
-                    </div>
-                </div>
-            )}
-            <div className="flex flex-col bg-[#E5E5E5] h-full">
-                <BreadCrumbs header={header} subtitle={subtitle} />
-                <div className="  flex justify-center align-center" style={{
-                    height: '90%',
-                }} >
-
-                    <div className="  bg-[#F1F1F1] flex  justify-center align-center m-auto 
-                    
-                    mobile:w-full mobile:w-full"
-                        style={{
-                            width: '41%',
-                            height: '76.8vh',
-                            borderRadius: '1rem',
-                            position: 'absolute',
-                            flexDirection: 'column',
-                            paddingRight: '5rem',
-                            justifyContent: 'center'
-
-                        }}
-                    >
-
-                        <div  style={{
-                            width: '11vw',
-                            top: '5rem',
-                            right: '27.6vw',
-                            fontFamily: 'Poppins',
-                            fontSize: '1rem',
-                            lineHeight: '1.5rem',
-                            textAlign: 'left',
-                            position: 'absolute',
-
-                        }}>
-                            <p className="mobile:text-xs mobile:bg-red-200 mobile:flex mobile:flex-row">
-                                Soru Metni:
-                            </p>
-
-                        </div>
-                        <div className="flex justify-center align-center m-auto" style={{ right: '1%', position: 'absolute', height: '28%', width: '100%', top: "7rem", }}>
-                            <textarea
-                                name="text" rows="12" cols="50" id="myTextarea"
-                                style={{
-                                    width: '89%',
-                                    borderRadius: '.1rem',
-                                    padding: '.9rem',
-                                    border: `1px solid ${borderColor}`,
-                                    boxSizing: 'border-box',
-                                    fontSize: '1rem',
-                                    lineHeight: '1.5rem',
-                                    fontFamily: 'Poppins',
-                                    textAlign: 'left',
-                                    wordWrap: 'break-word',
-                                    resize: 'none',
-                                    overflow: 'auto',
-                                    outline: 'none',
-
-                                    transition: 'border-color 0.2s ease-in-out',
-                                }}
-                                placeholder="Metin giriniz..."
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                required
-                                onChange={handleChange
-                                }
-                            />
-                        </div>
-                        <div className="flex  items-center mt-4 justify-end align-center m-auto" style={{
-                            top: '34vh',
-                            width: '15vw',
-                            paddingTop: "2rem",
-                            right: '34.3vw',
-                            fontFamily: 'Poppins',
-                            fontSize: '1rem',
-                            lineHeight: '1.5rem',
-                            textAlign: 'left',
-                            position: 'absolute',
-
-
-                        }}>
-                            <p className="text-base font-medium mr-2">Soru tipi</p>
-                            <div className="flex items-center" style={{ paddingLeft: '5vw', position: 'absolute', height: '100%', left: '12vw' }}>
-                                <span className="mr-3">:</span>
-                                <div style={{
-                                    top: '1vh',
-                                    width: '20vw',
-                                    left: '5.8vw',
-                                    position: 'absolute',
-                                }}>
-                                    <CustomComboBox options={questionTypeOptions} placeholder="Seçiniz" onGetCustomData={handleCustomComboBoxData} />
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="flex  items-center mt-4 justify-end align-center m-auto" style={{
-                            top: '42vh',
-                            width: '15vw',
-                            paddingTop: "2rem",
-                            right: '33.1vw',
-                            fontFamily: 'Poppins',
-                            fontSize: '1rem',
-                            lineHeight: '1.5rem',
-                            textAlign: 'left',
-                            position: 'absolute',
-
-
-                        }}>
-                            <p className="text-base font-medium mr-2">Soru etiketi</p>
-                            <div className="flex items-center" style={{ paddingLeft: '5vw', position: 'absolute', height: '100%', left: '10.8vw' }}>
-                                <span className="mr-3">:</span>
-                                <div style={{
-                                    top: '1vh',
-                                    width: '20vw',
-                                    left: '5.8vw',
-                                    position: 'absolute',
-                                }}>
-                                    < CustomComboBoxPlus options={questionTagsOptions} placeholder="Giriniz" onGetCustomPlusData={handleCustomComboBoxPlusData} />
-                                </div>
-                            </div>
-
-                        </div>
-                        <button
-                            style={{
-                                width: '6.25vw',
-                                height: '55px',
-                                top: '42vh',
-                                left: '29vw',
-                                borderRadius: '0.2604166',
-                                background: '#E5E5E5',
-                                color: '#000000',
-                                border: 'none',
-                                fontFamily: 'Poppins',
-                                fontSize: '1rem',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                position: 'absolute',
-                            }}
-                            onClick={handleCreate}
-                        >
-                            Ekle
-                        </button>
-
-                    </div>
-                </div>
-                <div style={{
-                    position: 'absolute',
-                    top: '92vh',
-                    right: '1vw',
-                    zindex: 9999,
-                }}>
-                    {alert.type && (
-                        <Alert type={alert.type} message={alert.message} closable={true} />
-                    )}
-                </div>
+    return (        <Layout>
+        {showConfirmPopup && (
+          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-60 z-50">
+            <div className="bg-[#F1F1F1] p-6 rounded-lg text-center shadow-md">
+              <p className="font-normal">
+                !!! Soru etiketi eklemediniz. Etiketsiz kaydetmek istediğinize emin misiniz?<br/>
+                Eğer "Evet" diyip "Ekle" butonuna basarsanız etiket eklememiş olacaksınız. <br/>
+                Etiket eklemek için "Hayır" diyip seçim yapın sonra artı ikonuna tıklayın. <br/>
+                "Ekle" butonu ile kaydedin
+              </p>
+              <div className="mt-4">
+                <Button
+                  type="submit"
+                  primary
+                  className="mr-2"
+                  rounded
+                  bold
+                  onClick={() => {
+                    setIsEmptyTagOids(true);
+                    setShowConfirmPopup(false);
+                  }}
+                >
+                  Evet
+                </Button>
+                <Button
+                  type="submit"
+                  secondary
+                  rounded
+                  bold
+                  onClick={() => setShowConfirmPopup(false)}
+                >
+                  Hayır
+                </Button>
+              </div>
             </div>
-        </Layout>
+          </div>
+        )}
+        <div className="flex flex-col bg-[#E5E5E5] h-full">
+          <BreadCrumbs header={header} subtitle={subtitle} />
+          <div className="flex flex-col items-center h-90">
+      
+            <div className="flex justify-center bg-[#F1F1F1]  w-[41%] h-[76.8vh] rounded-lg absolute flex-col  p-8 mobile:w-[95%]">
+              <div className="flex justify-center  top-16  font-Poppins text-base leading-6 text-left absolute">
+                <p>
+                  Soru metninizi giriniz:
+                </p>
+              </div>
+              <div className="flex justify-center  m-auto  absolute h-[28%] w-11/12 top-28 right-4">
+                <textarea
+                  name="text" rows="12" cols="50" id="myTextarea"
+                  className="w-[99%] p-4 text-base leading-[1.5rem] font-poppins text-left break-words"
+                  style={{                    
+                    border: `1px solid ${borderColor}`,
+                    boxSizing: 'border-box',
+                    resize: 'none',
+                    overflow: 'auto',
+                    outline: 'none',
+                    transition: 'border-color 0.2s ease-in-out',
+                }}
+                  placeholder="Metin giriniz..."
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex flex-row justify-start mt-4  items-center pt-8 ">
+                <p className="text-base font-medium mr-2 mobile:w-24">Soru tipi</p>
+                <div className="flex items-center justify-end left-13vw w-[22vw] h-full">
+                  <span className="mr-3">:</span>
+                  <div className="top-1vh w-[20vw] left-5.8vw mobile:w-50 ">
+                    <CustomComboBox options={questionTypeOptions} placeholder="Seçiniz" onGetCustomData={handleCustomComboBoxData} />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row  mt-4 mr-4 items-center  absolute  pt-8 top-[42vh]">
+                <p className="flex  text-base font-medium mr-2 mobile:w-24">Soru etiketi</p>
+                <div className="flex items-center h-full">
+                  <span className="mr-3">:</span>
+                  <div className=" w-[20vw] mobile:w-[40vw]    ">
+                    <div className="mobile:w-[51vw]">
+                    <CustomComboBoxPlus options={questionTagsOptions} placeholder="Giriniz" onGetCustomPlusData={handleCustomComboBoxPlusData} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                className="w-[6.25vw] h-[6.25vh] top-[42vh] left-[29vw] rounded-[0.2604166] bg-[#E5E5E5] text-black border-none font-Poppins text-base font-bold cursor-pointer absolute mobile:left-[70vw] mobile:top-[68vh] mobile:w-[19.25vw]"
+                onClick={handleCreate}
+              >
+                Ekle
+              </button>
+            </div>
+            <div className="  left-9vw z-50">
+            {alert.type && (
+              <Alert type={alert.type} message={alert.message} closable={true} />
+            )}
+          </div>
+          </div>
+
+        </div>
+      </Layout>
     );
 };
 
