@@ -121,6 +121,9 @@ const Table = ({
     <>
       <div className="flex flex-col  bg-[#F1F1F1] rounded-sm mr-10 ml-10 py-5 mobile:w-full mobile:m-0 mobile:justify-center ">
         <div className="first-column ">
+          {/* sadece göster ve filtreleme kısmını içine alan kısım */}
+          <div className="mobile:flex mobile:flex-col mobile:gap-2">
+          {/* göster kısmı */}
           <div className="filter-wrapper ">
             <label>Göster: </label>
             <select value={itemsPerPage} onChange={handleRowCountChange} className="mx-2">
@@ -132,9 +135,10 @@ const Table = ({
             </select>
             <label>Satır</label>
           </div>
-          <div className=""  >
+          {/* filtreleme kısmı */}
+          <div className="mobile:flex mobile:flex-col"  >
             <label>Buna göre: </label>
-            <select value={filterColumn} onChange={handleColumnChange} className="mx-3">
+            <select value={filterColumn} onChange={handleColumnChange} className="mx-3 mobile:mx-0">
               <option value="">Hepsi</option>
               {header.map((column) => (
                 <option key={column} value={column}>
@@ -143,24 +147,25 @@ const Table = ({
               ))}
             </select>
             <div>
-            <label >Ara :</label>
-            <Input value={filterValue} onChange={handleFilterChange} />
+            <label>Ara :</label>
+            <Input className="mobile:pb-0" value={filterValue} onChange={handleFilterChange} />
 
             </div>
           </div>
         </div>
-        <div className="table-wrapper mt-5 mobile:mt-0 mobile:w-10/12">
-          <div className="min-h-[550px] mobile:min-h-[330px] ">
+        </div>
+        <div className="table-wrapper mt-5 mobile:mt-5 mobile:w-full mobile:text-xs">
+          <div className="min-h-[550px] ">
             <table className="table">
               <thead>
                 <tr>
                   {header.map((item, index) => (
-                    <th className="px-6 py-3 mobile:px-1 mobile:py-1" key={index}>
+                    <th className="px-6 py-3 mobile:px-0 mobile:py-0 mobile:text-xs mobile:truncate " key={index}>
                       {item}
                     </th>
                   ))}
                   {/* {useLabel && <th>Anket Etiketleri</th>} */}
-                  {useIcon && <th>İşlemler</th>}
+                  {useIcon && <th className="mobile:text-xs">İşlemler</th>}
                   {useSurveyIcons && <th>İşlemler</th>}
                 </tr>
               </thead>

@@ -184,26 +184,26 @@ export default function List() {
   return (
     <>
       <Layout>
-        <div className="background">
+        <div className="background ">
           <div>
-            <div className="allUsersHeaderDiv">
+            <div className="allUsersHeaderDiv ">
               <div>
-                <p className="allUsersHeader">Tüm Kullanıcılar </p>
+                <p className="allUsersHeader ">Tüm Kullanıcılar </p>
               </div>
-              <div className="allUsersHeader">
+              <div className="allUsersHeader ">
                 <p>|</p>
               </div>
               <div>
-                <p className="allUsersSubHeader">
+                <p className="allUsersSubHeader ">
                   Ana Sayfa &gt; Kullanıcı İşlemleri &gt; Tüm Kullanıcılar
                 </p>
               </div>
             </div>
           </div>
-          <div className="list">
+          <div className="list ">
             <div>
-              <div className="flexColumnContainer">
-                <div className="listPageShow">
+              <div className="flexColumnContainer ">
+                <div className="listPageShow ">
                   <span>Göster: </span>
                   <div>
                     <select
@@ -230,12 +230,13 @@ export default function List() {
                   marginTop: "3rem",
                   height: "58vh",
                   marginLeft: "5%",
+                  
                 }}
               >
                 <table>
                   <thead>
                     <tr>
-                      <th style={{ width: "13rem", paddingBottom: "2rem" }}>
+                      <th style={{ width: "13rem", paddingBottom: "2rem"  }}>
                         <span>Adı</span>
                         <button className="bottomSort" onClick={handleSortName}>
                           <SortIcon />
@@ -270,7 +271,7 @@ export default function List() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="lineTableBody">
+                  <tbody className="lineTableBody ">
                     {currentItems.map((user, index) => (
                       <tr className="tableRow" key={index}>
                         <td style={{ width: "13rem" }}>{user.firstName}</td>
@@ -296,7 +297,7 @@ export default function List() {
                   </tbody>
                 </table>
               </div>
-              <div className="footer">
+              <div className="footer mobile:m-0">
                 <div>
                   <p style={{ marginBottom: "2rem" }}>
                     {userList.length} kullanıcıdan {currentItems.length} tanesi
