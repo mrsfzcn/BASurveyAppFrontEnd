@@ -61,6 +61,16 @@ function AddQuestion() {
     setQuestions((prevQuestions) => prevQuestions.filter((q) => q.questionOid !== question.questionOid));
   }
 
+
+  const deleteSurveyHandle = async (surveyOid) => {
+      try {
+        const response = await SurveyService.delete(surveyOid);
+      } catch (error) {
+        console.log(error);
+      }
+  };
+
+
   function handleSelectedQuestionClick(question) {
     setSelectedQuestions((prevSelectedQuestions) =>
       prevSelectedQuestions.filter((q) => q.questionOid !== question.questionOid)
@@ -243,6 +253,7 @@ function AddQuestion() {
                             rounded
                             className="mt-4"
                             onClick={() => {
+                              deleteSurveyHandle(surveyOid);
                               setIsCancelConfirmationOpen(false);
                               navigate("/anketler");
                             }}
