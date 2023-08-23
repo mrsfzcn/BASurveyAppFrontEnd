@@ -213,9 +213,9 @@ export default function QuestionUpdatePage() {
         >
           <div className="class2 bg-[#F1F1F1] flex justify-center align-center m-auto ">
             <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col gap-14 ">
-              <div className="flex flex-col gap-14 justify-center items-center">
+              <div className="flex flex-col gap-14 justify-center items-center mt-7">
                 <div className="flex items-center justify-between w-[600px] ">
-                  <label className="font-semibold w-[150px] ">Soru Id</label>
+                  <label className="font-semibold w-[150px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[200px]">Soru Id</label>
                   <Input disabled value={questionOid} full />
                 </div>
                 <div className="flex items-center   w-[600px] ">
@@ -224,6 +224,7 @@ export default function QuestionUpdatePage() {
                     onChange={handleChange}
                     value={questionString}
                     full
+                    className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
                   />
                 </div>
                 <div className="flex items-center w-[600px]">
@@ -238,7 +239,7 @@ export default function QuestionUpdatePage() {
                                     right: '17.0vw',
                                     position: 'relative',
                                 }}>
-                      <CustomComboBox options={questionTypeOptions} placeholder= "Seçiniz" onGetCustomData={handleCustomComboBoxData}/>
+                      <CustomComboBox options={questionTypeOptions} placeholder= "Seçiniz" onGetCustomData={handleCustomComboBoxData} className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"/>
                     </div>
                   </div>
                 </div>
@@ -255,14 +256,14 @@ export default function QuestionUpdatePage() {
                           right: '17.0vw',
                           position: 'relative',
                       }}>
-                          < QuestionUpdateComboBoxPlus options={questionTagsOptions} placeholder="Giriniz" onGetCustomPlusData={handleCustomComboBoxPlusData} />
+                          < QuestionUpdateComboBoxPlus options={questionTagsOptions} placeholder="Giriniz" onGetCustomPlusData={handleCustomComboBoxPlusData} className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]" />
                       </div>
                   
                   </div>
                 </div>
                 
               </div>
-              <div className="flex justify-center gap-7 flex-wrap" style={{ position: 'relative', top: '14vh'}}>
+              <div className="flex justify-center gap-7 flex-wrap mt-24 sm:mt-6 md:mt-8">
                 <Button primary rounded bold
                   onClick={handleUpdateQuestion}
                   className="">

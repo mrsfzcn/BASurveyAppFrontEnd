@@ -34,6 +34,7 @@ import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import RegenerateQrCode from "./pages/regenerateqrcode/RegenerateQrCode";
 import AssignStudentToClass from "./pages/AssignStudentClass/assignstudentclass"
+import StudentListPage from "./pages/classesPage/studentList/StudentListPage";
 function App() {
   return (
     <Router>
@@ -87,6 +88,12 @@ function App() {
             <Route path="guncelle/:id">
               <Route index element={<UpdateType />} />
             </Route>
+          </Route>
+          <Route path="/ogrencilistesi">
+            <Route index element={<StudentListPage />} />
+            {/* <Route path="guncelle/:id">
+              <Route index element={<UpdateType />} />
+            </Route> */}
           </Route>
 
         </Route>
