@@ -40,7 +40,10 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
   };
 
   useEffect(() => {
-    // selectedData state'i güncellendiğinde onGetCustomData fonksiyonunu çağırarak güncel veriyi gönderin
+
+    if(selectedData.length ===0){
+      setShowSelected(false)
+    }
     onGetCustomPlusData(selectedData);
   }, [selectedData]);
 
@@ -60,12 +63,12 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
       className="w-52 h-12 py-2 px-2 rounded border border-gray-300 font-poppins text-base leading-6 text-left outline-none cursor-pointer mobile:w-40"
     />
     {isOpen && (
-      <ul className="absolute top-[6vh] left-0 w-full max-h-[17vh] overflow-y-auto bg-white border border-gray-300 rounded list-none p-1 z-10">
+      <ul className="absolute top-[6vh] left-0 w-3/4 max-h-[17vh] overflow-y-auto bg-white border border-gray-300 rounded list-none p-1 z-10  bg-transparent border-0 border-b-2 border-black-200 appearance-none dark:text-black-400 dark:border-black-700 focus:outline-none focus:ring-0 focus:border-black-200 peer">
         {filteredOptions.map((option) => (
           <li
             key={option.value}
             onClick={() => handleOptionSelect(option)}
-            className="py-2 px-2 cursor-pointer"
+            className="py-2 px-2 cursor-pointer hover:bg-[#64E9B1] rounded"
           >
             {option.label}
           </li>
@@ -79,8 +82,8 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
       <QuestionPlusIcon />
     </button>
     {showSelected && (
-      <div className="top-[9vh] max-h-28 overflow-y-auto left-[0.1vw] absolute flex flex-row flex-wrap mobile:text-xs mobile:h-20 mobile:m-0 mobile:p-0
-      bg-white
+      <div className="top-[9vh] w-5/6 h-28 overflow-y-auto left-[0.1vw] absolute flex flex-row flex-wrap mobile:text-xs mobile:h-20 mobile:m-0 mobile:p-0
+      border border-gray-300
       
       ">
         {selectedData.map((data, index) => (
