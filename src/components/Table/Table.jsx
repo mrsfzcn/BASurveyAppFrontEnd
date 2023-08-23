@@ -8,7 +8,7 @@ const Table = ({
   header,
   useIcon,
   useSurveyIcons,
-  // useLabel,
+  useLabel,
   showTableData,
   deleteTableRows,
   editTableRows,
@@ -56,14 +56,18 @@ const Table = ({
   const renderTableCells = (rowData) => {
     return Object.keys(rowData).map((key, colIndex) => {
       const value = rowData[key];
-
-      if (Array.isArray(value)) {
+  
+      if (key === "studentTags") {
+        const tagNames = value.map(tag => tag.tagString).join(", ");
+        return <td key={colIndex}>{tagNames}</td>;
+      } else if (Array.isArray(value)) {
         return <td key={colIndex}>{value.join(", ")}</td>;
       } else {
         return <td key={colIndex}>{value}</td>;
       }
     });
   };
+  
 
   const handleEditClick = (rowData) => {
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
