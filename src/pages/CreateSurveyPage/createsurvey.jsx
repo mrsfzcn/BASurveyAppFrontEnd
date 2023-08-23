@@ -121,7 +121,7 @@ function CreateSurvey() {
   ];
   return (
     <Layout>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full ">
         <BreadCrumbs header={header} subtitle={subtitle} />
         <div className="flex h-full ">
 

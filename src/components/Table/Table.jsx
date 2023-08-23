@@ -119,10 +119,10 @@ const Table = ({
 
   return (
     <>
-      <div className="flex flex-col  bg-[#F1F1F1] rounded-sm mr-10 ml-10 py-5 mobile:w-full mobile:m-0 mobile:justify-center ">
+      <div className="flex flex-col  bg-[#F1F1F1] rounded-sm mr-10 ml-10 py-5 mobile:w-full mobile:m-0 mobile:justify-center mobile:max-w-full mobile:mr-0 mobile:py-0">
         <div className="first-column ">
           {/* sadece göster ve filtreleme kısmını içine alan kısım */}
-          <div className="mobile:flex mobile:flex-col mobile:gap-2">
+          <div className="mobile:flex mobile:flex-col mobile:gap-2 flex flex-row justify-between w-full text-xs mobile:max-w-full">
           {/* göster kısmı */}
           <div className="filter-wrapper ">
             <label>Göster: </label>
@@ -154,8 +154,8 @@ const Table = ({
           </div>
         </div>
         </div>
-        <div className="table-wrapper mt-5 mobile:mt-5 mobile:w-full mobile:text-xs">
-          <div className="min-h-[550px] ">
+        <div className="table-wrapper mt-5 mobile:mt-5 mobile:w-full mobile:text-xs ">
+          <div className=" max-h-[400px] overflow-y-auto">
             <table className="table">
               <thead>
                 <tr>
