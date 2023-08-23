@@ -19,6 +19,7 @@ import UserRegistration from "./pages/user/UserRegistration";
 import TumKullanicilar from "./pages/user/TumKullanicilar";
 import AddQuestion from "./pages/CreateSurveyPage/AddQuestion";
 import SendSurvey from "./pages/sendSurvey/SendSurvey";
+import TrainerToClass from "./pages/AssigningTrainerToClass/TrainerToClass";
 import TumAnketler from "./pages/surveys/TumAnketler";
 import AnketEkle from "./pages/surveys/AnketEkle";
 import AnketDuzenle from "./pages/surveys/AnketDuzenle";
@@ -44,6 +45,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/adminhome" element={<AdminHomePage />} exact />
           <Route path="/sendsurvey" element={<SendSurvey />} />
+          <Route path="/assigning-trainer-to-class" element={<TrainerToClass/>} />
           <Route path="/edituser" element={<UserEditPage />} />
           <Route path="/createsurvey" element={<CreateSurveyPage />} />
           <Route path="/assignstudentclass" element={<AssignStudentToClass />} />

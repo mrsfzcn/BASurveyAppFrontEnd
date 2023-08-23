@@ -51,13 +51,13 @@ const CustomComboBox = ({ options, placeholder ,onGetCustomData}) => {
   />
   {isOpen && (
     <ul
-      className="absolute top-15 left-0 w-3/4 max-h-40 overflow-y-auto bg-white border border-gray-300 rounded list-none p-1 z-10 mobile:w-44 "
+      className="absolute top-[6vh] left-0 w-3/4 max-h-40 overflow-y-auto bg-white border border-gray-300 rounded list-none p-1 z-10 bg-transparent border-0 border-b-2 border-black-200 appearance-none dark:text-black-400 dark:border-black-700 focus:outline-none focus:ring-0 focus:border-black-200 peer mobile:w-44 "
     >
       {filteredOptions.map((option) => (
         <li
           key={option.value}
           onClick={() => handleOptionSelect(option)}
-          className="py-2 px-2 cursor-pointer"
+          className="py-2 px-2 cursor-pointer hover:bg-[#64E9B1] rounded"
         >
           {option.label}
         </li>
