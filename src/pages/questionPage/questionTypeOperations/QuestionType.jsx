@@ -113,7 +113,7 @@ function QuestionType() {
 
   return (
     <Layout>
-      <div className="flex flex-col   bg-slate-100 h-full">
+      <div className="flex flex-col  bg-slate-100 h-full ">
         <BreadCrumbs header={header} subtitle={subtitle} />
         <div className="flex flex-col items-center justify-center gap-2 mt-4">
           <form

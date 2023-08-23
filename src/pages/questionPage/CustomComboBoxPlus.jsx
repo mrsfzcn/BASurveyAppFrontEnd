@@ -80,7 +80,7 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
     </button>
     {showSelected && (
       <div className="top-[9vh] max-h-28 overflow-y-auto left-[0.1vw] absolute flex flex-row flex-wrap mobile:text-xs mobile:h-20 mobile:m-0 mobile:p-0
-      bg-white
+      border-gray-300
       
       ">
         {selectedData.map((data, index) => (
