@@ -7,6 +7,8 @@ import ClassService  from "../../services/ClassService";
 import Dropdown from "../../components/Dropdown";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { AxiosError } from "axios";
+
 
 function AssignStudentClass(){
     const [studentName, setStudentName]= useState([]);
@@ -14,8 +16,12 @@ function AssignStudentClass(){
     const [error, setError] = useState("");
     const [studentOptions, setStudentOptions] = useState([]);
     const [classOptions, setClassOptions] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
       const [selection, setSelection] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
+    const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] =
+    useState(false);
+
     const navigate = useNavigate();   
     const [data, setData] = useState({
         studentName: "Öğrenci Adı",
@@ -32,6 +38,7 @@ function AssignStudentClass(){
             setClassOptions(
               tags.map((tag) => ({ label: tag.tagString, value: tag.oid }))
             );
+            console.log(tags);
           })
           .catch((error) => {
             console.error("Sınıf verileri alınırken bir hata oluştu:", error);
@@ -45,6 +52,7 @@ function AssignStudentClass(){
             setStudentOptions(
                 students.map((student) => ({label:student.firstName, value:student.oid, surname:student.lastName  }))
             );
+            console.log(students);
         })
         .catch((error) =>{
             console.error("Öğrenci verileri alınırken bir hata oluştu:", error);
@@ -63,9 +71,40 @@ function AssignStudentClass(){
       const handleCancel = () => {
         setIsCancelConfirmationOpen(true);
       };
-    
+    const handleAssign = (e) => {
+      e.preventDefault();
+      if(!selection.label){
+        setError("Lütfen bir öğrenci seçiniz!")
+        return;
+      }
+      if(!selectedClass){
+        setError("Lütfen bir sınıf seçiniz.");
+        return;
+      }
 
-    const header = { header: "Öğrenci Atama", href: "/createsurvey" };
+    const assignData ={
+      studentTagOid: selectedClass.value,
+      studentOid: selection.value,
+    };
+    ClassService.assign(assignData)
+    .then((response) =>{
+      setIsPopupOpen(true);
+    })
+    .catch((AxiosError) => {
+      if (AxiosError.response.data.exceptionCode === 9036) {
+        setError("Seçilen öğrencinin atanmış olduğu bir sınıf bulunmaktadır.");
+      } 
+    });
+    }
+
+
+    const closePopup = () => {
+      setIsPopupOpen(false);
+      navigate("/adminhome");
+    };
+
+
+    const header = { header: "Öğrenci Atama", href: "/adminhome" };
 
   
     const subtitle = [
@@ -75,11 +114,11 @@ function AssignStudentClass(){
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/anketler",
+        href: "/adminhome",
       },
       {
         title: "Sınıfa Öğrenci Atama",
-        href: "/createsurvey",
+        href: "/adminhome",
       },
     ];
     return(
@@ -90,7 +129,7 @@ function AssignStudentClass(){
             <div className="flex-[8_8_0%] flex justify-center items-center">
               <div className="flex justify-center items-center bg-gray-300 w-11/12 h-5/6 rounded">
                 <div className="flex bg-white flex-col gap-5 justify-center items-center w-9/12 h-5/6 rounded">
-                <div className="flex flex-row gap-5 justify-between items-center p-7 mt-0">
+                <div className="flex flex-row gap-5 justify-between items-center p-7 mt-0 w-3/4">
                   <select
                     id="underline_select"
                     className="flex text-lg m-auto h-auto py-2.5 px-0 w-full text-sm text-black-500 bg-transparent border-0 border-b-2 border-black-200 appearance-none dark:text-black-400 dark:border-black-700 focus:outline-none focus:ring-0 focus:border-black-200 peer"
@@ -135,7 +174,7 @@ function AssignStudentClass(){
     
                       <Dropdown
                             className="w-128"
-                            options={classOptions}  // Bu satırı değiştirdik
+                            options={classOptions} 
                             onChange={setSelectedClass}
                             value={selectedClass}
                         />
@@ -149,9 +188,10 @@ function AssignStudentClass(){
                       primary
                       rounded
                       bold
+                      onClick={handleAssign}
                       disabled={!selection}
                     >
-                      ATAMA YAP
+                      ÖĞRENCİ EKLE
                     </Button>
                     <Button
                       className=""
@@ -162,12 +202,57 @@ function AssignStudentClass(){
                     >
                       VAZGEÇ
                     </Button>
+                    {isCancelConfirmationOpen && (
+                      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+                        <div className="bg-white p-8 rounded shadow">
+                          <p className="text-xl font-bold mb-4">
+                            Emin misiniz?
+                          </p>
+                          <p>
+                            Sınıfa öğrenci ekleme işleminden vazgeçmek istediğinize
+                            emin misiniz?
+                          </p>
+                          <p>Tüm Anketler Sayfasına Yönlendirileceksiniz.</p>
+                          <Button
+                            primary
+                            rounded
+                            className="mt-4"
+                            onClick={() => {
+                              setIsCancelConfirmationOpen(false);
+                              navigate("/anketler");
+                            }}
+                          >
+                            Onayla
+                          </Button>
+                          <Button
+                            secondary
+                            rounded
+                            className="mt-4 mr-2"
+                            onClick={() => setIsCancelConfirmationOpen(false)}
+                          >
+                            İptal
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </div>
     
                 </div>
               </div>
             </div>
           </div>
+          {isPopupOpen && (
+          <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+            <div className="bg-white p-8 rounded shadow">
+              <p className="text-xl font-bold mb-4">Başarı!</p>
+              <p>{selection.label} öğrencisi {selectedClass.label} sınıfına başarı ile eklendi!</p>
+
+              <Button primary rounded className="mt-4" onClick={closePopup}>
+                Tamam
+              </Button>
+            </div>
+          </div>
+        )}
         </div>
       </Layout>
     );
