@@ -85,11 +85,39 @@ function AddTag() {
     }
     if (tag.tagClass.length < 1) {
       setAlert({ type: "error", message: "Etiket sınıfı boş bırakılamaz." });
+      setTimeout(()=>{
+        setAlert({type: "", message: ""});
+      },3000);
       return;
     }
-    TagService.createTag(tag)
+  
+  const upperCaseTagName = tag.tagName.toUpperCase();
+  
+  const existingTag = tags.find(
+    (existingTag) =>
+      existingTag.tagName === upperCaseTagName &&
+      existingTag.tagClasses.includes(...tag.tagClass)
+  );
+
+  if (existingTag) {
+    setAlert({
+      type: "error",
+      message: `Bu etiket ve sınıf kombinasyonu zaten mevcut: Etiket Adı -
+       ${existingTag.tagName}\nMevcut etiket sınıfı - ${existingTag.tagClasses}`,
+    });
+    setTimeout(() => {
+      setAlert({ type: "", message: "" });
+    }, 5000);
+    return;
+}
+
+    TagService.createTag({...tag, tagName : upperCaseTagName})
       .then((response) => {
-        setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
+        setAlert({ type: "success", message: "Etiket başarıyla eklendi." });
+        setTimeout(()=>{
+          setAlert({type: "", message: ""});
+        },3000);
+        setTag({ ...tag, tagClass: [] });
         setUpdateTag(true);
         e.target.reset();
         setSelectedOptions([]);
@@ -134,7 +162,6 @@ function AddTag() {
   }, [updateTag, deleteTag]);
 
   const handleSelectedOptionsChange = (updatedOptions) => {
-    console.log(updatedOptions);
     setSelectedOptions(updatedOptions);
     const a = updatedOptions.map((i) => i.value);
     setTag({ ...tag, tagClass: a });
