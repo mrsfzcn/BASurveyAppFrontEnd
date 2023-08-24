@@ -29,7 +29,7 @@ const UpdateTag = () => {
   const [loading, setLoading] = useState(false);
 
   const onChange = (e) => {
-    setUpdateTag({ ...updateTag, newTagString: e.target.value });
+    setUpdateTag({ ...updateTag, newTagString: e.target.value.toUpperCase() });
   };
   
   useEffect(()=>{ 
@@ -57,7 +57,6 @@ const UpdateTag = () => {
       }
 
       const response = await TagService.updateTagAndClasses(updateTag);
-
       if (response.status === 200) {
         setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
         navigate("/etiket");
