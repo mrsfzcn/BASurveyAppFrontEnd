@@ -82,9 +82,9 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
       <QuestionPlusIcon />
     </button>
     {showSelected && (
-      <div className="top-[9vh] w-5/6 h-28 overflow-y-auto left-[0.1vw] absolute flex flex-row flex-wrap mobile:text-xs mobile:h-20 mobile:m-0 mobile:p-0
+      <div className="max-w-[38vh] max-h-[22vh] min-w-[38vh] min-h-[22vh] overflow-y-auto left-[0.1vw] absolute flex flex-row flex-wrap mobile:text-xs mobile:h-20 mobile:m-0 mobile:p-0
       border border-gray-300
-      
+       p-1 mt-5
       ">
         {selectedData.map((data, index) => (
           <div
