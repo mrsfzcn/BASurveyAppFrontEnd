@@ -17,7 +17,7 @@ function QuestionListPage() {
   const deleteTableRows = async (index, rowData) => {
     const response = await QuestionService.delete(rowData.questionOid);
     if (response.status === 200) {
-      alert(rowData.questionOid + ". id'ye sahip soru başarıyla silindi");
+      alert(rowData.questionOid + " No'lu soru başarıyla silindi");
     } else {
       alert("bir hata meydana geldi");
     }
