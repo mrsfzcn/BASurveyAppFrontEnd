@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const GETALL = `http://localhost:8090/api/v1/student/students`;
-const DELETE = `http://localhost:8090/api/v1/user/delete/`;
+const DELETE = `http://localhost:8090/api/v1/student/delete-student-by-id/`;
 const UPDATE_STUDENT = "http://localhost:8090/api/v1/student/assign-student-tag";
 
 class StudentService {
