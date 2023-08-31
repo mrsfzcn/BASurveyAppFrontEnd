@@ -22,7 +22,7 @@ export const items = [
     label: "Sınıf İşlemleri",
     content: [
       { name: "Öğrenci Listeleme", href: "/ogrencilistesi" },
-      { name: "Eğitmen Listeleme", href: "" },
+      { name: "Eğitmen Listeleme", href: "/egitmenlistesi" },
       { name: "Sınıfa Eğitmen Atama", href: "/assigning-trainer-to-class" },
       { name: "Sınıfa Öğrenci Atama", href: "/assignstudentclass" },
     ],

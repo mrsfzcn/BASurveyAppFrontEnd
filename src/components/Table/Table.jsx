@@ -57,7 +57,7 @@ const Table = ({
     return Object.keys(rowData).map((key, colIndex) => {
       const value = rowData[key];
   
-      if (key === "studentTags") {
+      if (key === "studentTags" || key === "trainerTags") {
         const tagNames = value.map(tag => tag.tagString).join(", ");
         return <td key={colIndex}>{tagNames}</td>;
       } else if (Array.isArray(value)) {
