@@ -25,6 +25,7 @@ import AnketEkle from "./pages/surveys/AnketEkle";
 import AnketDuzenle from "./pages/surveys/AnketDuzenle";
 import UpdateTag from "./pages/tag/UpdateTag";
 import PreviewSurvey from "./pages/CreateSurveyPage/PreviewSurvey";
+import SurveyFilling from "./pages/surveyFillingPage/SurveyFilling";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
 import QuestionAddPage from "./pages/questionPage/QuestionAddPage";
 import UserEditPage from "./pages/userEdit/UserEditPage";
@@ -53,6 +54,7 @@ function App() {
           <Route path="/assignstudentclass" element={<AssignStudentToClass />} />
           <Route path="/addquestion" element={<AddQuestion />} />
           <Route path="/preview" element={<PreviewSurvey />} />
+          <Route path="/anket-doldurma-sayfası" element={<SurveyFilling />} />
           <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/etiket">
             <Route index element={<AddTag />} />

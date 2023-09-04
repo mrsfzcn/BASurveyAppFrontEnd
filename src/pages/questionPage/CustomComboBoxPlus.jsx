@@ -53,6 +53,7 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
 
   return (
     <div className="relative">
+      <div className="flex">
     <input
       type="text"
       value={searchTerm}
@@ -81,6 +82,7 @@ const CustomComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
     >
       <QuestionPlusIcon />
     </button>
+    </div>
     {showSelected && (
       <div className="max-w-[38vh] max-h-[22vh] min-w-[38vh] min-h-[22vh] overflow-y-auto left-[0.1vw] absolute flex flex-row flex-wrap mobile:text-xs mobile:h-20 mobile:m-0 mobile:p-0
       border border-gray-300
