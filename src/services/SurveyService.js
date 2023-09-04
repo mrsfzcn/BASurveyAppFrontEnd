@@ -5,6 +5,7 @@ const UPDATE= "http://localhost:8090/api/v1/survey/update";
 const QUESTIONS = "http://localhost:8090/api/v1/questions/find-all-question";
 const ADD_QUESTIONS_TO_SURVEY ="http://localhost:8090/api/v1/survey/add-questions-to-survey";
 const LIST = "http://localhost:8090/api/v1/survey/list";
+const FIND_SURVEY_BY_EMAIL_TOKEN = "http://localhost:8090/api/v1/survey/find-survey-by-email-token/";
 const DELETE = "http://localhost:8090/api/v1/survey/delete/";
 const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/find-survey-by-id/";
 const GET_ALL_TAG = "http://localhost:8090/api/v1/student-tag/student-tags";
@@ -58,6 +59,15 @@ class SurveyService {
       },
     };
     return await axios.get(LIST, config);
+  }
+  async findSurveyByEmailToken(value) {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    return await axios.get(FIND_SURVEY_BY_EMAIL_TOKEN+value, config);
   }
   async delete(id) {
     const token = localStorage.getItem("token");
