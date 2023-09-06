@@ -6,6 +6,7 @@ import TrainerTagService from "../../services/TrainerTagService.js";
 import "./surveyfilling.css"
 import MultipleChoiceSurvey from "./MultipleChoiceSurvey";
 import LikertSurvey from "./LikertSurvey";
+import OpenEndedSurvey from "./OpenEndedSurvey.jsx";
 function SurveyFilling() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -74,6 +75,8 @@ function SurveyFilling() {
         if (type === "Çoktan Seçmeli") {
           return (
             <MultipleChoiceSurvey
+            multipleQuestionOid={questionId}
+            multipleOptions={options}
               veriTasi={(veri) => {
                 setUpData(veri);
               }}
@@ -88,6 +91,10 @@ function SurveyFilling() {
                 setUpData(veri);
               }}
             />
+          );
+        }else if (type === "Açık Uçlu") {
+          return (
+            <OpenEndedSurvey/>
           );
         } else {
           return null; 
