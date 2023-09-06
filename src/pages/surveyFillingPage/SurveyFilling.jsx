@@ -2,6 +2,7 @@ import { useLocation, useNavigate,useParams  } from "react-router-dom";
 import { useState,useEffect  } from "react";
 import SurveyService from "../../services/SurveyService.js";
 import StudentService from "../../services/StudentService.js";
+import TrainerTagService from "../../services/TrainerTagService.js";
 import "./surveyfilling.css"
 import MultipleChoiceSurvey from "./MultipleChoiceSurvey";
 import LikertSurvey from "./LikertSurvey";
@@ -14,7 +15,35 @@ function SurveyFilling() {
     const [firstName , setFirstName] = useState('');
     const [lastName , setLastName ] = useState('');
   const [questions, setQuestions] = useState([]);
+  const [masterTrainers, setMasterTrainers] = useState({});
+  const [assistantTrainers, setAssistantTrainers] = useState({});
       useEffect(() => {
+        console.log(tokenValue);
+
+        const fetchTrainersData = async () => {
+          try {
+            const response = await TrainerTagService.findTrainersEmailToken(tokenValue);
+            const trainersResponses = response.data;
+        
+            trainersResponses.forEach((trainerRes) => {
+              if (trainerRes.authorizedRole === 'MASTER_TRAINER') {
+                setMasterTrainers({
+                  firstName: trainerRes.firstName,
+                  lastName: trainerRes.lastName,
+                  authorizedRole: trainerRes.authorizedRole
+                });
+              } else if (trainerRes.authorizedRole === 'ASSISTANT_TRAINER') {
+                setAssistantTrainers({
+                  firstName: trainerRes.firstName,
+                  lastName: trainerRes.lastName,
+                  authorizedRole: trainerRes.authorizedRole
+                });
+              }
+            });
+            } catch (error) {
+            console.error(error);
+          }
+        };
         const fetchStudentData = async () => {
             try {
               const response = await StudentService.findUserIdByEmailToken(tokenValue)
@@ -35,6 +64,7 @@ function SurveyFilling() {
             console.error(error);
           }
         };
+        fetchTrainersData()
         fetchStudentData();
         fetchData();
       }, []);
@@ -66,17 +96,21 @@ function SurveyFilling() {
       console.log(upData);
 
   return (
-<div className="flex flex-col grid-flow-col justify-center items-center bg-[#8dc2ec] min-h-screen  rounded relative" >
+<div className="flex flex-col grid-flow-col  items-center bg-[#8dc2ec] min-h-screen  rounded relative" >
     <div className="bg-white mt-9 rounded flex flex-col bg-[#e8f2fb] w-1/2 px-8  " >  
 
     <h2 className="text-3xl font-bold text-center mb-4 pt-4 ">{surveyTitle}</h2>
-    <p className="text-justify pt-2 px-4 mb-16 text-l">
+    <p className="text-justify pt-2 px-4 mb-7 text-l">
       Merhaba Arkadaşlar, <br />
       Sizlere daha iyi destek olabilmek adına hazırlamış olduğumuz Boost Eğitim Süreci Anketini doldurmanızı rica ederiz.
       Teşekkürler
-      <br /><br /> <br />
-      Merhaba, {firstName} {lastName}.. Bu formu gönderdiğinizde, sahibi adınızı ve e-posta adresinizi görür.
-      <br /> <br /> <br />
+      <br /><br />
+      Merhaba, <span className= "font-bold">{firstName} {lastName}</span> .. Bu formu gönderdiğinizde, sahibi adınızı ve e-posta adresinizi görür.
+      <br /> <br /> 
+      Uzman Eğitmen: <span className= "font-bold">{masterTrainers.firstName} {masterTrainers.lastName}</span>
+      <br />
+      Asistan Eğitmen: <span className= "font-bold">{assistantTrainers.firstName} {assistantTrainers.lastName}</span>
+      <br /><br /> 
       <strong className="text-red-700">Gerekli*</strong>
     </p>
 
