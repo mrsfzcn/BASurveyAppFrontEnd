@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button";
+import Input from "../Input";
+import InputMulti from "../InputMulti";
 import QuestionPlusIcon from "../../pages/questionPage/QuestionPlusIcon";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import CrossIconLarge from "../icons/CrossIconLarge";
 
-const MultipleChoice = (props) => {
+const MultiOptionalMultiSelectableAndOther = (props) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [editIndex, setEditIndex] = useState(null);
@@ -89,13 +91,13 @@ const MultipleChoice = (props) => {
                   className="py-0.4 px-1 rounded my-1 mx-1"
                   onClick={() => handleEditOption(index)}
                 >
-                  <BsFillPencilFill className="edit-btn"/>
+                  <BsFillPencilFill className="edit-btn" />
                 </button>
                 <button
                   className="py-0.4 px-1 rounded my-1 mx-1"
                   onClick={() => handleDeleteOption(index)}
                 >
-                  <BsFillTrashFill className="delete-btn"/>
+                  <BsFillTrashFill className="delete-btn" />
                 </button>
               </>
             )}
@@ -142,7 +144,7 @@ const MultipleChoice = (props) => {
             editIndex !== null ? "hidden" : ""
           } `}
         >
-          <QuestionPlusIcon/>
+          <QuestionPlusIcon />
         </button>
       </div>
       {showConfirmPopup && (
@@ -150,10 +152,11 @@ const MultipleChoice = (props) => {
           <div className="bg-[#F1F1F1] p-7 rounded-lg text-center shadow-md relative">
             <div className="flex justify-end ">
               <button
-                className="absolute top-2 right-3 text-gray-500 "
+                className="absolute top-3 right-3 text-gray-500 "
                 onClick={() => setShowConfirmPopup(false)}
               >
-                <CrossIconLarge/>
+                {" "}
+                <CrossIconLarge />{" "}
               </button>
             </div>
             <h2 className="text-center mb-2 mt-1 font-bold">
@@ -163,10 +166,9 @@ const MultipleChoice = (props) => {
               {options.map((option, index) => (
                 <div key={index} className="my-2 flex items-center">
                   <input
-                    type="radio"
-                    name="likert-options"
+                    type="checkbox"
                     id={`option-${index}`}
-                    className="mr-2 flex-start w-4 h-4 "
+                    className="mr-2 flex-start w-4 h-4"
                   />
                   <label
                     htmlFor={`option-${index}`}
@@ -176,6 +178,18 @@ const MultipleChoice = (props) => {
                   </label>
                 </div>
               ))}
+              <div className="my-2 flex items-center">
+                <input
+                  type="checkbox"
+                  id="addOptionCheckboxStart"
+                  className="mr-2 flex-start w-4 h-4"
+                />
+                <InputMulti
+                  type="text"
+                  className="ml-4"
+                  placeholder="Yeni opsiyon girebilirsiniz"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -183,5 +197,4 @@ const MultipleChoice = (props) => {
     </div>
   );
 };
-
-export default MultipleChoice;
+export default MultiOptionalMultiSelectableAndOther;

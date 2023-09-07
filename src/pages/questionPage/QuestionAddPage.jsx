@@ -14,7 +14,11 @@ import QuestionPlusIcon from "./QuestionPlusIcon";
 import QuestionTypeService from "../../services/QuestionTypeService";
 import QuestionService from "../../services/QuestionService";
 import MultipleChoice from "../../components/options/MultipleChoice";
-import LikertScale from "../../components/options/Likert";
+import Likert from "../../components/options/Likert";
+import Matrix from "../../components/options/Matrix";
+import MultiOptionalMultiSelectable from "../../components/options/MultiOptionalMultiSelectable";
+import MultiOptionalMultiSelectableAndOther from "../../components/options/MultiOptionalMultiSelectableAndOther";
+import OpenEnded from "../../components/options/OpenEnded";
 
 const QuestionAddPage = ({ props }) => {
   const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
@@ -83,6 +87,19 @@ const QuestionAddPage = ({ props }) => {
   };
 
   const handleCreate = (event) => {
+    if (upData.length === 0) {  //Matriks upData içini doldurmadığı için zaten çalışmıyordu ama burda da hataya giriyor...
+      setAlert({
+        type: "error",
+        message: "Sorularda en az bir şık seçeneği olmalıdır",
+      });
+      event.preventDefault(); // Form gönderimin engellemek için 
+      setTimeout(() => {
+        setError(false);
+        setAlert({ type: "", message: "" });
+      }, 5000);
+      return;
+      
+    }
     if (upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
       setAlert({
         type: "error",
@@ -220,12 +237,12 @@ const QuestionAddPage = ({ props }) => {
     }
   };
 
-  const [upData, setUpData] = useState([]); //cevap seçeneklerine kaydedilen veriyi tutmak için 
-  const renderComponent = () => {
-    console.log(selectedOption);
+  const [upData, setUpData] = useState([]); //seçeneklere kaydedilen veriyi tutmak için 
+  const renderComponent = () => {     //Sistemde kullanılacak tüm soru tipleri aşağıdakilerdir.
+    //console.log(selectedOption);
     if (selectedOption === "Çoktan Seçmeli") {
       return (
-        <MultipleChoice
+        <MultipleChoice questionString={createQuestion.questionString}
           veriTasi={(veri) => {
             setUpData(veri);
           }}
@@ -233,17 +250,49 @@ const QuestionAddPage = ({ props }) => {
       );
     } else if (selectedOption === "Likert") {
       return (
-        <LikertScale
+        <Likert questionString={createQuestion.questionString}
           veriTasi={(veri) => {
             setUpData(veri);
           }}
         />
       );
-    } else {
+    }else if(selectedOption === "Çok Seçenekli Çok Seçilebilir"){
+      return (
+        <MultiOptionalMultiSelectable questionString={createQuestion.questionString}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    }else if(selectedOption === "Çok Seçenekli Çok Seçilebilir Ve Seçenek Girilebilir"){
+      return (
+        <MultiOptionalMultiSelectableAndOther questionString={createQuestion.questionString}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    }else if(selectedOption === "Matriks"){
+      return (
+        <Matrix questionString={createQuestion.questionString}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    }else if(selectedOption === "Açık Uçlu"){
+      return (
+        <OpenEnded questionString={createQuestion.questionString}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    }
+     else {
       return null; 
     }
   };
-  console.log(upData);
 
   const handleRedirect = () => {
     window.location.href = "/questionlist";
@@ -363,7 +412,7 @@ const QuestionAddPage = ({ props }) => {
                       onGetCustomData={handleCustomComboBoxData}
                     />
                   </div>
-                  <div className="flex flex-row items-center  absolute  pt-8 top-[35vh] ">
+                  <div className="flex flex-row items-center  absolute top-[35vh] ">
                     {renderComponent()}
                   </div>
                 </div>
