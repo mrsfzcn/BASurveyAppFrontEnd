@@ -87,19 +87,22 @@ const QuestionAddPage = ({ props }) => {
   };
 
   const handleCreate = (event) => {
-    if (upData.length === 0) {  //Matriks upData içini doldurmadığı için zaten çalışmıyordu ama burda da hataya giriyor...
-      setAlert({
-        type: "error",
-        message: "Sorularda en az bir şık seçeneği olmalıdır",
-      });
-      event.preventDefault(); // Form gönderimin engellemek için 
-      setTimeout(() => {
-        setError(false);
-        setAlert({ type: "", message: "" });
-      }, 5000);
-      return;
-      
+    if(selectedOption != "Açık Uçlu" && selectedOption != "Matriks"){
+      if (upData.length === 0) {  //Matriks upData içini doldurmadığı için zaten çalışmıyordu ama burda da hataya giriyor...
+        setAlert({
+          type: "error",
+          message: "Sorularda en az bir şık seçeneği olmalıdır",
+        });
+        event.preventDefault(); // Form gönderimin engellemek için 
+        setTimeout(() => {
+          setError(false);
+          setAlert({ type: "", message: "" });
+        }, 5000);
+        return;
+        
+      }
     }
+    
     if (upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
       setAlert({
         type: "error",
@@ -276,16 +279,13 @@ const QuestionAddPage = ({ props }) => {
       return (
         <Matrix questionString={createQuestion.questionString}
           veriTasi={(veri) => {
-            setUpData(veri);
+            setUpData(veri); 
           }}
         />
       );
     }else if(selectedOption === "Açık Uçlu"){
       return (
         <OpenEnded questionString={createQuestion.questionString}
-          veriTasi={(veri) => {
-            setUpData(veri);
-          }}
         />
       );
     }
