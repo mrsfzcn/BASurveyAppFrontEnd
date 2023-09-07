@@ -15,39 +15,7 @@ const LikertSurvey = (props) => {
     console.log("Seçilen Değer:", value,"Soru oid:",likertQuestionOid);
   };
 
-  const handleBottomLeftInputChange = (e) => {
-    setBottomLeftValue(e.target.value);
-  };
-  
 
-  const handleBottomRightInputChange = (e) => {
-    setBottomRightValue(e.target.value);
-  };
-
-  const handleStartValueChange = (value) => {
-    const newValue = parseInt(value);
-    if (newValue >= 0 && newValue<=1 && newValue < endValue) {
-      setStartValue(likertOptions[0]);
-      renderScale()
-    }
-  };
-
-  const handleEndValueChange = (value) => {
-    const newValue = parseInt(value);
-    if (newValue > startValue && newValue <= 10) {
-      setEndValue(likertOptions[1]);
-      renderScale()
-    }
-  };
-
-  useEffect(() => {
-    setOptions(prevOptions => {
-      const newOptions = [startValue,endValue, bottomLeftValue, bottomRightValue ];
-      props.veriTasi(newOptions);
-      console.log(newOptions);
-      return newOptions;
-    });
-  }, [bottomLeftValue, bottomRightValue, startValue, endValue]);
 
   const renderScale = () => {
     const scaleValues = Array.from({ length: endValue - startValue + 1 }, (_, index) => startValue + index);
@@ -68,7 +36,7 @@ const LikertSurvey = (props) => {
   };
 
   return (
-    <div className="mt-1 border  pl-[1.5rem] pr-5  w-8/9 h-[11rem] overflow-hidden">
+    <div className="mt-1 border  pl-[1.2rem] pr-5  w-8/9 h-[11rem] overflow-hidden">
       <div className="flex justify-between mb-8 px-1 py-1">
 
       </div>
