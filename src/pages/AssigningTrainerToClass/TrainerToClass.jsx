@@ -209,7 +209,7 @@ const TrainerToClass = () => {
                       rounded
                       bold
                       onClick={() => {
-                        navigate("/adminhome");
+                        navigate("/ogrencilistesi");
                       }}
                     >
                       VAZGEÇ

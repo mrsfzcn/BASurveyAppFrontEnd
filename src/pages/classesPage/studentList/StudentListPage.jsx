@@ -11,7 +11,7 @@ function StudentListPage() {
 
     const [students, setStudents] = useState([]);
   
-    const header = ["No", "Adı", "Soyadı", "Eposta", "Kayıt Tarihi", "Tags"];
+    const header = ["No", "Adı", "Soyadı", "Eposta", "Kayıt Tarihi", "Sınıfı"];
   
     // To delete selected question
     const deleteTableRows = async (index, rowData) => {

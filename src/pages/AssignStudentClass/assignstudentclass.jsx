@@ -74,8 +74,8 @@ function AssignStudentClass(){
     const handleAssign = (e) => {
       e.preventDefault();
       if(!selection.label){
-        setError("Lütfen bir öğrenci seçiniz!")
-        return;
+              setError("Lütfen bir öğrenci seçiniz!")
+              return;
       }
       if(!selectedClass){
         setError("Lütfen bir sınıf seçiniz.");
@@ -100,7 +100,7 @@ function AssignStudentClass(){
 
     const closePopup = () => {
       setIsPopupOpen(false);
-      navigate("/adminhome");
+      navigate("/ogrencilistesi");
     };
 
 
@@ -148,7 +148,7 @@ function AssignStudentClass(){
                     <option value="">Öğrenci Seçiniz</option>
                     {studentOptions.map((student) => (
                       <option key={student.value} value={student.label}>
-                        {student.label}
+                        {student.label + " " + student.surname}
                       </option>
                     ))}
                   </select>
@@ -219,7 +219,7 @@ function AssignStudentClass(){
                             className="mt-4"
                             onClick={() => {
                               setIsCancelConfirmationOpen(false);
-                              navigate("/anketler");
+                              navigate("/ogrencilistesi");
                             }}
                           >
                             Onayla
