@@ -36,7 +36,7 @@ const LikertSurvey = (props) => {
   };
 
   return (
-    <div className="mt-1 border  pl-[1.2rem] pr-5  w-8/9 h-[11rem] overflow-hidden">
+    <div className="mt-1 pl-[1.2rem] pr-5  w-8/9 h-[11rem] overflow-hidden">
       <div className="flex justify-between mb-8 px-1 py-1">
 
       </div>

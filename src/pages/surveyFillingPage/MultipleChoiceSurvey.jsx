@@ -10,7 +10,7 @@ const MultipleChoiceSurvey = (props) => {
   };
   return (
     <div className="App">
-      <div className='overflow-x-auto px-4 py-2 overflow-y-auto max-w-[46vh] max-h-[22vh] border border-gray-300 p-1 min-w-[46vh] min-h-[22vh] mt-0.5'>
+      <div className='overflow-x-auto px-4 py-2 overflow-y-auto max-w-[46vh] max-h-[22vh]  p-1 min-w-[46vh] min-h-[22vh] mt-0.5'>
         {multipleOptions.map((option, index) => (
           <div key={index} className="flex items-center py-1">
 
