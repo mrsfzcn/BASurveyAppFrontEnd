@@ -27,9 +27,12 @@ function PreviewSurvey() {
   const handleSendSurvey = () => {
     const surveyData = {   
       surveyId: surveyOid, 
-      questionIds: selectedQuestions.map((question) => question.questionOid),
-   
+      questionIds: selectedQuestions.map((question) => ({
+          questionOid: question.questionOid,
+          order: question.order
+      })),
     };
+    console.log("Gönderilen veri:", surveyData);
 
     SurveyService.addQuestionsToSurvey(surveyData)
       .then((response) => {
