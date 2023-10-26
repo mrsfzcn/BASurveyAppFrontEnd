@@ -15,6 +15,7 @@ const UserEditPage = () => {
     const userId = localStorage.getItem("userId");
     const [userEmail, setUserEmail] = useState("");
     const token = localStorage.getItem("token");
+    const selectedRole = localStorage.getItem("selectedRole")
     const navigate = useNavigate();
     const [initialUserData, setInitialUserData] = useState({
         name: "",
@@ -30,12 +31,21 @@ const UserEditPage = () => {
 
     const fetchData = async () => {
         try {
-
-            const response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            let response;
+            if(selectedRole=== "Student"){
+                 response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            }else{
+                 response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            }
+           
 
             const data = response.data;
 
@@ -70,7 +80,12 @@ const UserEditPage = () => {
         setSurname(initialUserData.surname);
         setMail(initialUserData.mail);
         setRole(initialUserData.role);
-        navigate("/ogrencilistesi");
+        if(selectedRole=== "Student"){
+            navigate("/ogrencilistesi");
+        }else{
+            navigate("/egitmenlistesi");
+        }
+        
     };
 
     const namehandleChange = (event) => {
