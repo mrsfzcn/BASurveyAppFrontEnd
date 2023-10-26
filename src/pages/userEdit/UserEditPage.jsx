@@ -15,6 +15,7 @@ const UserEditPage = () => {
     const userId = localStorage.getItem("userId");
     const [userEmail, setUserEmail] = useState("");
     const token = localStorage.getItem("token");
+    const selectedRole = localStorage.getItem("selectedRole")
     const navigate = useNavigate();
     const [initialUserData, setInitialUserData] = useState({
         name: "",
@@ -23,6 +24,7 @@ const UserEditPage = () => {
         role: "",
     });
 
+       
 
     useEffect(() => {
         fetchData();
@@ -30,12 +32,31 @@ const UserEditPage = () => {
 
     const fetchData = async () => {
         try {
-
-            const response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
+            let response;
+         switch (selectedRole) {
+            case "Student":
+                response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+           headers: {
+               Authorization: `Bearer ${token}`,
+           },
+       });
+                break;
+            case "Trainer":
+                response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+         
+                break;
+         
+            default: response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+                break;
+         }
 
             const data = response.data;
 
@@ -70,7 +91,20 @@ const UserEditPage = () => {
         setSurname(initialUserData.surname);
         setMail(initialUserData.mail);
         setRole(initialUserData.role);
-        navigate("/ogrencilistesi");
+       
+        switch (selectedRole) {
+            case "Student":
+                navigate("/ogrencilistesi");
+                break;
+            case "Trainer":
+                navigate("/egitmenlistesi");
+                break;
+            default:
+                navigate("/kullanici")
+                break;
+        }
+        
+        localStorage.removeItem("selectedRole")
     };
 
     const namehandleChange = (event) => {

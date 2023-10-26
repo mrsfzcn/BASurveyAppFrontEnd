@@ -102,7 +102,9 @@ const TrainerToClass = () => {
       });
   };
 
-  const header = { header: "Eğitmen Atama", href: "/assigning-trainer-to-class" };
+  const header = {
+    header: "Eğitmen Atama", href: "/assigning-trainer-to-class", describe:
+      "Eğitmen atama sayfasına hoşgeldiniz buradan eğitmenleri ilgili olduğu sınıflara atayabilirsiniz." };
 
   const subtitle = [
     {
@@ -111,7 +113,7 @@ const TrainerToClass = () => {
     },
     {
       title: "Sınıf İşlemleri",
-      href: "/anketler",
+      href: "/assigning-trainer-to-class",
     },
     {
       title: "Sınıfa Eğitmen Atama ",

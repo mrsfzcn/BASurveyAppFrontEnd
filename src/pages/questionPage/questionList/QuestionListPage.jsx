@@ -48,7 +48,9 @@ function QuestionListPage() {
     fetchData();
   }, []);
 
-  const header2 = { header: "Soru Listesi", href: "/questionlist" };
+  const header2 = {
+    header: "Soru Listesi", href: "/questionlist", describe:
+      "Soru listesi sayfasına hoşgeldiniz buradan soruları görüntüleyebilirsiniz." };
   const subtitle = [
     {
       title: "Anasayfa",

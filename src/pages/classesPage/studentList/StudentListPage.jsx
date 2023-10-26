@@ -31,7 +31,10 @@ function StudentListPage() {
   
     const handleEditClick = (rowData) => {
       console.log(rowData.oid);
+      console.log(rowData)
       localStorage.setItem("userId", rowData.oid);
+      localStorage.setItem("selectedRole","Student")
+      // localStorage.setItem("selectedRole",rowData.authorizedRole)
       navigate("/edituser"); //editleme url'i gelecek
       // navigate(`/edituser/${rowData.oid}`, { state: rowData });
     };
@@ -50,7 +53,7 @@ function StudentListPage() {
       fetchData();
     }, []);
   
-    const header2 = { header: "Öğrenci Listesi", href: "/ogrencilistesi" };
+  const header2 = { header: "Öğrenci Listesi", href: "/ogrencilistesi", describe: "Öğrenci listeme sayfasına hoşgeldiniz buradan öğrencileri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
     const subtitle = [
       {
         title: "Anasayfa",
@@ -67,13 +70,11 @@ function StudentListPage() {
     ];
     
     return (
-      <Layout>
-  
+      <Layout>  
           <div className='flex flex-col  gap-10 bg-slate-100 h-full'>
           <BreadCrumbs header={header2} subtitle={subtitle} />
           <Table  data={students} header={header} useIcon={true} useLabel={true} deleteTableRows={deleteTableRows} editTableRows={handleEditClick}/>
             </div>
-          
           </Layout>
     )
   }

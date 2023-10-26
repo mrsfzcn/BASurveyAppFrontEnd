@@ -10,6 +10,7 @@ import SortIcon from "../svg/sort-solid.jsx";
 import DeleteIcon from "../svg/delete-svg";
 import Alert from "../../.../../../../components/Alert";
 import Input from "../../../../components/Input";
+import BreadCrumbs from "../../../../components/BreadCrumbs";
 
 export default function List() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -181,23 +182,30 @@ export default function List() {
     indexOfFirstItem,
     indexOfLastItem
   );
+  const header = {
+    header: "Tüm Kullanıcılar", href: "/kullanici", describe:
+      "Kullanıcı görünteleme sayfasına hoşgeldiniz buradan bütün kullanıcıları görüntüleyebilirsiniz." }
+  const subtitle = [
+    {
+      title: "Anasayfa",
+      href: "/adminhome"
+    },
+    {
+      title: "Kullanıcı İşlemleri",
+      href: "/kullanici"
+    }
+  ]
+  
+
   return (
     <>
       <Layout>
         <div className="background ">
           <div>
             <div className="allUsersHeaderDiv ">
-              <div>
-                <p className="allUsersHeader ">Tüm Kullanıcılar </p>
-              </div>
-              <div className="allUsersHeader ">
-                <p>|</p>
-              </div>
-              <div>
-                <p className="allUsersSubHeader ">
-                  Ana Sayfa &gt; Kullanıcı İşlemleri &gt; Tüm Kullanıcılar
-                </p>
-              </div>
+              <div style={{marginLeft: "70px"}}>
+                <BreadCrumbs header={header} subtitle={subtitle} />
+              </div>                         
             </div>
           </div>
           <div className="list ">

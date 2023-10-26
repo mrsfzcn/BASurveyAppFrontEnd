@@ -298,7 +298,10 @@ const QuestionAddPage = ({ props }) => {
     window.location.href = "/questionlist";
   };
 
-  const header = { header: "Soru Ekle", href: "/questionlist/add" };
+  const header = {
+    header: "Soru Ekle", href: "/questionlist/add", describe:
+      "Soru ekleme sayfasına hoşgeldiniz buradan soru ekleme işlemi yapabilirsiniz."
+};
 
   const [isFocused, setIsFocused] = React.useState(false);
 

@@ -31,7 +31,9 @@ function TrainerListPage() {
   
     const handleEditClick = (rowData) => {
       console.log(rowData.oid);
+      console.log(rowData)
       localStorage.setItem("userId", rowData.oid);
+      localStorage.setItem("selectedRole","Trainer")
       navigate("/edituser"); //editleme url'i gelecek
       // navigate(`/edituser/${rowData.oid}`, { state: rowData });
     };
@@ -50,7 +52,7 @@ function TrainerListPage() {
       fetchData();
     }, []);
   
-    const header2 = { header: "Eğitmen Listesi", href: "/egitmenlistesi" };
+  const header2 = { header: "Eğitmen Listesi", href: "/egitmenlistesi", describe: "Eğitmen listeme sayfasına hoşgeldiniz buradan eğitmenleri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
     const subtitle = [
       {
         title: "Anasayfa",
