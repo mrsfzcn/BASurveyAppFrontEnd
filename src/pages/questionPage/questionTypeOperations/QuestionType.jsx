@@ -11,7 +11,10 @@ import QuestionTypeService from "../../../services/QuestionTypeService";
 function QuestionType() {
   const navigate = useNavigate();
   //Breadcrumb
-  const header = { header: "Soru Tipi", href: "/questiontypelist" };
+  const header = {
+    header: "Soru Tipi", href: "/questiontypelist", describe:
+      "Soru tipi işlemleri sayfasına hoşgeldiniz buradan soru tipi ekleme , silme ve güncelleme işlemleri yapabilirsiniz."
+};
   const subtitle = [
     {
       title: "Anasayfa",
