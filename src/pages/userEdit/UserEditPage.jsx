@@ -125,27 +125,45 @@ const UserEditPage = () => {
 
     return (
         <Layout>
-            <div className='user-edit-page'>
-                <div className='outer-react'>
-                    <ContentHeading/>
-                    <div className='inner-react'>
-                        <div className="inner2-react">
-                            <div className="inputs">
-                                <input type="text" id='name' value={name} onChange={namehandleChange}/>
-                                <input type="text" id='surname' value={surname} onChange={surnamehandleChange}/>
-                                <input type="text" id='mail' value={mail} onChange={mailhandleChange}/>
-                                <input type="text" id='role' value={role} onChange={rolehandleChange}/>
-                            </div>
-                            <div className='buttons'>
-                                <button className='kaydet' onClick={handleSubmit}>KAYDET</button>
-                                <button className='vazgec' onClick={handleCancel}>VAZGEÇ</button>
-                            </div>
-                        </div>
+          <div className='user-edit-page'>
+            <div className='outer-react'>
+              <ContentHeading />
+              <div className='inner-react'>
+                <div className="inner2-react">
+                  <div className="inputs">
+                    <div className="input-field">
+                      <label htmlFor="name">İsim</label>
+                      <input type="text" id='name' value={name} onChange={namehandleChange} />
                     </div>
+                    <div className="input-field">
+                      <label htmlFor="surname">Soyisim</label>
+                      <input type="text" id='surname' value={surname} onChange={surnamehandleChange} />
+                    </div>
+                    <div className="input-field">
+                      <label htmlFor="mail">Email</label>
+                      <input type="text" id='mail' value={mail} onChange={mailhandleChange} />
+                    </div>
+                    <div className="input-field">
+                      <label htmlFor="role">Role</label>
+                      <select id='role' value={role} onChange={rolehandleChange}>
+                        <option value="admin">ADMIN</option>
+                        <option value="manager">MANAGER</option>
+                        <option value="master_trainer">Master Trainer</option>
+                        <option value="assistant_trainer">Assistant Trainer</option>
+                        <option value="student">Student</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className='buttons'>
+                    <button className='kaydet' onClick={handleSubmit}>KAYDET</button>
+                    <button className='vazgec' onClick={handleCancel}>VAZGEÇ</button>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </Layout>
-    );
+      );      
 };
 
 export default UserEditPage;
