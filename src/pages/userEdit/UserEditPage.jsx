@@ -146,8 +146,8 @@ const UserEditPage = () => {
                     <div className="input-field">
                       <label htmlFor="role">Role</label>
                       <select id='role' value={role} onChange={rolehandleChange}>
-                        <option value="admin">ADMIN</option>
-                        <option value="manager">MANAGER</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Yönetici</option>
                         <option value="master_trainer">Master Trainer</option>
                         <option value="assistant_trainer">Assistant Trainer</option>
                         <option value="student">Student</option>
