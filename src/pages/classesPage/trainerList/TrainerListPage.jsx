@@ -31,7 +31,9 @@ function TrainerListPage() {
   
     const handleEditClick = (rowData) => {
       console.log(rowData.oid);
+      console.log(rowData)
       localStorage.setItem("userId", rowData.oid);
+      localStorage.setItem("selectedRole","Trainer")
       navigate("/edituser"); //editleme url'i gelecek
       // navigate(`/edituser/${rowData.oid}`, { state: rowData });
     };
