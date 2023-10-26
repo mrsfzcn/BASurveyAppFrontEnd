@@ -24,6 +24,7 @@ const UserEditPage = () => {
         role: "",
     });
 
+       
 
     useEffect(() => {
         fetchData();
@@ -32,20 +33,30 @@ const UserEditPage = () => {
     const fetchData = async () => {
         try {
             let response;
-            if(selectedRole=== "Student"){
-                 response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+         switch (selectedRole) {
+            case "Student":
+                response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+           headers: {
+               Authorization: `Bearer ${token}`,
+           },
+       });
+                break;
+            case "Trainer":
+                response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-            }else{
-                 response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-            }
-           
+         
+                break;
+         
+            default: response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+                break;
+         }
 
             const data = response.data;
 
@@ -80,12 +91,20 @@ const UserEditPage = () => {
         setSurname(initialUserData.surname);
         setMail(initialUserData.mail);
         setRole(initialUserData.role);
-        if(selectedRole=== "Student"){
-            navigate("/ogrencilistesi");
-        }else{
-            navigate("/egitmenlistesi");
+       
+        switch (selectedRole) {
+            case "Student":
+                navigate("/ogrencilistesi");
+                break;
+            case "Trainer":
+                navigate("/egitmenlistesi");
+                break;
+            default:
+                navigate("/kullanici")
+                break;
         }
         
+        localStorage.removeItem("selectedRole")
     };
 
     const namehandleChange = (event) => {
