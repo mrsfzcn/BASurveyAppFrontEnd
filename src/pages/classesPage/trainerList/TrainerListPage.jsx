@@ -50,7 +50,7 @@ function TrainerListPage() {
       fetchData();
     }, []);
   
-    const header2 = { header: "Eğitmen Listesi", href: "/egitmenlistesi" };
+  const header2 = { header: "Eğitmen Listesi", href: "/egitmenlistesi", describe: "Eğitmen listeme sayfasına hoşgeldiniz buradan eğitmenleri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
     const subtitle = [
       {
         title: "Anasayfa",

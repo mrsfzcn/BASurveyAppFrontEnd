@@ -104,7 +104,9 @@ function AssignStudentClass(){
     };
 
 
-    const header = { header: "Öğrenci Atama", href: "/adminhome" };
+  const header = {
+    header: "Öğrenci Atama", href: "/assignstudentclass", describe:
+      "Öğrenci atama sayfasına hoşgeldiniz buradan öğrencileri ilgili olduğu sınıflara atayabilirsiniz." };
 
   
     const subtitle = [
@@ -114,11 +116,11 @@ function AssignStudentClass(){
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/adminhome",
+        href: "/assignstudentclass",
       },
       {
         title: "Sınıfa Öğrenci Atama",
-        href: "/adminhome",
+        href: "/assignstudentclass",
       },
     ];
     return(

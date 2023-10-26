@@ -147,7 +147,9 @@ const SendSurvey = () => {
     setIsPopupOpen(false);
     navigate("/anketler");
   };
-  const header = { header: "Anket Oluşturma", href: "/createsurvey" };
+  const header = {
+    header: "Anket Gönderme", href: "/sendsurvey", describe:
+      "Anket oluşturma sayfasına hoşgeldiniz buradan anketlerinizi oluşturabilirsiniz." };
 
   const handleCancel = () => {
     setIsCancelConfirmationOpen(true);
@@ -166,6 +168,10 @@ const SendSurvey = () => {
       title: "Anket Oluşturma",
       href: "/createsurvey",
     },
+    {
+      title: "Anket Gönderme",
+      href: "sendsurvey"
+    }
   ];
   return (
     <Layout>

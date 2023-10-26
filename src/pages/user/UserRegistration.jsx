@@ -77,7 +77,7 @@ const UserRegistration = () => {
     window.location.href= '/kullanici'
   };
 
-  const header = { header: "Kullanıcı Ekle", href: "/kullanici/ekle" };
+  const header = { header: "Kullanıcı Ekle", href: "/kullanici/ekle", describe: "Kullanıcı ekleme sayfasına hoşgeldiniz buradan kullanıcı ekleyebilir, silebilir ve güncelleyebilirsiniz." };
 
   const subtitle = [
     {

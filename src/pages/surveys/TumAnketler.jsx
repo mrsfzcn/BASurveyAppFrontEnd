@@ -132,7 +132,10 @@ const TumAnketler = () => {
     };
   }, [deleteSurvey]);
 
-  const header2 = { header: "Tüm Anketler", href: "/anketler" };
+  const header2 = {
+    header: "Tüm Anketler", href: "/anketler", describe:
+      "Anket görüntüleme sayfasına hoşgeldiniz buradan anketleri görüntüleyebilir, güncelleyebilir veya silebilirsiniz."
+  };
 
   const subtitle = [
     {
@@ -142,6 +145,10 @@ const TumAnketler = () => {
     {
       title: "Anket İşlemleri",
       href: "/anketler",
+    },
+    {
+      title: "Anket Oluşturma",
+      href: "/createsurvey"
     },
     {
       title: "Tüm Anketler",
@@ -181,11 +188,10 @@ const TumAnketler = () => {
               <div className="flex flex-col gap-8 ">
                 {surveyQuestions.map((item, index) => (
                   <div
-                    className={`flex gap-4 justify-between${
-                      item.deleted
+                    className={`flex gap-4 justify-between${item.deleted
                         ? " justify-between line-through text-red-500"
                         : ""
-                    }`}
+                      }`}
                     key={index}
                   >
                     {index + 1} - {item.questionString}{" "}
