@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import ContentHeading from '../../components/ContentHeading';
 import Sidebar from '../../components/sidebar/Sidebar'
 import "./UserEditPage.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Layout from '../../components/Layout';
+import Dropdown from '../../components/Dropdown';
 
 const UserEditPage = () => {
     const [name, setName] = useState("");
@@ -16,7 +17,12 @@ const UserEditPage = () => {
     const [userEmail, setUserEmail] = useState("");
     const token = localStorage.getItem("token");
     const selectedRole = localStorage.getItem("selectedRole")
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
+    const options = [
+        { label: "STUDENT", value: "STUDENT" },
+        { label: "MASTER_TRAINER", value: "MASTER_TRAINER" },
+        { label: "ASSISTANT_TRAINER", value: "ASSISTANT_TRAINER" },
+    ];
     const [initialUserData, setInitialUserData] = useState({
         name: "",
         surname: "",
@@ -32,20 +38,20 @@ const UserEditPage = () => {
     const fetchData = async () => {
         try {
             let response;
-            if(selectedRole=== "Student"){
-                 response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+            if (options.value === "STUDENT") {
+                response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-            }else{
-                 response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
+            } else {
+                response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
             }
-           
+
 
             const data = response.data;
 
@@ -68,7 +74,7 @@ const UserEditPage = () => {
     };
 
     const handleChange = (event) => {
-        const {id, value} = event.target;
+        const { id, value } = event.target;
 
         if (id === "userEmail") {
             setUserEmail(value);
@@ -80,12 +86,12 @@ const UserEditPage = () => {
         setSurname(initialUserData.surname);
         setMail(initialUserData.mail);
         setRole(initialUserData.role);
-        if(selectedRole=== "Student"){
+        if (options.value === "STUDENT") {
             navigate("/ogrencilistesi");
-        }else{
-            navigate("/egitmenlistesi");
+        } else {
+            navigate("/kullanici");
         }
-        
+
     };
 
     const namehandleChange = (event) => {
@@ -102,22 +108,22 @@ const UserEditPage = () => {
     };
     const rolehandleChange = (event) => {
         event.preventDefault
-        setRole(event.target.value);
+        setRole(event);
     };
 
     const handleSubmit = async () => {
-
         const firstName = name;
         const lastName = surname;
         const email = mail;
-        const authorizedRole = role;
+        const authorizedRole = role.label;
+        console.log(role); 
         axios.put(
             `http://localhost:8090/api/v1/user/update/${userEmail}`,
             {
                 firstName: name,
                 lastName: surname,
-                email: mail,
-                authorizedRole: role,
+                email: email,
+                authorizedRole: authorizedRole,
             },
             {
                 headers: {
@@ -126,7 +132,7 @@ const UserEditPage = () => {
                 },
             }
         ).then((response) => {
-            console.log("Update successful:", response.data)
+            console.log("Update successful:", response.data)            
         })
             .catch((error) => {
                 console.error("Error updating data:", error)
@@ -134,6 +140,7 @@ const UserEditPage = () => {
         console.log(name);
         console.log(firstName);
         console.log(lastName);
+        console.log(role.label);        
         navigate("/kullanici");
     };
 
@@ -142,14 +149,17 @@ const UserEditPage = () => {
         <Layout>
             <div className='user-edit-page'>
                 <div className='outer-react'>
-                    <ContentHeading/>
+                    <ContentHeading />
                     <div className='inner-react'>
                         <div className="inner2-react">
                             <div className="inputs">
-                                <input type="text" id='name' value={name} onChange={namehandleChange}/>
-                                <input type="text" id='surname' value={surname} onChange={surnamehandleChange}/>
-                                <input type="text" id='mail' value={mail} onChange={mailhandleChange}/>
-                                <input type="text" id='role' value={role} onChange={rolehandleChange}/>
+                                <input type="text" id='name' value={name} onChange={namehandleChange} />
+                                <input type="text" id='surname' value={surname} onChange={surnamehandleChange} />
+                                <input type="text" id='mail' value={mail} onChange={mailhandleChange} />
+                                {/* <input type="text" id='role' value={role} onChange={rolehandleChange} /> */}
+                                <div className='dropdown'>
+                                <Dropdown options={options} value={role} onChange={rolehandleChange} placeholder={"Seçim Yap"} />
+                                </div>
                             </div>
                             <div className='buttons'>
                                 <button className='kaydet' onClick={handleSubmit}>KAYDET</button>
