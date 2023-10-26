@@ -43,3 +43,11 @@
   background-color: #f44336;
   color: white;
 }
+
+.dropdown {
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  margin-left: 15%;
+  margin-top: 25px;
+}

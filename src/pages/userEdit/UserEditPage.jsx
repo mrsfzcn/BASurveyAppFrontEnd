@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import ContentHeading from '../../components/ContentHeading';
 import Sidebar from '../../components/sidebar/Sidebar'
 import "./UserEditPage.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Layout from '../../components/Layout';
+import Dropdown from '../../components/Dropdown';
 
 const UserEditPage = () => {
     const [name, setName] = useState("");
@@ -16,7 +17,12 @@ const UserEditPage = () => {
     const [userEmail, setUserEmail] = useState("");
     const token = localStorage.getItem("token");
     const selectedRole = localStorage.getItem("selectedRole")
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
+    const options = [
+        { label: "STUDENT", value: "STUDENT" },
+        { label: "MASTER_TRAINER", value: "MASTER_TRAINER" },
+        { label: "ASSISTANT_TRAINER", value: "ASSISTANT_TRAINER" },
+    ];
     const [initialUserData, setInitialUserData] = useState({
         name: "",
         surname: "",
@@ -79,7 +85,7 @@ const UserEditPage = () => {
     };
 
     const handleChange = (event) => {
-        const {id, value} = event.target;
+        const { id, value } = event.target;
 
         if (id === "userEmail") {
             setUserEmail(value);
@@ -104,7 +110,6 @@ const UserEditPage = () => {
                 break;
         }
         
-        localStorage.removeItem("selectedRole")
     };
 
     const namehandleChange = (event) => {
@@ -121,22 +126,22 @@ const UserEditPage = () => {
     };
     const rolehandleChange = (event) => {
         event.preventDefault
-        setRole(event.target.value);
+        setRole(event);
     };
 
     const handleSubmit = async () => {
-
         const firstName = name;
         const lastName = surname;
         const email = mail;
-        const authorizedRole = role;
+        const authorizedRole = role.label;
+        console.log(role); 
         axios.put(
             `http://localhost:8090/api/v1/user/update/${userEmail}`,
             {
                 firstName: name,
                 lastName: surname,
-                email: mail,
-                authorizedRole: role,
+                email: email,
+                authorizedRole: authorizedRole,
             },
             {
                 headers: {
@@ -145,7 +150,7 @@ const UserEditPage = () => {
                 },
             }
         ).then((response) => {
-            console.log("Update successful:", response.data)
+            console.log("Update successful:", response.data)            
         })
             .catch((error) => {
                 console.error("Error updating data:", error)
@@ -153,6 +158,7 @@ const UserEditPage = () => {
         console.log(name);
         console.log(firstName);
         console.log(lastName);
+        console.log(role.label);        
         navigate("/kullanici");
     };
 
