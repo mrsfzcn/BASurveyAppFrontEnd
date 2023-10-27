@@ -96,3 +96,26 @@
 .pagination li.active {
   background-color: #ccc;
 }
+
+@media (max-width: 600px) {
+  .table {
+    display: block;
+    width: 100%;
+  }
+
+  .table-container {
+    max-height: none;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .table {
+    width: 100%;
+  }
+
+  .first-column, .extra-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
