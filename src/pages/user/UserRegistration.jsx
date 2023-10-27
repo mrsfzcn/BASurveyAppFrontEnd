@@ -10,7 +10,7 @@ import MultiDropdown from "../../components/MultiDropdown";
 
 const UserRegistration = () => {
   const [user, setUser] = useState({
-    password: "",
+    password: passwordGenerator(),
     firstName: "",
     lastName: "",
     roles: [],
@@ -26,11 +26,11 @@ const UserRegistration = () => {
   ];
   const handleSelectedOptionsChange = (updatedOptions) => {
     setSelectedOptions(updatedOptions);
-    const a=updatedOptions.map((i)=>
-       i.value
+    const a = updatedOptions.map((i) =>
+      i.value
     );
-    setUser({ ...user, roles: a})
-    
+    setUser({ ...user, roles: a })
+
   };
   const handleCreate = (event) => {
     event.preventDefault();
@@ -44,14 +44,7 @@ const UserRegistration = () => {
         message: "Soyad 2 karakterden uzun olmalıdır.",
       });
       return;
-    }
-    if (user.password.length < 8) {
-      setAlert({
-        type: "error",
-        message: "Şifre 8 karakterden uzun olmalıdır.",
-      });
-      return;
-    }
+    }    
     if (user.roles.length < 1) {
       setAlert({ type: "error", message: "Rol seçiniz." });
       return;
@@ -74,7 +67,7 @@ const UserRegistration = () => {
       });
   };
   const handleRedirect = () => {
-    window.location.href= '/kullanici'
+    window.location.href = '/kullanici'
   };
 
   const header = { header: "Kullanıcı Ekle", href: "/kullanici/ekle", describe: "Kullanıcı ekleme sayfasına hoşgeldiniz buradan kullanıcı ekleyebilir, silebilir ve güncelleyebilirsiniz." };
@@ -93,6 +86,16 @@ const UserRegistration = () => {
       href: "/kullanici/ekle",
     },
   ];
+//  TAM 8 HANELİ RASTGELE ŞİFRE ÜRETEN BİR METHOD YAZILDI. BACKEND'DEKI VALIDASYONU GEÇEBİLMEK İÇİN 8in ÜSTÜ BİR ŞİFRE OLUŞUYOR EXCEPTION GEÇİLMİŞ OLUYOR
+  function passwordGenerator() {
+    var length = 8,
+      characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      returnedValue = "";
+    for (var i = 0, n = characters.length; i < length; ++i) {
+      returnedValue += characters.charAt(Math.floor(Math.random() * n));
+    }
+    return returnedValue;
+  }
 
   return (
     <Layout>
@@ -122,14 +125,6 @@ const UserRegistration = () => {
                       setUser({ ...user, lastName: e.target.value })
                     }
                   />
-                  <Input
-                    placeholder="Şifre"
-                    half
-                    required
-                    onChange={(e) =>
-                      setUser({ ...user, password: e.target.value })
-                    }
-                  />
                   <div className="w-1/2 flex justify-start items-center gap-5 mobile:flex mobile:flex-col">
                     {/* <Dropdown options={options} onChange={onChange} value={selection}/> */}
                     <MultiDropdown
@@ -139,16 +134,14 @@ const UserRegistration = () => {
                     />
                     <div className="flex flex-wrap gap-4 items-center justify-center ">
 
-                    
-                    
-                    {selectedOptions.map((option) => (
-                      <span
-                        className="flex justify-center items-center  px-2 py-1 rounded-md bg-[#64E9B1] text-black text-sm font-semibold"
-                        key={option.value}
-                      >
-                        {option.label}
-                      </span>
-                    ))}
+                      {selectedOptions.map((option) => (
+                        <span
+                          className="flex justify-center items-center  px-2 py-1 rounded-md bg-[#64E9B1] text-black text-sm font-semibold"
+                          key={option.value}
+                        >
+                          {option.label}
+                        </span>
+                      ))}
                     </div>
                   </div>
                   {alert.type && (
