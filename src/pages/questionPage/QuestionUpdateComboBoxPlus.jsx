@@ -25,21 +25,21 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
   };
 
   useEffect(()=>{
-     if (params.id){
-        QuestionService.questionGetById(params.id)
+    if (params.id){
+      QuestionService.questionGetById(params.id)
         .then((response) => {
-            console.log(response.data);
-            setSelectedData(response.data.questionTags.map((questionTag) => ({label: questionTag.tagString, value: questionTag.tagStringId})))
+          console.log(response.data);
+          setSelectedData(response.data.questionTags.map((questionTag) => ({ label: questionTag.tagString, value: questionTag.tagStringId })))
+          onGetCustomPlusData(response.data.questionTags.map((questionTag) => ({ value: questionTag.tagStringId })));
+          if (selectedData != []) {
+            setShowSelected(true);
+          }
 
-            if(selectedData != []){
-                setShowSelected(true);
-            }
-            
         })
         .catch((error) => {
           alert(params.id + "nolu soru bulunamamıştır");
         });
-     }
+    }
 
   },[]);
 
@@ -52,13 +52,13 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
   const handleQuestionPlusIconClick = () => {
     if (selectedOption) {
       const alreadyExists = selectedData.some((dataItem) => dataItem.value === selectedOption.value);
-    if (!alreadyExists) {
-      setSelectedData((prevSelectedData) => [...prevSelectedData, selectedOption]);
-      setShowSelected(true);
-    }
+      if (!alreadyExists) {
+        setSelectedData((prevSelectedData) => [...prevSelectedData, selectedOption]);
+        setShowSelected(true);
+      }
       setSelectedOption(null);
       setSearchTerm('')
-     
+
     }
   };
 
@@ -105,7 +105,7 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
             top: '6vh',
             left: '0',
             width: '100%',
-            maxHeight: '17vh', 
+            maxHeight: '17vh',
             overflowY: 'auto',
             background: '#FFF',
             border: '1px solid #ccc',
@@ -122,16 +122,16 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
               style={{
                 padding: '0.5rem',
                 cursor: 'pointer',
-                
+
               }}
             >
-              
+
               {option.label}
             </li>
           ))}
         </ul>
       )}
-       <button
+      <button
         onClick={handleQuestionPlusIconClick}
         style={{
           top: '1.3vh',
@@ -147,24 +147,24 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
           {selectedData.map((data, index) => (
             <div key={index} style={{ marginBottom: '1.8rem', marginRight: '0.5rem'}}>
               <span style={{ background: '#D9D9D9',  color: '#000000', paddingTop: '0.22rem ',paddingBottom:'0.22rem' ,borderRadius: '0.2604166vh' }}>
-              <span style={{  position: 'relative', top: '2vh', right: '0.12vw',left:'0.1vw' ,paddingRight: '0.01vw'}}>
-              <LabelIcon/>
+                <span style={{  position: 'relative', top: '2vh', right: '0.12vw',left:'0.1vw' ,paddingRight: '0.01vw'}}>
+                  <LabelIcon/>
                 </span>
                 <span style={{  paddingLeft: '1.2rem ',paddingRight: '0.5rem'}}>
-                {data.label}
+                  {data.label}
                 </span>
                 <button
                   onClick={() => handleRemoveSelectedData(data)}
                   style={{  position: 'relative', top: '-0.55vh', right: '0.12vw', cursor: 'pointer' ,paddingLeft: '0.01vw'}}
-                >    
+                >
                   <CrossIcon/>
                 </button>
               </span>
             </div>
           ))}
-          
+
         </div>
-      )}     
+      )}
     </div>
   );
 };
