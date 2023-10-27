@@ -100,9 +100,11 @@ const UserEditPage = () => {
        
         switch (selectedRole) {
             case "Student":
+                localStorage.removeItem("selectedRole")
                 navigate("/ogrencilistesi");
                 break;
             case "Trainer":
+                localStorage.removeItem("selectedRole")
                 navigate("/egitmenlistesi");
                 break;
             default:
