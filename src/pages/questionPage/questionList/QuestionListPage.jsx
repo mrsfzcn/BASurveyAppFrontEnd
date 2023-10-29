@@ -15,16 +15,22 @@ function QuestionListPage() {
 
   // To delete selected question
   const deleteTableRows = async (index, rowData) => {
-    const response = await QuestionService.delete(rowData.questionOid);
-    if (response.status === 200) {
-      alert(rowData.questionOid + " No'lu soru başarıyla silindi");
-    } else {
-      alert("bir hata meydana geldi");
+    let response;
+    try {
+      response = await QuestionService.delete(rowData.questionOid);
+    } catch (error) {
+      alert(error.response.data.exceptionMessage);
     }
+
+    if (response.data) {
+      alert(rowData.questionOid + " No'lu soru başarıyla silindi");
     console.log(response);
     const rows = [...surveys];
     rows.splice(index, 1);
     setSurveys(rows);
+    } else {
+    alert("bir hata meydana geldi");
+    }
   };
 
   const navigate = useNavigate();
