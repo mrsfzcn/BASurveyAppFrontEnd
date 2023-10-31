@@ -431,6 +431,7 @@ const QuestionAddPage = ({ props }) => {
                       </option>
                     ))}
                   </select>
+                  </div>
                   <div className="flex flex-row items-center  absolute top-[35vh] ">
                     {renderComponent()}
                   </div>
