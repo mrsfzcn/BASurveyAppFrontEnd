@@ -36,7 +36,7 @@ const QuestionAddPage = ({ props }) => {
     tagOids: [],
     options: [],
   });
-
+  const [matrixQuestions, setMatrixQuestions] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,8 +86,29 @@ const QuestionAddPage = ({ props }) => {
     setCreateQuestion({ ...createQuestion, tagOids: a });
   };
 
+  function matrixSpecialKeywordError(){
+    setAlert({
+      type: "error",
+      message: "Soru '$$' içeremez! ",
+    });
+    setTimeout(() => {
+      setError(false);
+      setAlert({ type: "", message: "" });
+    }, 5000);
+  }
+
   const handleCreate = (event) => {
-    if(selectedOption != "Açık Uçlu" && selectedOption != "Matriks"){
+    const newDataArray = [
+      {
+        questionString: selectedOption!="Matriks" ? createQuestion.questionString: matrixQuestions.join(" $$ "),
+        order: createQuestion.order,
+        questionTypeOid: createQuestion.questionTypeOid,
+        tagOids: createQuestion.tagOids,
+        options: upData,
+      },
+    ];
+    
+    if(selectedOption != "Açık Uçlu"){
       if (upData.length === 0) {  //Matriks upData içini doldurmadığı için zaten çalışmıyordu ama burda da hataya giriyor...
         setAlert({
           type: "error",
@@ -99,11 +120,10 @@ const QuestionAddPage = ({ props }) => {
           setAlert({ type: "", message: "" });
         }, 5000);
         return;
-        
       }
     }
     
-    if (upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
+    if (selectedOption==="Likert" && upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
       setAlert({
         type: "error",
         message: "Sol Etiket boş olamaz",
@@ -114,9 +134,10 @@ const QuestionAddPage = ({ props }) => {
         setAlert({ type: "", message: "" });
       }, 5000);
       return;
-      
+
     }
-    if (upData[3] === "") {
+    
+    if (selectedOption==="Likert" && upData[3] === "") {
       setAlert({
         type: "error",
         message: "Sağ Etiket boş olamaz",
@@ -128,28 +149,19 @@ const QuestionAddPage = ({ props }) => {
       }, 5000); 
       return;
     }
-    if (
-      createQuestion.questionString.length > 1 &&
+      if (
+      newDataArray[0].questionString.length > 1 &&
       createQuestion.questionTypeOid !== null
     ) {
-      if (createQuestion.tagOids.length === 0 && !isEmptyTagOids) {
+            if (createQuestion.tagOids.length === 0 && !isEmptyTagOids) {
         setShowConfirmPopup(true);
       } else {
         event.preventDefault();
-        const newDataArray = [
-          {
-            questionString: createQuestion.questionString,
-            order: createQuestion.order,
-            questionTypeOid: createQuestion.questionTypeOid,
-            tagOids: createQuestion.tagOids,
-            options: upData,
-          },
-        ];
-        console.log(newDataArray);
         QuestionService.createQuestions(newDataArray)
           .then((response) => {
             setAlert({ type: "success", message: "Soru başarıyla eklendi." });
             setCreateQuestion({ ...createQuestion, questionString: "" });
+            if(selectedOption!="Matriks")
             document.getElementById("myTextarea").value = "";
             setTimeout(() => {
               window.location.reload(); //ekle butona tıklayınca etiket ve tip temizlensin diye eklendi.
@@ -185,7 +197,7 @@ const QuestionAddPage = ({ props }) => {
       }
     } else {
       setIsEmptyTagOids(false);
-      if (createQuestion.questionString.length <= 1) {
+      if (selectedOption!="Matriks" && createQuestion.questionString.length <= 1) {
         setError(true);
         setAlert({
           type: "error",
@@ -280,7 +292,9 @@ const QuestionAddPage = ({ props }) => {
         <Matrix questionString={createQuestion.questionString}
           veriTasi={(veri) => {
             setUpData(veri); 
-          }}
+          }} 
+          setMatrixQuestions={setMatrixQuestions}
+          matrixSpecialKeywordError ={matrixSpecialKeywordError}
         />
       );
     }else if(selectedOption === "Açık Uçlu"){
@@ -374,7 +388,7 @@ const QuestionAddPage = ({ props }) => {
         <BreadCrumbs header={header} subtitle={subtitle} />
         <div className="flex flex-col items-center h-90">
           <div className="flex justify-center items-center bg-[#F1F1F1]  w-[66%] h-[79.8vh] rounded-lg absolute flex-col  p-8 mobile:w-[95%]">
-            <div className="flex justify-center left-[4vh] top-8  font-Poppins text-base leading-6 text-left absolute">
+          {selectedOption!="Matriks" ? <>  <div className="flex justify-center left-[4vh] top-8  font-Poppins text-base leading-6 text-left absolute">
               <p>Soru metninizi giriniz:</p>
             </div>
             <div className="flex justify-center  m-auto absolute h-[20%] w-11/12 top-16">
@@ -392,13 +406,14 @@ const QuestionAddPage = ({ props }) => {
                   outline: "none",
                   transition: "border-color 0.2s ease-in-out",
                 }}
-                placeholder="Metin giriniz..."
+                placeholder={selectedOption=="Matriks" ? "Lütfen Matriks soru satırını alt kısımdan ekleyin.": "Metni Giriniz..."}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 required
                 onChange={handleChange}
+                disabled={selectedOption=="Matriks" && true}
               />
-            </div>
+            </div></>: <h2 className="flex justify-center top-8 text-2xl font-Poppins font-medium absolute">Lütfen Matriks soru satırını alt kısımdan ekleyin.</h2>}
             <div className="flex flex-row justify-start mb-[12vh] items-center space-x-[12.8rem] ">
               <div className="flex ml-10">
                 <div className="flex items-center space-x-1">

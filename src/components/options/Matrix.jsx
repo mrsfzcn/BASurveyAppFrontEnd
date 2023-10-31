@@ -8,7 +8,7 @@ import CrossIconLarge from "../icons/CrossIconLarge";
 // Likert örneğinde ki gibi veritaşi metoduyla alt component'ten üst sayfaya veri taşıdım. Orayı inceleyebilirsiniz!!!!!!!
 
 const Matrix = (props) => {
-  const [inputValueColumns, setInputValueColumns] = useState("");
+    const [inputValueColumns, setInputValueColumns] = useState("");
   const [inputValueRows, setInputValueRows] = useState("");
   const [editIndexRows, setEditIndexRows] = useState(null);
   const [editIndexColumns, setEditIndexColumns] = useState(null);
@@ -28,22 +28,30 @@ const Matrix = (props) => {
       if (rows.includes(trimmedValue)) {
         alert("Bu değer zaten eklenmiş!");
       } else {
-        if (editIndexRows !== null) {
-          const updatedOptions = [...rows];
-          updatedOptions[editIndexRows] = trimmedValue;
-          setRows(updatedOptions);
-          setEditIndexRows(null);
-        } else {
-          setRows([...rows, trimmedValue]);
+       if(trimmedValue.includes(" $$ "))
+       props.matrixSpecialKeywordError()
+        else{
+          if (editIndexRows !== null) {
+            const updatedOptions = [...rows];
+            updatedOptions[editIndexRows] = trimmedValue;
+            setRows(updatedOptions);
+            props.setMatrixQuestions(updatedOptions);
+            setEditIndexRows(null);
+          } else {
+            setRows([...rows, trimmedValue]);
+            props.setMatrixQuestions([...rows, trimmedValue]);
+          }
+          setInputValueRows("");
+          //console.log("Satıra Yeni Değer Eklendi:", trimmedValue);
         }
-        setInputValueRows("");
-        //console.log("Satıra Yeni Değer Eklendi:", trimmedValue);
+        
       }
     }
   };
   const handleDeleteOptionRows = (index) => {
     const updatedOptions = rows.filter((_, i) => i !== index);
     setRows(updatedOptions);
+    props.setMatrixQuestions(updatedOptions);
   };
 
   const handleEditOptionRows = (index) => {
@@ -70,9 +78,11 @@ const Matrix = (props) => {
           const updatedOptions = [...columns];
           updatedOptions[editIndexColumns] = trimmedValue;
           setColumns(updatedOptions);
+          props.veriTasi(updatedOptions)
           setEditIndexColumns(null);
-        } else {
+                 } else {
           setColumns([...columns, trimmedValue]);
+          props.veriTasi([...columns, trimmedValue])
         }
         setInputValueColumns("");
         //console.log("Sütuna Yeni Değer Eklendi:", trimmedValue);
@@ -82,6 +92,7 @@ const Matrix = (props) => {
   const handleDeleteOptionColumns = (index) => {
     const updatedOptions = columns.filter((_, i) => i !== index);
     setColumns(updatedOptions);
+    props.veriTasi(updatedOptions)
   };
 
   const handleEditOptionColumns = (index) => {
@@ -110,7 +121,7 @@ const Matrix = (props) => {
       >
         ÖNİZLEME
       </Button>
-      <div className="flex">
+            <div className="flex">
         <div className="flex-1">
           <h2 className="text-center mb-2">Satırlar(Sorular)</h2>
           <div className="overflow-x-auto overflow-y-auto max-w-[265px] max-h-[15vh] border border-gray-300 p-1 min-w-[265px] min-h-[15vh] mt-0.5">
