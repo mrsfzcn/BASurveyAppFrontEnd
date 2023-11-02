@@ -51,15 +51,18 @@ const Table = ({
     }
   });
 
-  const handleRowClick = (value) => {};
+  const handleRowClick = (value) => { };
 
   const renderTableCells = (rowData) => {
     return Object.keys(rowData).map((key, colIndex) => {
       const value = rowData[key];
-  
+
       if (key === "studentTags" || key === "trainerTags") {
         const tagNames = value.map(tag => tag.tagString).join(", ");
         return <td key={colIndex}>{tagNames}</td>;
+      } else if (key == "questionString" && value.includes(" $$ ") && rowData.questionType == "Matriks") {
+        const matriksQuestions = value.split(" $$ ").join(", ")
+        return <td key={colIndex}>{matriksQuestions}</td>
       } else if (Array.isArray(value)) {
         return <td key={colIndex}>{value.join(", ")}</td>;
       } else {
@@ -67,7 +70,7 @@ const Table = ({
       }
     });
   };
-  
+
 
   const handleEditClick = (rowData) => {
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
@@ -127,36 +130,36 @@ const Table = ({
         <div className="first-column ">
           {/* sadece göster ve filtreleme kısmını içine alan kısım */}
           <div className="mobile:flex mobile:flex-col mobile:gap-2 flex flex-row justify-between w-full text-xs mobile:max-w-full">
-          {/* göster kısmı */}
-          <div className="filter-wrapper ">
-            <label>Göster: </label>
-            <select value={itemsPerPage} onChange={handleRowCountChange} className="mx-2">
-              {itemsPerPageOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <label>Satır</label>
-          </div>
-          {/* filtreleme kısmı */}
-          <div className="mobile:flex mobile:flex-col"  >
-            <label>Buna göre: </label>
-            <select value={filterColumn} onChange={handleColumnChange} className="mx-3 mobile:mx-0">
-              <option value="">Hepsi</option>
-              {header.map((column) => (
-                <option key={column} value={column}>
-                  {column}
-                </option>
-              ))}
-            </select>
-            <div>
-            <label>Ara :</label>
-            <Input className="mobile:pb-0" value={filterValue} onChange={handleFilterChange} />
+            {/* göster kısmı */}
+            <div className="filter-wrapper ">
+              <label>Göster: </label>
+              <select value={itemsPerPage} onChange={handleRowCountChange} className="mx-2">
+                {itemsPerPageOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <label>Satır</label>
+            </div>
+            {/* filtreleme kısmı */}
+            <div className="mobile:flex mobile:flex-col"  >
+              <label>Buna göre: </label>
+              <select value={filterColumn} onChange={handleColumnChange} className="mx-3 mobile:mx-0">
+                <option value="">Hepsi</option>
+                {header.map((column) => (
+                  <option key={column} value={column}>
+                    {column}
+                  </option>
+                ))}
+              </select>
+              <div>
+                <label>Ara :</label>
+                <Input className="mobile:pb-0" value={filterValue} onChange={handleFilterChange} />
 
+              </div>
             </div>
           </div>
-        </div>
         </div>
         <div className="table-wrapper mt-5 mobile:mt-5 mobile:w-full mobile:text-xs ">
           <div className=" max-h-[400px] overflow-y-auto">

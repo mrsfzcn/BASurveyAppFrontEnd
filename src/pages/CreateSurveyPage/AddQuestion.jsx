@@ -193,7 +193,7 @@ function AddQuestion() {
                                 <h2 className="text-left font-bold m-2 p-2">Anket Adı: </h2>
                                 <p className="m-2 p-2">{surveyTitle}</p>
                             </div>
-
+                            
                             {selectedQuestions.map((question, index) => (
                                 <div
                                     key={index}
@@ -201,7 +201,7 @@ function AddQuestion() {
                                     onClick={() => handleSelectedQuestionClick(question)}
                                 >
                                     <div className="flex items-center">
-                                        <p>{question.questionString}</p>
+                                    <p>{question.questionType=="Matriks" ? question.questionString.split(" $$ ").join(", ") : question.questionString}</p>
 
                                         <div className="ml-auto">
                                             <label>
@@ -247,7 +247,7 @@ function AddQuestion() {
                                     onClick={() => handleQuestionClick(question)}
                                 >
                                     <div className="flex items-center justify-between">
-                                        <p>{question.questionString}</p>
+                                        <p>{question.questionType=="Matriks" ? question.questionString.split(" $$ ").join(", ") : question.questionString}</p>
                                         {question.selected && (
                                             <div className="ml-auto">
                                                 <label>
