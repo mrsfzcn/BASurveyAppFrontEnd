@@ -24,7 +24,7 @@ function Input({
   );
 
   return (
-    <input
+    <input 
       type={type}
       placeholder={placeholder}
       value={value}
