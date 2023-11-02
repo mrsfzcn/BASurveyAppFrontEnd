@@ -12,6 +12,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import CustomComboBox from "./CustomComboBox";
 import QuestionUpdateComboBoxPlus from './QuestionUpdateComboBoxPlus';
 import Alert from "../../components/Alert";
+import MatriksInput from "../../components/QuestionMatriksInput";
 
 export default function QuestionUpdatePage() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -136,7 +137,23 @@ export default function QuestionUpdatePage() {
   const handleUpdateQuestion = (event) => {
     event.preventDefault();
     console.log(updateQuestion);
-    const questionTypeIdFixer = questionTypeOptions.find(type => type.label == questionType)    
+    const questionTypeIdFixer = questionTypeOptions.find(type => type.label == questionType)
+    if(questionType == "Matriks"){
+      const matriks = questionString.split(" $$ ")
+      if(matriks.includes("")){
+        setAlert({
+          type: "error",
+          message:
+            "Matriks bos girdi birakilamaz",
+        });
+        setTimeout(() => {
+          setAlert({ type: "", message: "" });
+        }, 5000);
+        return;
+      }
+      
+    }
+    
     const confirmedUpdatedQuestion = { ...updateQuestion, questionTypeOid: questionTypeIdFixer.value, questionString:questionString,tagOids: questionTagIds }
     QuestionService.updateQuestion(confirmedUpdatedQuestion)
       .then((response) => {
@@ -224,12 +241,13 @@ export default function QuestionUpdatePage() {
                 </div>
                 <div className="flex items-center   w-[600px] ">
                   <label className="font-semibold w-[150px]">Soru Metni</label>
+                  {questionType != "Matriks" ?(
                   <Input
                     onChange={handleChange}
                     value={questionString}
                     full
                     className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
-                  />
+                  />) : <MatriksInput questionString={questionString} setQuestionString={setQuestionString} /> }
                 </div>
                 <div className="flex items-center w-[600px]">
                   <label className="font-semibold  w-[150px]">

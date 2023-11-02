@@ -424,13 +424,12 @@ const QuestionAddPage = ({ props }) => {
                 <div className="flex items-center">
                   <span className="mr-3">:</span>
                   <div className="w-[20vw] left-5.8vw mobile:w-50">
-                  <select>
-                    {questionTypeOptions.map((type) => (
-                      <option key={type.value} value={type.value}>
-                        {type.label}
-                      </option>
-                    ))}
-                  </select>
+                  <div><CustomComboBox
+                      options={questionTypeOptions}
+                      placeholder="Seçiniz"
+                      onGetCustomData={handleCustomComboBoxData}
+                    />
+                  </div>
                   </div>
                   <div className="flex flex-row items-center  absolute top-[35vh] ">
                     {renderComponent()}
