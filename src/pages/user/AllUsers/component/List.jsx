@@ -148,7 +148,7 @@ export default function List() {
   const handleEditClick = async (oid) => {
     console.log(oid);
     localStorage.setItem("userId", oid);
-    navigate("/edituser"); //editleme url'i gelecek
+    navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
   };
 
   const handleDeleteClick = async (oid) => {
@@ -188,7 +188,7 @@ export default function List() {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome"
+      href: "/yonetici-sayfasi"
     },
     {
       title: "Kullanıcı İşlemleri",

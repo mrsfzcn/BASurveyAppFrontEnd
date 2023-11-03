@@ -39,7 +39,7 @@ const UpdateType = () => {
 
       if (response.status === 200) {
         setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
-        navigate("/questiontypelist");
+        navigate("/soru-tipi-listesi");
       } else {
         setAlert({
           type: "error",
@@ -57,14 +57,14 @@ const UpdateType = () => {
 
   //vazgeç butonuna basarsa kullanılan method
   const navigateMain = (e) => {
-    navigate("/questiontypelist");
+    navigate("/soru-tipi-listesi");
   };
 
   //
 
   const header = {
     header: "Soru Tipi Güncelle",
-    href: "/questiontypelist/guncelle",
+    href: "/soru-tipi-listesi/guncelle",
     describe:
       "Soru Tipi Güncelleme sayfasıdır. Bu sayfada etiket güncelleyebilirsiniz.",
   };
@@ -76,11 +76,11 @@ const UpdateType = () => {
     },
     {
       title: "Soru Tipi İşlemleri",
-      href: "/questiontypelist",
+      href: "/soru-tipi-listesi",
     },
     {
       title: "Soru Tipi Güncelle",
-      href: "/questiontypelist/guncelle",
+      href: "/soru-tipi-listesi/guncelle",
     },
   ];
 

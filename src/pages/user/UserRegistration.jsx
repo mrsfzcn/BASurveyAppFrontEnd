@@ -75,7 +75,7 @@ const UserRegistration = () => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Kullanıcı İşlemleri",

@@ -198,7 +198,7 @@ export default function QuestionUpdatePage() {
 
 
   const navigateMain = (e) => {
-    navigate("/questionlist");
+    navigate("/soru-listesi");
   };
 
   const handleSubmit = (e) => {
@@ -207,19 +207,19 @@ export default function QuestionUpdatePage() {
     // BACKEND TARAFINDA DÜZELENME YAPILMASI ŞART !!
   };
 
-  const header2 = { header: "Soru Listesi", href: "/questionlist" };
+  const header2 = { header: "Soru Listesi", href: "/soru-listesi" };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/questionlist",
+      href: "/soru-listesi",
     },
     {
       title: "Soru Listesi",
-      href: "/questionlist/guncelle/",
+      href: "/soru-listesi/guncelle/",
     },
   ];
 

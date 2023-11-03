@@ -37,7 +37,7 @@ function QuestionListPage() {
 
   const handleEditClick = (rowData) => {
     console.log(rowData);
-    navigate(`/questionlist/guncelle/${rowData.questionOid}`, { state: rowData });
+    navigate(`/soru-listesi/guncelle/${rowData.questionOid}`, { state: rowData });
   };
 
   // To get all list 
@@ -55,20 +55,20 @@ function QuestionListPage() {
   }, []);
 
   const header2 = {
-    header: "Soru Listesi", href: "/questionlist", describe:
+    header: "Soru Listesi", href: "/soru-listesi", describe:
       "Soru listesi sayfasına hoşgeldiniz buradan soruları görüntüleyebilirsiniz." };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/questionlist",
+      href: "/soru-listesi",
     },
     {
       title: "Soru Listesi",
-      href: "/questionlist",
+      href: "/soru-listesi",
     },
   ];
     return (

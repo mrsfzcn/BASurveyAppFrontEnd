@@ -13,26 +13,26 @@ export const items = [
   {
     label: "Soru İşlemleri",
     content: [
-      { name: "Tüm Sorular", href: "/questionlist" },
-      { name: "Soru Tipi İşlemleri", href: "/questiontypelist" },
-      { name: "Soru Ekle", href: "/questionlist/add" },
+      { name: "Tüm Sorular", href: "/soru-listesi" },
+      { name: "Soru Tipi İşlemleri", href: "/soru-tipi-listesi" },
+      { name: "Soru Ekle", href: "/soru-listesi/ekle" },
     ],
   },
   {
     label: "Sınıf İşlemleri",
     content: [
-      { name: "Öğrenci Listeleme", href: "/ogrencilistesi" },
-      { name: "Eğitmen Listeleme", href: "/egitmenlistesi" },
-      { name: "Sınıfa Eğitmen Atama", href: "/assigning-trainer-to-class" },
-      { name: "Sınıfa Öğrenci Atama", href: "/assignstudentclass" },
+      { name: "Öğrenci Listeleme", href: "/ogrenci-listesi" },
+      { name: "Eğitmen Listeleme", href: "/egitmen-listesi" },
+      { name: "Sınıfa Eğitmen Atama", href: "/sinifa-egitmen-atama" },
+      { name: "Sınıfa Öğrenci Atama", href: "/sinifa-ogrenci-atama" },
     ],
   },
   {
     label: "Anket İşlemleri",
     content: [
       { name: "Tüm Anketler", href: "/anketler" },
-      { name: "Anket Ekle", href: "/createsurvey" },
-      { name: "Anket Gönder", href: "/sendsurvey" },
+      { name: "Anket Ekle", href: "/anket-olustur" },
+      { name: "Anket Gönder", href: "/anket-gonder" },
     ],
   },
 

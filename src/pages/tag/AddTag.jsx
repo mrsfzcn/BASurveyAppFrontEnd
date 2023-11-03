@@ -20,7 +20,7 @@ function AddTag() {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Etiket İşlemleri",

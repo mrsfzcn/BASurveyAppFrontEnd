@@ -12,17 +12,17 @@ function QuestionType() {
   const navigate = useNavigate();
   //Breadcrumb
   const header = {
-    header: "Soru Tipi", href: "/questiontypelist", describe:
+    header: "Soru Tipi", href: "/soru-tipi-listesi", describe:
       "Soru tipi işlemleri sayfasına hoşgeldiniz buradan soru tipi ekleme , silme ve güncelleme işlemleri yapabilirsiniz."
 };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Soru Tipi İşlemleri",
-      href: "/questiontypelist",
+      href: "/soru-tipi-listesi",
     },
   ];
 
@@ -80,7 +80,7 @@ function QuestionType() {
 
   const handleEditClick = (rowData) => {
     console.log(rowData);
-    navigate(`/questiontypelist/guncelle/` + rowData.questionType, { state: rowData });
+    navigate(`/soru-tipi-listesi/guncelle/` + rowData.questionType, { state: rowData });
   };
 
   const deleteTableRows = async (index, rowData) => {

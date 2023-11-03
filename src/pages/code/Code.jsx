@@ -35,7 +35,7 @@ const Code = () => {
       if (response.status === 200) {
         alert("QR Code başarıyla yenilendi.");
         setNewQrCode(response.data.qrCode);
-        navigate(`/regenerate-qr-code`, { state: response.data.qrCode });
+        navigate(`/yeni-kare-kod-olustur`, { state: response.data.qrCode });
       }
     });
   };
@@ -60,7 +60,7 @@ const Code = () => {
           const decodedToken = TokenService.decodeToken(code.token);
           localStorage.setItem("auth", encrypt("true"));
           if (decodedToken && decodedToken.role === "ADMIN") {
-            navigate("/adminhome");
+            navigate("/yonetici-sayfasi");
           }
         } else {
           alert("hata var");
@@ -75,7 +75,7 @@ const Code = () => {
   useEffect(() => {
     const authItem = localStorage.getItem("auth");
     if (authItem && decrypt(authItem) === "true") {
-      navigate("/adminhome");
+      navigate("/yonetici-sayfasi");
     }
   }, []);
 
@@ -83,7 +83,7 @@ const Code = () => {
 
   useEffect(() => {
     if (!codePage) {
-      navigate("/login");
+      navigate("/giris");
     }
   }, [navigate, codePage]);
 
@@ -153,7 +153,7 @@ const Code = () => {
               type="button"
               className=" w-full h-12 border-none rounded-lg bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white font-poppins font-bold text-base z-10 "
             >
-              <Link to="/login">Geri dön</Link>
+              <Link to="/giris">Geri dön</Link>
             </button>
             <button
               type="submit"

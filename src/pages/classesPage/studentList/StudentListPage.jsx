@@ -35,8 +35,8 @@ function StudentListPage() {
       localStorage.setItem("userId", rowData.oid);
       localStorage.setItem("selectedRole","Student")
       // localStorage.setItem("selectedRole",rowData.authorizedRole)
-      navigate("/edituser"); //editleme url'i gelecek
-      // navigate(`/edituser/${rowData.oid}`, { state: rowData });
+      navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
+      // navigate(`/kullanici-bilgileri-guncelle/${rowData.oid}`, { state: rowData });
     };
   
     // To get all list 
@@ -53,19 +53,19 @@ function StudentListPage() {
       fetchData();
     }, []);
   
-  const header2 = { header: "Öğrenci Listesi", href: "/ogrencilistesi", describe: "Öğrenci listeme sayfasına hoşgeldiniz buradan öğrencileri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
+  const header2 = { header: "Öğrenci Listesi", href: "/ogrenci-listesi", describe: "Öğrenci listeme sayfasına hoşgeldiniz buradan öğrencileri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
     const subtitle = [
       {
         title: "Anasayfa",
-        href: "/adminhome",
+        href: "/yonetici-sayfasi",
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/ogrencilistesi",
+        href: "/ogrenci-listesi",
       },
       {
         title: "Öğrenci Listesi",
-        href: "/ogrencilistesi",
+        href: "/ogrenci-listesi",
       },
     ];
     

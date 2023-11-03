@@ -28,7 +28,7 @@ function Login() {
   useEffect(() => {
     const authItem = localStorage.getItem("auth");
     if (authItem && decrypt(authItem) === "true") {
-      navigate("/adminhome");
+      navigate("/yonetici-sayfasi");
     }
   }, []);
 
@@ -57,9 +57,9 @@ function Login() {
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         if (response.data.qrCode === null) {
-          navigate("/code", { state: { codePage: true } });
+          navigate("/kod", { state: { codePage: true } });
         } else
-          navigate("/qrcode", {
+          navigate("/kare-kod", {
             state: { qrCode: response.data.qrCode, qrCodePage: true },
           });
       })
