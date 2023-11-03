@@ -34,8 +34,8 @@ function TrainerListPage() {
       console.log(rowData)
       localStorage.setItem("userId", rowData.oid);
       localStorage.setItem("selectedRole","Trainer")
-      navigate("/edituser"); //editleme url'i gelecek
-      // navigate(`/edituser/${rowData.oid}`, { state: rowData });
+      navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
+      // navigate(`/kullanici-bilgileri-guncelle/${rowData.oid}`, { state: rowData });
     };
   
     // To get all list 
@@ -52,19 +52,19 @@ function TrainerListPage() {
       fetchData();
     }, []);
   
-  const header2 = { header: "Eğitmen Listesi", href: "/egitmenlistesi", describe: "Eğitmen listeme sayfasına hoşgeldiniz buradan eğitmenleri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
+  const header2 = { header: "Eğitmen Listesi", href: "/egitmen-listesi", describe: "Eğitmen listeme sayfasına hoşgeldiniz buradan eğitmenleri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
     const subtitle = [
       {
         title: "Anasayfa",
-        href: "/adminhome",
+        href: "/yonetici-sayfasi",
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/egitmenlistesi",
+        href: "/egitmen-listesi",
       },
       {
         title: "Eğitmen Listesi",
-        href: "/egitmenlistesi",
+        href: "/egitmen-listesi",
       },
     ];
     

@@ -5,10 +5,10 @@ const PrivateRoutes = ({ children, ...rest }) => {
   let auth = localStorage.getItem("auth");
 
   if (!auth) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/giris" />;
   }
 
-  return decrypt(auth) === "true" ? <Outlet /> : <Navigate to="/login" />;
+  return decrypt(auth) === "true" ? <Outlet /> : <Navigate to="/giris" />;
 };
 
 export default PrivateRoutes;

@@ -140,7 +140,7 @@ const TumAnketler = () => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Anket İşlemleri",
@@ -148,7 +148,7 @@ const TumAnketler = () => {
     },
     {
       title: "Anket Oluşturma",
-      href: "/createsurvey"
+      href: "/anket-olustur"
     },
     {
       title: "Tüm Anketler",

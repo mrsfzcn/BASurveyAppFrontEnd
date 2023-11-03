@@ -309,11 +309,11 @@ const QuestionAddPage = ({ props }) => {
   };
 
   const handleRedirect = () => {
-    window.location.href = "/questionlist";
+    window.location.href = "/soru-listesi";
   };
 
   const header = {
-    header: "Soru Ekle", href: "/questionlist/add", describe:
+    header: "Soru Ekle", href: "/soru-listesi/ekle", describe:
       "Soru ekleme sayfasına hoşgeldiniz buradan soru ekleme işlemi yapabilirsiniz."
 };
 
@@ -330,15 +330,15 @@ const QuestionAddPage = ({ props }) => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/questionlist",
+      href: "/soru-listesi",
     },
     {
       title: "Soru Ekle",
-      href: "/questionlist/add",
+      href: "/soru-listesi/ekle",
     },
   ];
   const borderColor = error ? "#ff3333" : isFocused ? "#00a4e4" : "#ccc";

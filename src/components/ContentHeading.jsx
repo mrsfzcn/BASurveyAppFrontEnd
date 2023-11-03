@@ -28,18 +28,18 @@ const ContentHeading = () => {
     color: 'hsla(221, 31%, 19%, 1)'
   };
   const header = {
-    header: "Kullanıcı Düzenle", href: "/edituser", describe:
+    header: "Kullanıcı Düzenle", href: "/kullanici-bilgileri-guncelle", describe:
       "Kullanıcı düzenleme sayfasına hoşgeldiniz buradan kullanıcıları güncelleyebilirsiniz."
   };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Kullanıcı Düzenle",
-      href: "/edituser",
+      href: "/kullanici-bilgileri-guncelle",
     },
   ]
 

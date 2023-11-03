@@ -39,7 +39,7 @@ function AdminHome() {
   };
   const handleQuestionClick = (event) => {
     const target = event.target;
-    navigate("/questionlist");
+    navigate("/soru-listesi");
     
   };
   const handleClassroomClick = (event) => {

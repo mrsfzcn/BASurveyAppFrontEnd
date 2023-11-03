@@ -117,7 +117,7 @@ function AddQuestion() {
     }
 
     const handlePreviewClick = () => {
-        navigate("/preview", {
+        navigate("/on-izleme", {
             state: {surveyTitle, surveyOid, selectedQuestions},
         });
     };
@@ -165,12 +165,12 @@ function AddQuestion() {
         setSearchType(selectedOption.value);
     }
 
-    const header = {header: "Anket Oluşturma", href: "/createsurvey"};
+    const header = {header: "Anket Oluşturma", href: "/anket-olustur"};
 
     const subtitle = [
         {
             title: "Anasayfa",
-            href: "/adminhome",
+            href: "/yonetici-sayfasi",
         },
         {
             title: "Anket İşlemleri",
@@ -178,7 +178,7 @@ function AddQuestion() {
         },
         {
             title: "Anket Oluşturma",
-            href: "/createsurvey",
+            href: "/anket-olustur",
         },
     ];
     return (

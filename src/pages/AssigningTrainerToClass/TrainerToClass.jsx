@@ -103,21 +103,21 @@ const TrainerToClass = () => {
   };
 
   const header = {
-    header: "Eğitmen Atama", href: "/assigning-trainer-to-class", describe:
+    header: "Eğitmen Atama", href: "/sinifa-egitmen-atama", describe:
       "Eğitmen atama sayfasına hoşgeldiniz buradan eğitmenleri ilgili olduğu sınıflara atayabilirsiniz." };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Sınıf İşlemleri",
-      href: "/assigning-trainer-to-class",
+      href: "/sinifa-egitmen-atama",
     },
     {
       title: "Sınıfa Eğitmen Atama ",
-      href: "/assigning-trainer-to-class",
+      href: "/sinifa-egitmen-atama",
     },
   ];
   return (
@@ -211,7 +211,7 @@ const TrainerToClass = () => {
                       rounded
                       bold
                       onClick={() => {
-                        navigate("/ogrencilistesi");
+                        navigate("/ogrenci-listesi");
                       }}
                     >
                       VAZGEÇ

@@ -43,7 +43,7 @@ const QrCode = () => {
           const decodedToken = TokenService.decodeToken(code.token);
           localStorage.setItem("auth", encrypt("true"));
           if (decodedToken && decodedToken.role === "ADMIN") {
-            navigate("/adminhome");
+            navigate("/yonetici-sayfasi");
           }
         } else {
           alert("hata var");
@@ -58,7 +58,7 @@ const QrCode = () => {
   useEffect(() => {
     const authItem = localStorage.getItem("auth");
     if (authItem && decrypt(authItem) === "true") {
-      navigate("/adminhome");
+      navigate("/yonetici-sayfasi");
     }
   }, []);
 
@@ -66,7 +66,7 @@ const QrCode = () => {
 
   useEffect(() => {
     if (!qrCodePage) {
-      navigate("/login");
+      navigate("/giris");
     }
   }, [navigate, qrCodePage]);
 

@@ -45,7 +45,7 @@ const RegenerateQrCode = () => {
           const decodedToken = TokenService.decodeToken(code.token);
           localStorage.setItem("auth", encrypt("true"));
           if (decodedToken && decodedToken.role === "ADMIN") {
-            navigate("/adminhome");
+            navigate("/yonetici-sayfasi");
           }
         } else {
           alert("hata var");
@@ -60,7 +60,7 @@ const RegenerateQrCode = () => {
   useEffect(() => {
     const authItem = localStorage.getItem("auth");
     if (authItem && decrypt(authItem) === "true") {
-      navigate("/adminhome");
+      navigate("/yonetici-sayfasi");
     }
   }, []);
 
@@ -116,7 +116,7 @@ const RegenerateQrCode = () => {
                rounded-lg 
                bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white  font-poppins font-bold text-base z-10 "
             >
-              <a href="/login"> Geri dön</a>
+              <a href="/giris"> Geri dön</a>
             </button>
             <button
               className=" w-full h-12 

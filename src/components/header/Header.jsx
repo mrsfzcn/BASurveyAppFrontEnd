@@ -29,7 +29,7 @@ function Header() {
       <p className="ml-4 hidden tablet:block text-white font-medium text-3xl xldektop:text-4xl ">
         Survey App
       </p>
-      <a href="/adminhome" className="tablet:hidden">
+      <a href="/yonetici-sayfasi" className="tablet:hidden">
         <Btlogo />
       </a>
       <div className="hidden tablet:block mr-10 tablet:flex-col-reverse">

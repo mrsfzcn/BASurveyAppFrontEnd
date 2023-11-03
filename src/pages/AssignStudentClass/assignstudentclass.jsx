@@ -100,27 +100,27 @@ function AssignStudentClass(){
 
     const closePopup = () => {
       setIsPopupOpen(false);
-      navigate("/ogrencilistesi");
+      navigate("/ogrenci-listesi");
     };
 
 
   const header = {
-    header: "Öğrenci Atama", href: "/assignstudentclass", describe:
+    header: "Öğrenci Atama", href: "/sinifa-ogrenci-atama", describe:
       "Öğrenci atama sayfasına hoşgeldiniz buradan öğrencileri ilgili olduğu sınıflara atayabilirsiniz." };
 
   
     const subtitle = [
       {
         title: "Anasayfa",
-        href: "/adminhome",
+        href: "/yonetici-sayfasi",
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/assignstudentclass",
+        href: "/sinifa-ogrenci-atama",
       },
       {
         title: "Sınıfa Öğrenci Atama",
-        href: "/assignstudentclass",
+        href: "/sinifa-ogrenci-atama",
       },
     ];
     return(
@@ -221,7 +221,7 @@ function AssignStudentClass(){
                             className="mt-4"
                             onClick={() => {
                               setIsCancelConfirmationOpen(false);
-                              navigate("/ogrencilistesi");
+                              navigate("/ogrenci-listesi");
                             }}
                           >
                             Onayla

@@ -90,7 +90,7 @@ function CreateSurvey() {
     SurveyService.create(createSurveyData)
       .then((response) => {
         const surveyOid = response.data.surveyOid; 
-        navigate("/addquestion", { state: { surveyTitle, surveyOid } }); 
+        navigate("/soru-ekle", { state: { surveyTitle, surveyOid } }); 
         console.log(surveyOid)
 
       })
@@ -104,13 +104,13 @@ function CreateSurvey() {
       });
   };
   const header = {
-    header: "Anket Oluşturma", href: "/createsurvey", describe:
+    header: "Anket Oluşturma", href: "/anket-olustur", describe:
       "Anket oluşturma sayfasına hoşgeldiniz buradan anket oluşturabilirsiniz." };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/adminhome",
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Anket İşlemleri",
@@ -118,7 +118,7 @@ function CreateSurvey() {
     },
     {
       title: "Anket Oluşturma",
-      href: "/createsurvey",
+      href: "/anket-olustur",
     },
   ];
   return (

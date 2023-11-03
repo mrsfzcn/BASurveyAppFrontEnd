@@ -41,19 +41,19 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/qrcode" element={<Qrcode />} />
-        <Route path="/code" element={<Code />} />
-        <Route path="/regenerate-qr-code" element={<RegenerateQrCode />} />
+        <Route path="/giris" element={<Login />} />
+        <Route path="/kare-kod" element={<Qrcode />} />
+        <Route path="/kod" element={<Code />} />
+        <Route path="/yeni-kare-kod-olustur" element={<RegenerateQrCode />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/adminhome" element={<AdminHomePage />} exact />
-          <Route path="/sendsurvey" element={<SendSurvey />} />
-          <Route path="/assigning-trainer-to-class" element={<TrainerToClass/>} />
-          <Route path="/edituser" element={<UserEditPage />} />
-          <Route path="/createsurvey" element={<CreateSurveyPage />} />
-          <Route path="/assignstudentclass" element={<AssignStudentToClass />} />
-          <Route path="/addquestion" element={<AddQuestion />} />
-          <Route path="/preview" element={<PreviewSurvey />} />
+          <Route path="/yonetici-sayfasi" element={<AdminHomePage />} exact />
+          <Route path="/anket-gonder" element={<SendSurvey />} />
+          <Route path="/sinifa-egitmen-atama" element={<TrainerToClass/>} />
+          <Route path="/kullanici-bilgileri-guncelle" element={<UserEditPage />} />
+          <Route path="/anket-olustur" element={<CreateSurveyPage />} />
+          <Route path="/sinifa-ogrenci-atama" element={<AssignStudentToClass />} />
+          <Route path="/soru-ekle" element={<AddQuestion />} />
+          <Route path="/on-izleme" element={<PreviewSurvey />} />
           <Route path="/anket-doldurma-sayfası" element={<SurveyFilling />} />
           <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/etiket">
@@ -77,28 +77,28 @@ function App() {
               <Route index element={<AnketEkle />} />
             </Route>
           </Route>
-          <Route path="/questionlist">
+          <Route path="/soru-listesi">
             <Route index element={<QuestionListPage />} />
-            <Route path="add">
+            <Route path="ekle">
               <Route index element={<QuestionAddPage />} />
             </Route>
             <Route path="guncelle/:id">
               <Route index element={<QuestionUpdatePage />} />
             </Route>
           </Route>
-          <Route path="/questiontypelist">
+          <Route path="/soru-tipi-listesi">
             <Route index element={<QuestionType />} />
             <Route path="guncelle/:id">
               <Route index element={<UpdateType />} />
             </Route>
           </Route>
-          <Route path="/ogrencilistesi">
+          <Route path="/ogrenci-listesi">
             <Route index element={<StudentListPage />} />
             {/* <Route path="guncelle/:id">
               <Route index element={<UpdateType />} />
             </Route> */}
           </Route>
-          <Route path="/egitmenlistesi">
+          <Route path="/egitmen-listesi">
             <Route index element={<TrainerListPage />} />
             {/* <Route path="guncelle/:id">
               <Route index element={<UpdateType />} />

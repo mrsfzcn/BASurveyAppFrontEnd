@@ -19,7 +19,7 @@ function Sidebar() {
     xldesktop:pt-3
      "
     >
-      <a href="/adminhome">
+      <a href="/yonetici-sayfasi">
         <Btlogo />
       </a>
 

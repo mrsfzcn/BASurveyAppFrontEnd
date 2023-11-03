@@ -47,7 +47,7 @@ const Table = ({
   };
 
   const handleEditClick = (rowData) => {
-    navigate(`/questionlist/guncelle/${rowData.questionOid}`, { state: rowData });
+    navigate(`/soru-listesi/guncelle/${rowData.questionOid}`, { state: rowData });
   };
 
   // Pagination
