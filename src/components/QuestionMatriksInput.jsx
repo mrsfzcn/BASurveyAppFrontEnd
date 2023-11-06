@@ -28,14 +28,9 @@ function MatriksInput({ questionString , setQuestionString}) {
           }
     }
 
-    function handleDeleteClick(e){
-        console.log(e.target.id)
-        questions.forEach((element, index) => {
-            if(e.target.id != index){
-                console.log(index)
-            }
-        });
-        const filteredQuestions= questions.filter((x,index)=>index != e.target.id);
+    function handleDeleteClick(index){
+      
+        const filteredQuestions= questions.filter((x,i)=>i !== index);
         setQuestions(filteredQuestions);
         setQuestionString(filteredQuestions.join(' $$ '))
     }
@@ -57,7 +52,7 @@ function MatriksInput({ questionString , setQuestionString}) {
             className="flex md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
           />
           {questions.length >1 &&
-          <button id={index} onClick={handleDeleteClick}><BsFillTrashFill className="delete-btn" /></button>}
+          <button onClick={()=>handleDeleteClick(index)}><BsFillTrashFill className="delete-btn" /></button>}
           </section>
         ))}
         <button className="mx-1 my-1" onClick={handleClick}>
