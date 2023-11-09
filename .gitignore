@@ -1,15 +1,29 @@
-/node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# ides / editors
+/.idea
+/.vscode
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
 /build
 
-.env
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+package-lock.json
 
 npm-debug.log*
-
-.vscode/
-.idea/
-
-.DS_Store
-
-*.swp
-*~
+yarn-debug.log*
+yarn-error.log*
