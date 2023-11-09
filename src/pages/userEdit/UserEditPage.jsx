@@ -115,27 +115,27 @@ const UserEditPage = () => {
     };
 
     const namehandleChange = (event) => {
-        event.preventDefault
+        event.preventDefault()
         setName(event.target.value);
     };
     const surnamehandleChange = (event) => {
-        event.preventDefault
+        event.preventDefault()
         setSurname(event.target.value);
     };
     const mailhandleChange = (event) => {
-        event.preventDefault
+        event.preventDefault()
         setMail(event.target.value);
     };
     const rolehandleChange = (event) => {
-        event.preventDefault
-        setRole(event);
+        event.preventDefault()
+        setRole(event.target.value);
     };
 
     const handleSubmit = async () => {
         const firstName = name;
         const lastName = surname;
         const email = mail;
-        const authorizedRole = role.label;
+        const authorizedRole = role;
         console.log(role); 
         axios.put(
             `http://localhost:8090/api/v1/user/update/${userEmail}`,
@@ -188,11 +188,12 @@ const UserEditPage = () => {
                     <div className="input-field">
                       <label htmlFor="role">Role</label>
                       <select id='role' value={role} onChange={rolehandleChange}>
-                        <option value="admin">Admin</option>
-                        <option value="manager">Yönetici</option>
-                        <option value="master_trainer">Master Trainer</option>
-                        <option value="assistant_trainer">Assistant Trainer</option>
-                        <option value="student">Student</option>
+                      <option value={role}>{role}</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="MANAGER">Yönetici</option>
+                        <option value="MASTER_TRAINER">Master Trainer</option>
+                        <option value="ASSISTANT_TRAINER">Assistant Trainer</option>
+                        <option value="STUDENT">Student</option>
                       </select>
                     </div>
                   </div>
