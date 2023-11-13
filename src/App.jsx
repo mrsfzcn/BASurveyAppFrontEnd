@@ -37,6 +37,7 @@ import RegenerateQrCode from "./pages/regenerateqrcode/RegenerateQrCode";
 import AssignStudentToClass from "./pages/AssignStudentClass/assignstudentclass"
 import StudentListPage from "./pages/classesPage/studentList/StudentListPage";
 import TrainerListPage from "./pages/classesPage/trainerList/TrainerListPage";
+import ClassListPage from "./pages/classesPage/classList/ClassListPage";
 function App() {
   return (
     <Router>
@@ -104,7 +105,11 @@ function App() {
               <Route index element={<UpdateType />} />
             </Route> */}
           </Route>
-
+          <Route>
+            <Route path="/sinif-listesi">
+              <Route index element={<ClassListPage />} />
+            </Route>
+          </Route>  
         </Route>
       </Routes>
     </Router>
