@@ -14,7 +14,7 @@ export const items = [
     label: "Soru İşlemleri",
     content: [
       { name: "Tüm Sorular", href: "/soru-listesi" },
-      { name: "Soru Tipi İşlemleri", href: "/soru-tipi-listesi" },
+      // { name: "Soru Tipi İşlemleri", href: "/soru-tipi-listesi" },
       { name: "Soru Ekle", href: "/soru-listesi/ekle" },
     ],
   },

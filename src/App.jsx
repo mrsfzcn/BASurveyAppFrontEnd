@@ -87,12 +87,12 @@ function App() {
               <Route index element={<QuestionUpdatePage />} />
             </Route>
           </Route>
-          <Route path="/soru-tipi-listesi">
+          {/* <Route path="/soru-tipi-listesi">
             <Route index element={<QuestionType />} />
             <Route path="guncelle/:id">
               <Route index element={<UpdateType />} />
             </Route>
-          </Route>
+          </Route> */}
           <Route path="/ogrenci-listesi">
             <Route index element={<StudentListPage />} />
             {/* <Route path="guncelle/:id">
