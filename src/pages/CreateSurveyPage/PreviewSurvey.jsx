@@ -44,9 +44,19 @@ function PreviewSurvey() {
      
       });
   };
+
+  const deleteSurveyHandle = async (surveyOid) => {
+    try {
+        const response = await SurveyService.delete(surveyOid);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
   const navigateBack = () => {
     navigate(-1);
 };
+
 
 
   const closePopup = () => {
@@ -130,6 +140,7 @@ function PreviewSurvey() {
                             rounded
                             className="mt-4"
                             onClick={() => {
+                              deleteSurveyHandle(surveyOid);
                               setIsCancelConfirmationOpen(false);
                               navigate("/anketler");
                             }}
