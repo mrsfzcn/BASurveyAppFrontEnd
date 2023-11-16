@@ -182,8 +182,13 @@
   border: 2px solid white;
 }
 
-.editButton {
-  margin-right: 1rem;
+.refreshButton {
+  transform: rotate(0deg);
+  transition: transform 400ms;
+}
+
+.refreshTrigger{
+  transform: rotate(360deg);
 }
 
 .tableHeader {
