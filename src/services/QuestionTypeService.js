@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const UPDATE_TYPE = "http://localhost:8090/api/v1/question-types/update-question-type-by-type-string";
-const CREATE_TYPE = "http://localhost:8090/api/v1/question-types/create-question-type";
-const GET_ALL_TYPE = "http://localhost:8090/api/v1/question-types/get-all-question-type";
-const DELETE = `http://localhost:8090/api/v1/question-types/delete/`;
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const UPDATE_TYPE = `${BASE_URL}/api/v1/question-types/update-question-type-by-type-string`
+const CREATE_TYPE = `${BASE_URL}/api/v1/question-types/create-question-type`
+const GET_ALL_TYPE = `${BASE_URL}/api/v1/question-types/get-all-question-type`
+const DELETE = `${BASE_URL}/api/v1/question-types/delete`
 
 class QuestionTypeService {
   async updateType(updateType) {
@@ -35,7 +36,7 @@ class QuestionTypeService {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
     };
-    return await axios.delete(DELETE + id, config);
+    return await axios.delete(`${DELETE}/${id}`, config);
     }
 }
 

@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const GET_ALL_TRAINER = `http://localhost:8090/api/v1/trainer/find-all-trainers`;
-const GET_ALL_TRAINER_TAGS = "http://localhost:8090/api/v1/trainer-tag/findall";
-const DELETE = `http://localhost:8090/api/v1/trainer/delete-trainer-by-id/`;
-const ASSIGN_TRAINER=  "http://localhost:8090/api/v1/trainer/assign-trainer-tag";
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const GET_ALL_TRAINER = `${BASE_URL}/api/v1/trainer/find-all-trainers`
+const GET_ALL_TRAINER_TAGS = `${BASE_URL}/api/v1/trainer-tag/find-all`
+const DELETE = `${BASE_URL}/api/v1/trainer/delete-trainer-by-id`
+const ASSIGN_TRAINER = `${BASE_URL}/api/v1/trainer/assign-trainer-tag`
 
 
 class TrainerService {
@@ -43,7 +44,7 @@ class TrainerService {
             Authorization: `Bearer ${token}`,
             },
         };
-        return await axios.delete(DELETE + id, config);
+        return await axios.delete(`${DELETE}/${id}`, config);
         }
 }
 export default new TrainerService();

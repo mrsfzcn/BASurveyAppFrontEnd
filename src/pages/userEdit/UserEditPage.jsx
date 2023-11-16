@@ -8,6 +8,7 @@ import Layout from '../../components/Layout';
 import Dropdown from '../../components/Dropdown';
 
 const UserEditPage = () => {
+    const BASE_URL = import.meta.env.VITE_BASE_URL
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [mail, setMail] = useState("");
@@ -18,18 +19,13 @@ const UserEditPage = () => {
     const token = localStorage.getItem("token");
     const selectedRole = localStorage.getItem("selectedRole")
     const navigate = useNavigate();    
-    const options = [
-        { label: "STUDENT", value: "STUDENT" },
-        { label: "MASTER_TRAINER", value: "MASTER_TRAINER" },
-        { label: "ASSISTANT_TRAINER", value: "ASSISTANT_TRAINER" },
-    ];
+    
     const [initialUserData, setInitialUserData] = useState({
         name: "",
         surname: "",
         mail: "",
         role: "",
     });
-
        
 
     useEffect(() => {
@@ -41,14 +37,14 @@ const UserEditPage = () => {
             let response;
          switch (selectedRole) {
             case "Student":
-                response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+                 response = await axios.get(`${BASE_URL}/api/v1/student/find-user-by-student-oid/${userId}`, {
            headers: {
                Authorization: `Bearer ${token}`,
            },
        });
                 break;
             case "Trainer":
-                response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
+                 response = await axios.get(`${BASE_URL}/api/v1/trainer/find-user-by-trainer-oid/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -56,7 +52,7 @@ const UserEditPage = () => {
          
                 break;
          
-            default: response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
+             default: response = await axios.get(`${BASE_URL}/api/v1/user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -138,7 +134,7 @@ const UserEditPage = () => {
         const authorizedRole = role;
         console.log(role); 
         axios.put(
-            `http://localhost:8090/api/v1/user/update/${userEmail}`,
+            `${BASE_URL}/api/v1/user/update/${userEmail}`,
             {
                 firstName: name,
                 lastName: surname,
