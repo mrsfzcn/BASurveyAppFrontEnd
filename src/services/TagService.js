@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const UPDATE_TAG = "http://localhost:8090/api/v1/main-tags/update-tag-by-tag-name";
-const UPDATE_TAG_AND_CLASSES = "http://localhost:8090/api/v1/main-tags/update-tag-by-tag-name-and-tag-classes-all";
-const CREATE_TAG = "http://localhost:8090/api/v1/main-tags/";
-const GET_ALL_TAG = "http://localhost:8090/api/v1/main-tags/";
-const DELETE_TAG = "http://localhost:8090/api/v1/main-tags/delete-by-tag-string/";
+const UPDATE_TAG = import.meta.env.VITE_UPDATE_TAG
+const UPDATE_TAG_AND_CLASSES = import.meta.env.VITE_UPDATE_TAG_AND_CLASSES
+const CREATE_TAG = import.meta.env.VITE_CREATE_TAG
+const GET_ALL_TAG = import.meta.env.VITE_GET_ALL_TAG
+const DELETE_TAG = import.meta.env.VITE_DELETE_TAG
 class TagService {
   async updateTag(updateTag) {
     return await axios.put(UPDATE_TAG, updateTag, {
@@ -45,7 +45,7 @@ class TagService {
         Authorization: `Bearer ${token}`,
       },
     };
-    return await axios.delete(DELETE_TAG + tagString , config);
+    return await axios.delete(`${DELETE_TAG}/${tagString}` , config);
   }
 }
 

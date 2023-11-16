@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const LOGIN = "http://localhost:8090/api/v1/auth/authenticate";
-const VERIFYCODE = "http://localhost:8090/api/v1/auth/verify-code";
-const REGISTER = "http://localhost:8090/api/v1/auth/register";
-const REGENERATE_QR_CODE =
-  "http://localhost:8090/api/v1/auth/regenerate-qr-code";
+const LOGIN = import.meta.env.VITE_LOGIN
+const VERIFYCODE = import.meta.env.VITE_VERIFYCODE
+const REGISTER = import.meta.env.VITE_REGISTER
+const REGENERATE_QR_CODE = import.meta.env.VITE_REGENERATE_QR_CODE
+  
 class AuthService {
   login(user) {
     return axios.post(LOGIN, user);

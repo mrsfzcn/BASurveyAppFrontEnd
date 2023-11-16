@@ -29,7 +29,10 @@ const UserEditPage = () => {
         mail: "",
         role: "",
     });
-
+    const FIND_USER_BY_STUDENT_OID = import.meta.env.VITE_FIND_USER_BY_STUDENT_OID
+    const FIND_USER_BY_TRAINER_OID = import.meta.env.VITE_FIND_USER_BY_TRAINER_OID
+    const DEFAULT_USER = import.meta.env.VITE_DEFAULT_USER
+    const DEFAULT_USER_UPDATE = import.meta.env.VITE_DEFAULT_USER_UPDATE
        
 
     useEffect(() => {
@@ -41,14 +44,14 @@ const UserEditPage = () => {
             let response;
          switch (selectedRole) {
             case "Student":
-                response = await axios.get(`http://localhost:8090/api/v1/student/findUserByStudentOid/${userId}`, {
+                 response = await axios.get(`${FIND_USER_BY_STUDENT_OID}/${userId}`, {
            headers: {
                Authorization: `Bearer ${token}`,
            },
        });
                 break;
             case "Trainer":
-                response = await axios.get(`http://localhost:8090/api/v1/trainer/findUserByTrainerOid/${userId}`, {
+                 response = await axios.get(`${FIND_USER_BY_TRAINER_OID}/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -56,7 +59,7 @@ const UserEditPage = () => {
          
                 break;
          
-            default: response = await axios.get(`http://localhost:8090/api/v1/user/${userId}`, {
+            default: response = await axios.get(`${DEFAULT_USER}/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -138,7 +141,7 @@ const UserEditPage = () => {
         const authorizedRole = role;
         console.log(role); 
         axios.put(
-            `http://localhost:8090/api/v1/user/update/${userEmail}`,
+            `${DEFAULT_USER_UPDATE}/${userEmail}`,
             {
                 firstName: name,
                 lastName: surname,

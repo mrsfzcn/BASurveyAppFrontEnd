@@ -1,12 +1,11 @@
 import axios from "axios";
 
-const GETALL = `http://localhost:8090/api/v1/questions/find-all-question`;
-const DELETE = `http://localhost:8090/api/v1/questions/delete-question-by-id/`;
-const GET_QUESTION_BY_ID = "http://localhost:8090/api/v1/questions/find-by-id/";
-const GET_ALL_QUESTION_TAGS = "http://localhost:8090/api/v1/question-tags";
-const CREATE_QUESTION = "http://localhost:8090/api/v1/questions";
-const UPDATE_QUESTION = "http://localhost:8090/api/v1/questions/update-question";
-
+const GETALL = import.meta.env.VITE_GETALL_QUESTION
+const DELETE = import.meta.env.VITE_DELETE_QUESTION
+const GET_QUESTION_BY_ID = import.meta.env.VITE_GET_QUESTION_BY_ID
+const GET_ALL_QUESTION_TAGS = import.meta.env.VITE_GET_ALL_QUESTION_TAGS
+const CREATE_QUESTION = import.meta.env.VITE_CREATE_QUESTION
+const UPDATE_QUESTION = import.meta.env.VITE_UPDATE_QUESTION
 
 class QuestionService {
 
@@ -37,7 +36,7 @@ class QuestionService {
         Authorization: `Bearer ${token}`,
         },
     };
-    return await axios.delete(DELETE + id, config);
+    return await axios.delete(`${DELETE}/${id}`, config);
     }
 
     async questionGetById(id) {
@@ -47,7 +46,7 @@ class QuestionService {
           Authorization: `Bearer ${token}`,
         },
       };
-      return await axios.get(GET_QUESTION_BY_ID + id, config);
+      return await axios.get(`${GET_QUESTION_BY_ID}/${id}`, config);
     }
     async getAllQuestionTags(id) {
       const token = localStorage.getItem("token");

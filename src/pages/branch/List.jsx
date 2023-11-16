@@ -27,7 +27,7 @@ export default function BranchList() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
   const [sortSurname, setSortSurname] = useState();
-
+  const FIND_ALL_USER_DETAILS = import.meta.env.VITE_FIND_ALL_USER_DETAILS
 
   useEffect(() => {
     fetchData(); //Branch bilgisi eklenecek.
@@ -36,7 +36,7 @@ export default function BranchList() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8090/api/v1/user/find-all-user-details`,//Buraya branch yolu gelecek.
+        `${FIND_ALL_USER_DETAILS}`,//Buraya branch yolu gelecek.
         {
           headers: {
             Authorization: `Bearer ${token}`,

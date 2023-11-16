@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const CREATE = "http://localhost:8090/api/v1/survey";
-const UPDATE= "http://localhost:8090/api/v1/survey/update";
-const QUESTIONS = "http://localhost:8090/api/v1/questions/find-all-question";
-const ADD_QUESTIONS_TO_SURVEY ="http://localhost:8090/api/v1/survey/add-questions-to-survey";
-const LIST = "http://localhost:8090/api/v1/survey/list";
-const FIND_SURVEY_BY_EMAIL_TOKEN = "http://localhost:8090/api/v1/survey/find-survey-by-email-token/";
-const DELETE = "http://localhost:8090/api/v1/survey/full-delete/";
-const GET_SURVEY_BY_ID = "http://localhost:8090/api/v1/survey/find-survey-by-id/";
-const GET_ALL_TAG = "http://localhost:8090/api/v1/student-tag/student-tags";
-const ASSIGN=  "http://localhost:8090/api/v1/survey/assign";
-const DEFAULT_SURVEY ="http://localhost:8090/api/v1/survey/";
+const CREATE = import.meta.env.VITE_CREATE_SURVEY
+const UPDATE = import.meta.env.VITE_UPDATE_SURVEY
+const QUESTIONS = import.meta.env.VITE_FIND_ALL_SURVEY_QUESTIONS
+const ADD_QUESTIONS_TO_SURVEY = import.meta.env.VITE_ADD_QUESTIONS_TO_SURVEY
+const LIST = import.meta.env.VITE_SURVEY_LIST
+const FIND_SURVEY_BY_EMAIL_TOKEN = import.meta.env.VITE_FIND_SURVEY_BY_EMAIL_TOKEN
+const DELETE = import.meta.env.VITE_DELETE_SURVEY
+const GET_SURVEY_BY_ID = import.meta.env.VITE_GET_SURVEY_BY_ID
+const GET_ALL_TAG = import.meta.env.VITE_GET_ALL_SURVEY_TAG
+const ASSIGN = import.meta.env.VITE_ASSIGN_SURVEY
+const DEFAULT_SURVEY = import.meta.env.VITE_DEFAULT_SURVEY_ENDPOINT
 
 class SurveyService {
   create(survey) {
@@ -76,7 +76,7 @@ class SurveyService {
         Authorization: `Bearer ${token}`,
       },
     };
-    return await axios.delete(DELETE + id, config);
+    return await axios.delete(`${DELETE}/${id}`, config);
   }
 
   async surveyGetById(id) {
@@ -86,7 +86,7 @@ class SurveyService {
         Authorization: `Bearer ${token}`,
       },
     };
-    return await axios.get(GET_SURVEY_BY_ID + id, config);
+    return await axios.get(`${GET_SURVEY_BY_ID}/${id}`, config);
   }
 
   addQuestionsToSurvey(addQuestion) {
@@ -128,7 +128,7 @@ class SurveyService {
   }
   async getSurveyQuestions(id){
     try{
-        const response = await axios.get(`${DEFAULT_SURVEY}${id}/questions`, {
+        const response = await axios.get(`${DEFAULT_SURVEY}/${id}/questions`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -147,7 +147,7 @@ class SurveyService {
       data: { questionIds: data},
     };
     try{
-      const response = axios.delete(`${DEFAULT_SURVEY}${id}/questions`, config);
+      const response = axios.delete(`${DEFAULT_SURVEY}/${id}/questions`, config);
       return response;
     }catch(error){
       console.log(error);

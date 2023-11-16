@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const GETALL = `http://localhost:8090/api/v1/student/students`;
-const DELETE = `http://localhost:8090/api/v1/student/delete-student-by-id/`;
-const UPDATE_STUDENT = "http://localhost:8090/api/v1/student/assign-student-tag";
-const FIND_USER_ID_BY_EMAIL_TOKEN = "http://localhost:8090/api/v1/user/find-user-by-email-token/";
+const GETALL = import.meta.env.VITE_GETALL_STUDENT
+const DELETE = import.meta.env.VITE_DELETE_STUDENT
+const UPDATE_STUDENT = import.meta.env.VITE_UPDATE_STUDENT
+const FIND_USER_ID_BY_EMAIL_TOKEN = import.meta.env.VITE_FIND_USER_ID_BY_EMAIL_TOKEN
 
 class StudentService {
 
@@ -34,7 +34,7 @@ class StudentService {
           Authorization: `Bearer ${token}`,
           },
       };
-      return await axios.delete(DELETE + id, config);
+      return await axios.delete(`${DELETE}/${id}`, config);
       }
 
       async findUserIdByEmailToken(value) {
@@ -44,7 +44,7 @@ class StudentService {
             Authorization: `Bearer ${token}`,
           },
         };
-        return await axios.get(FIND_USER_ID_BY_EMAIL_TOKEN+value, config);
+        return await axios.get(`${FIND_USER_ID_BY_EMAIL_TOKEN}`+ `${value}`, config);
       }
   }
   export default new StudentService();

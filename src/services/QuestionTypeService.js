@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const UPDATE_TYPE = "http://localhost:8090/api/v1/question-types/update-question-type-by-type-string";
-const CREATE_TYPE = "http://localhost:8090/api/v1/question-types/create-question-type";
-const GET_ALL_TYPE = "http://localhost:8090/api/v1/question-types/get-all-question-type";
-const DELETE = `http://localhost:8090/api/v1/question-types/delete/`;
+const UPDATE_TYPE = import.meta.env.VITE_UPDATE_QUESTION_TYPE
+const CREATE_TYPE = import.meta.env.VITE_CREATE_QUESTION_TYPE
+const GET_ALL_TYPE = import.meta.env.VITE_GET_ALL_QUESTION_TYPE
+const DELETE = import.meta.env.VITE_DELETE_QUESTION_TYPE
 
 class QuestionTypeService {
   async updateType(updateType) {
@@ -35,7 +35,7 @@ class QuestionTypeService {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
     };
-    return await axios.delete(DELETE + id, config);
+    return await axios.delete(`${DELETE}/${id}`, config);
     }
 }
 

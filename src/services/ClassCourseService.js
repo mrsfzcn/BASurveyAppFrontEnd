@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const GETALL = `http://localhost:8090/api/v1/course-group/get-all-data-for-fronted-table`;
+const GETALL = import.meta.env.VITE_GETALLCOURSEGROUP
 
 
 class StudentService {
