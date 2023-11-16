@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const GET_ALL_TRAINER = import.meta.env.VITE_GET_ALL_TRAINER
-const GET_ALL_TRAINER_TAGS = import.meta.env.VITE_GET_ALL_TRAINER_TAGS
-const DELETE = import.meta.env.VITE_DELETE_TRAINER_BY_ID
-const ASSIGN_TRAINER = import.meta.env.VITE_ASSIGN_TRAINER_TAG
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const GET_ALL_TRAINER = `${BASE_URL}/api/v1/trainer/find-all-trainers`
+const GET_ALL_TRAINER_TAGS = `${BASE_URL}/api/v1/trainer-tag/find-all`
+const DELETE = `${BASE_URL}/api/v1/trainer/delete-trainer-by-id`
+const ASSIGN_TRAINER = `${BASE_URL}/api/v1/trainer/assign-trainer-tag`
 
 
 class TrainerService {

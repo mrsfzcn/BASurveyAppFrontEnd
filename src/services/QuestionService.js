@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const GETALL = import.meta.env.VITE_GETALL_QUESTION
-const DELETE = import.meta.env.VITE_DELETE_QUESTION
-const GET_QUESTION_BY_ID = import.meta.env.VITE_GET_QUESTION_BY_ID
-const GET_ALL_QUESTION_TAGS = import.meta.env.VITE_GET_ALL_QUESTION_TAGS
-const CREATE_QUESTION = import.meta.env.VITE_CREATE_QUESTION
-const UPDATE_QUESTION = import.meta.env.VITE_UPDATE_QUESTION
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const GETALL = `${BASE_URL}/api/v1/questions/find-all-question`
+const DELETE = `${BASE_URL}/api/v1/questions/delete-question-by-id`
+const GET_QUESTION_BY_ID = `${BASE_URL}/api/v1/questions/find-by-id`
+const GET_ALL_QUESTION_TAGS = `${BASE_URL}/api/v1/question-tags`
+const CREATE_QUESTION = `${BASE_URL}/api/v1/questions`
+const UPDATE_QUESTION = `${BASE_URL}/api/v1/questions/update-question`
 
 class QuestionService {
 

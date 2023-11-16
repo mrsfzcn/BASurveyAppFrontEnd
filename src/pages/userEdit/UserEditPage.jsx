@@ -8,6 +8,7 @@ import Layout from '../../components/Layout';
 import Dropdown from '../../components/Dropdown';
 
 const UserEditPage = () => {
+    const BASE_URL = import.meta.env.VITE_BASE_URL
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [mail, setMail] = useState("");
@@ -18,21 +19,13 @@ const UserEditPage = () => {
     const token = localStorage.getItem("token");
     const selectedRole = localStorage.getItem("selectedRole")
     const navigate = useNavigate();    
-    const options = [
-        { label: "STUDENT", value: "STUDENT" },
-        { label: "MASTER_TRAINER", value: "MASTER_TRAINER" },
-        { label: "ASSISTANT_TRAINER", value: "ASSISTANT_TRAINER" },
-    ];
+    
     const [initialUserData, setInitialUserData] = useState({
         name: "",
         surname: "",
         mail: "",
         role: "",
     });
-    const FIND_USER_BY_STUDENT_OID = import.meta.env.VITE_FIND_USER_BY_STUDENT_OID
-    const FIND_USER_BY_TRAINER_OID = import.meta.env.VITE_FIND_USER_BY_TRAINER_OID
-    const DEFAULT_USER = import.meta.env.VITE_DEFAULT_USER
-    const DEFAULT_USER_UPDATE = import.meta.env.VITE_DEFAULT_USER_UPDATE
        
 
     useEffect(() => {
@@ -44,14 +37,14 @@ const UserEditPage = () => {
             let response;
          switch (selectedRole) {
             case "Student":
-                 response = await axios.get(`${FIND_USER_BY_STUDENT_OID}/${userId}`, {
+                 response = await axios.get(`${BASE_URL}/api/v1/student/find-user-by-student-oid/${userId}`, {
            headers: {
                Authorization: `Bearer ${token}`,
            },
        });
                 break;
             case "Trainer":
-                 response = await axios.get(`${FIND_USER_BY_TRAINER_OID}/${userId}`, {
+                 response = await axios.get(`${BASE_URL}/api/v1/trainer/find-user-by-trainer-oid/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -59,7 +52,7 @@ const UserEditPage = () => {
          
                 break;
          
-            default: response = await axios.get(`${DEFAULT_USER}/${userId}`, {
+             default: response = await axios.get(`${BASE_URL}/api/v1/user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -141,7 +134,7 @@ const UserEditPage = () => {
         const authorizedRole = role;
         console.log(role); 
         axios.put(
-            `${DEFAULT_USER_UPDATE}/${userEmail}`,
+            `${BASE_URL}/api/v1/user/update/${userEmail}`,
             {
                 firstName: name,
                 lastName: surname,

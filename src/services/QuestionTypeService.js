@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const UPDATE_TYPE = import.meta.env.VITE_UPDATE_QUESTION_TYPE
-const CREATE_TYPE = import.meta.env.VITE_CREATE_QUESTION_TYPE
-const GET_ALL_TYPE = import.meta.env.VITE_GET_ALL_QUESTION_TYPE
-const DELETE = import.meta.env.VITE_DELETE_QUESTION_TYPE
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const UPDATE_TYPE = `${BASE_URL}/api/v1/question-types/update-question-type-by-type-string`
+const CREATE_TYPE = `${BASE_URL}/api/v1/question-types/create-question-type`
+const GET_ALL_TYPE = `${BASE_URL}/api/v1/question-types/get-all-question-type`
+const DELETE = `${BASE_URL}/api/v1/question-types/delete`
 
 class QuestionTypeService {
   async updateType(updateType) {

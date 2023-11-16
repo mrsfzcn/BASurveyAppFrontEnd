@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const GETALL = import.meta.env.VITE_GETALL_STUDENT
-const DELETE = import.meta.env.VITE_DELETE_STUDENT
-const UPDATE_STUDENT = import.meta.env.VITE_UPDATE_STUDENT
-const FIND_USER_ID_BY_EMAIL_TOKEN = import.meta.env.VITE_FIND_USER_ID_BY_EMAIL_TOKEN
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const GETALL = `${BASE_URL}/api/v1/student/students`
+const DELETE = `${BASE_URL}/api/v1/student/delete-student-by-id`
+const UPDATE_STUDENT = `${BASE_URL}/api/v1/student/assign-student-tag`
+const FIND_USER_ID_BY_EMAIL_TOKEN = `${BASE_URL}/api/v1/user/find-user-by-email-token`
 
 class StudentService {
 

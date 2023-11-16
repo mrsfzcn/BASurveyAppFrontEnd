@@ -32,8 +32,7 @@ export default function List() {
   const [sortEposta, setSortEposta] = useState();
   const [sortKullaniciRolu, setSortKullaniciRolu] = useState();
   const [sortKayitTarihi, setSortKayitTarihi] = useState();
-  const FIND_ALL_USER_DETAILS = import.meta.env.VITE_FIND_ALL_USER_DETAILS
-  const USER_DELETE = import.meta.env.VITE_USER_DELETE
+  const BASE_URL = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
     fetchData();
@@ -42,7 +41,7 @@ export default function List() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${FIND_ALL_USER_DETAILS}`,
+        `${BASE_URL}/api/v1/user/find-all-user-details`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -158,7 +157,7 @@ export default function List() {
     console.log(oid);
     try {
       const response = await axios.delete(
-        `${USER_DELETE}/${oid}`,
+        `${BASE_URL}/api/v1/user/delete/${oid}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const LOGIN = import.meta.env.VITE_LOGIN
-const VERIFYCODE = import.meta.env.VITE_VERIFYCODE
-const REGISTER = import.meta.env.VITE_REGISTER
-const REGENERATE_QR_CODE = import.meta.env.VITE_REGENERATE_QR_CODE
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const LOGIN = `${BASE_URL}/api/v1/auth/authenticate`
+const VERIFYCODE = `${BASE_URL}/api/v1/auth/verify-code`
+const REGISTER = `${BASE_URL}/api/v1/auth/register`
+const REGENERATE_QR_CODE = `${BASE_URL}/api/v1/auth/regenerate-qr-code`
   
 class AuthService {
   login(user) {

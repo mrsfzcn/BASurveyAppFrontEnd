@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const FIND_TRAINERS_BY_TRAINER_TAG = import.meta.env.VITE_FIND_TRAINERS_BY_TRAINER_TAG
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const FIND_TRAINERS_BY_TRAINER_TAG = `${BASE_URL}/api/v1/trainer-tag/find-trainers-by-trainer-tag`
 
 class TrainerTagService {
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const GETALL = import.meta.env.VITE_GETALLCOURSEGROUP
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const GETALL = `${BASE_URL}/api/v1/course-group/get-all-data-for-fronted-table`
 
 
 class StudentService {

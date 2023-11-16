@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const LIST_ALL_STUDENTS = import.meta.env.VITE_LIST_ALL_STUDENTS
-const ASSIGN = import.meta.env.VITE_ASSIGN_STUDENT
+const BASE_URL = import.meta.env.VITE_BASE_URL
+const LIST_ALL_STUDENTS = `${BASE_URL}/api/v1/student/students`
+const ASSIGN = `${BASE_URL}/api/v1/student/assign-student-tag`
 class ClassService{
    async list(){
     try {
