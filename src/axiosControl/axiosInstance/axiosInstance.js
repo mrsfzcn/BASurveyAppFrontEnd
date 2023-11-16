@@ -1,7 +1,7 @@
 // axiosInstance.js
 
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const axiosInstance = (baseURL) => {
   const instance = axios.create({
@@ -35,8 +35,8 @@ const axiosInstance = (baseURL) => {
           return;
         }
         localStorage.removeItem("token");
-        const history = useHistory();
-        history.push("/login"); // Yetkisiz erişim durumunda login sayfasına yönlendir
+        const navigate = useNavigate();
+        navigate("/login"); // Yetkisiz erişim durumunda login sayfasına yönlendir
         return Promise.reject(new Error("Yetki hatası"));
       }
       return Promise.reject(error);
@@ -49,7 +49,6 @@ const axiosInstance = (baseURL) => {
 const baseURL = "http://localhost:8090/api/v1";
 
 const axiosInstanceGlobal = axiosInstance(`${baseURL}`);
-
 
 export {
   axiosInstanceGlobal,
