@@ -26,8 +26,8 @@ export default function BranchList() {
   const navigate = useNavigate();
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
-  const [sortSurname, setSortSurname] = useState();
-
+  const [sortCity, setSortCity] = useState();
+  
 
   useEffect(() => {
     fetchData(); //Branch bilgisi eklenecek.
@@ -36,7 +36,7 @@ export default function BranchList() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8090/api/v1/user/find-all-user-details`,//Buraya branch yolu gelecek.
+        `http://localhost:8090/api/v1/branch/active-branches`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ export default function BranchList() {
 
   const filterBranhces = (branchList, search, currentPage, itemsPerPage) => {
     const filteredList = branchList.filter((item) =>
-      item.firstName.toLowerCase().trim().includes(search.toLowerCase().trim()) //firstName branchList geldiğinde name olarak değişmeli.
+      item.name.toLowerCase().trim().includes(search.toLowerCase().trim())
     );
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -82,21 +82,21 @@ export default function BranchList() {
      setSortName(status);    
      const branchListCopy = [...branchList];    
      if (status) {     
-      branchListCopy.sort((a, b) => a.firstName.localeCompare(b.firstName));       
+      branchListCopy.sort((a, b) => a.name.localeCompare(b.name));       
     } else {     
-      branchListCopy.sort((a, b) => b.firstName.localeCompare(a.firstName));     
+      branchListCopy.sort((a, b) => b.name.localeCompare(a.name));     
     }   
     setBranchList(branchListCopy); };
 
-  const handleSortSurname = () => {
-    const status = !sortSurname;
-    setSortSurname(status);
+  const handleSortCity = () => {
+    const status = !sortCity;
+    setSortCity(status);
 
     const branchListCopy = [...branchList];    
     if (status) {     
-      branchListCopy.sort((a, b) => a.lastName.localeCompare(b.lastName));       
+      branchListCopy.sort((a, b) => a.city.localeCompare(b.city));       
    } else {     
-    branchListCopy.sort((a, b) => b.lastName.localeCompare(a.lastName));     
+    branchListCopy.sort((a, b) => b.city.localeCompare(a.city));     
    }   
    setBranchList(branchListCopy); 
   };
@@ -104,13 +104,48 @@ export default function BranchList() {
   
 
 
-  const handleRefreshClick = async (oid) => {
-  //Databasedeki değeri güncelleyecek ve buraya getirecek.
+  const handleRefreshClick = async ( apiId,event) => {
+    event.target.parentElement.classList.toggle("refreshTrigger");  //Dom kullanıldı değiştirilmeli.
+      axios.put(
+        `http://localhost:8090/api/v1/branch/refresh/${apiId}`,null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ).then(resp => {
+        setBranchList(branchList.map(branch => {
+          if(branch.oid == resp.data.oid)
+          return resp.data
+          return branch
+        }))
+        setSearchedList(searchedList.map(branch => {
+          if(branch.oid == resp.data.oid)
+          return resp.data
+        return branch;
+        }));
+        setAlert({type:"success",message:"Güncelleme başarılı!"})
+        setTimeout(() => {
+          setAlert({type:"",message:""})
+        }, 3000);
+      })
+      .catch(err => {
+        
+        if(err.response.data.exceptionMessage.includes("Bu şube kapatılmıştır.")){
+          setBranchList(branchList.filter(branch => branch.apiId != apiId))
+          setSearchedList(searchedList.filter(branch => branch.apiId != apiId));
+        }
+        
+        setAlert({type:"error",message:err.response.data.exceptionMessage})
+        setTimeout(() => {
+          setAlert({type:"",message:""})
+        }, 3000);
+      });
   };
 
 
   const filteredBranchList = branchList.filter((item) =>
-    item.firstName.toLowerCase().trim().includes(search.toLowerCase().trim())
+    item.name.toLowerCase().trim().includes(search.toLowerCase().trim())
   );
 
   const currentItems = filteredBranchList.slice(
@@ -188,7 +223,7 @@ export default function BranchList() {
                       </th>
                       <th style={{ width: "13rem", paddingBottom: "2rem" }}>
                         <span>Şehir</span>
-                        <button className="bottomSort" onClick={handleSortSurname}>
+                        <button className="bottomSort" onClick={handleSortCity}>
                           <SortIcon />
                         </button>
                       </th>
@@ -198,14 +233,14 @@ export default function BranchList() {
                     </tr>
                   </thead>
                   <tbody className="lineTableBody ">
-                    {currentItems.map((user, index) => (
+                    {currentItems.map((branch, index) => (
                       <tr className="tableRow" key={index}>
-                        <td style={{ width: "13rem" }}>{user.firstName}</td>
-                        <td style={{ width: "13rem" }}>{user.lastName}</td>
+                        <td style={{ width: "13rem" }}>{branch.name}</td>
+                        <td style={{ width: "13rem" }}>{branch.city}</td>
                         <td style={{ width: "15rem" }}>
                           <button
-                            className="editButton"
-                            onClick={() => handleRefreshClick(user.oid)}
+                            className={`refreshButton`}
+                            onClick={(e) => handleRefreshClick(branch.apiId,e)}
                           >
                             <RefreshIcon />
                           </button>
