@@ -191,6 +191,17 @@
   transform: rotate(360deg);
 }
 
+.rowBackground{
+  background-color: none;
+  transition: background-color 1000ms;
+}
+.rowBackgroundSuccessFade{
+  background-color: #64e9b1;
+}
+.rowBackgroundErrorFade{
+  background-color: rgba(255, 0, 0, 0.336);
+}
+
 .tableHeader {
   border-collapse: collapse;
 }
