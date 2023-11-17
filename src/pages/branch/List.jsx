@@ -30,13 +30,13 @@ export default function BranchList() {
   const BASE_URL = import.meta.env.VITE_BASE_URL  
 
   useEffect(() => {
-    fetchData(); //Branch bilgisi eklenecek.
+    fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/v1/user/find-all-user-details`,//Buraya branch yolu gelecek.
+        `${BASE_URL}/api/v1/branch/active-branches`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -104,44 +104,47 @@ export default function BranchList() {
   
 
 
-  const handleRefreshClick = async ( apiId,event) => {
-    event.target.parentElement.classList.toggle("refreshTrigger");  //Dom kullanıldı değiştirilmeli.
-      axios.put(
-        `http://localhost:8090/api/v1/branch/refresh/${apiId}`,null,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      ).then(resp => {
-        setBranchList(branchList.map(branch => {
-          if(branch.oid == resp.data.oid)
-          return resp.data
-          return branch
-        }))
-        setSearchedList(searchedList.map(branch => {
-          if(branch.oid == resp.data.oid)
-          return resp.data
-        return branch;
-        }));
-        setAlert({type:"success",message:"Güncelleme başarılı!"})
-        setTimeout(() => {
-          setAlert({type:"",message:""})
-        }, 3000);
-      })
-      .catch(err => {
-        
-        if(err.response.data.exceptionMessage.includes("Bu şube kapatılmıştır.")){
-          setBranchList(branchList.filter(branch => branch.apiId != apiId))
-          setSearchedList(searchedList.filter(branch => branch.apiId != apiId));
-        }
-        
-        setAlert({type:"error",message:err.response.data.exceptionMessage})
-        setTimeout(() => {
-          setAlert({type:"",message:""})
-        }, 3000);
-      });
-  };
+  const handleRefreshClick = async ( apiId,setSpinner) => {
+      
+    axios.put(
+      `http://localhost:8090/api/v1/branch/refresh/${apiId}`,null,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then(resp => {
+      setSpinner("success")
+      setBranchList(branchList.map(branch => {
+        if(branch.oid == resp.data.oid)
+        return resp.data
+        return branch
+      }))
+      setSearchedList(searchedList.map(branch => {
+        if(branch.oid == resp.data.oid)
+        return resp.data
+      return branch;
+      }));
+      setAlert({type:"success",message:"Güncelleme başarılı!"})
+      setTimeout(() => {
+        setSpinner("default")
+        setAlert({type:"",message:""})
+      }, 3000);
+    })
+    .catch(err => {
+      setSpinner("error")
+      if(err.response.data.exceptionMessage.includes("Bu şube kapatılmıştır.")){
+        setBranchList(branchList.filter(branch => branch.apiId != apiId))
+        setSearchedList(searchedList.filter(branch => branch.apiId != apiId));
+      }
+      
+      setAlert({type:"error",message:err.response.data.exceptionMessage})
+      setTimeout(() => {
+        setSpinner("default")
+        setAlert({type:"",message:""})
+      }, 3000);
+    });
+};
 
 
   const filteredBranchList = branchList.filter((item) =>
@@ -228,24 +231,13 @@ export default function BranchList() {
                         </button>
                       </th>
                       <th style={{ width: "15rem", paddingBottom: "2rem" }}>
-                        <span>İşlem</span>
+                        <span>Güncelle</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="lineTableBody ">
-                    {currentItems.map((branch, index) => (
-                      <tr className="tableRow" key={index}>
-                        <td style={{ width: "13rem" }}>{branch.name}</td>
-                        <td style={{ width: "13rem" }}>{branch.city}</td>
-                        <td style={{ width: "15rem" }}>
-                          <button
-                            className={`refreshButton`}
-                            onClick={(e) => handleRefreshClick(branch.apiId,e)}
-                          >
-                            <RefreshIcon />
-                          </button>
-                        </td>
-                      </tr>
+                  {currentItems.map((branch, index) => (
+                     <TableRow branch={branch} key={branch.oid} index={index} handleRefreshClick={handleRefreshClick}/>
                     ))}
                   </tbody>
                 </table>
@@ -292,4 +284,21 @@ export default function BranchList() {
       </Layout>
     </>
   );
+}
+
+function TableRow({branch,handleRefreshClick}){
+  
+  const [spinner, setSpinner] = useState("default");
+  return <tr className={`tableRow rowBackground ${spinner=="success"&&"rowBackgroundSuccessFade"} ${spinner=="error"&&"rowBackgroundErrorFade"}`} key={branch.oid}>
+  <td style={{ width: "13rem" }}>{branch.name}</td>
+  <td style={{ width: "13rem" }}>{branch.city}</td>
+  <td style={{ width: "15rem" }}>
+    <button
+      className={`refreshButton ${spinner=="default"&& "refreshTrigger"}`}
+      onClick={() => handleRefreshClick(branch.apiId,setSpinner)}
+    >
+      <RefreshIcon />
+    </button>
+  </td>
+</tr>
 }
