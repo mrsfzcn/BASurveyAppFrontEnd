@@ -38,6 +38,7 @@ import AssignStudentToClass from "./pages/AssignStudentClass/assignstudentclass"
 import StudentListPage from "./pages/classesPage/studentList/StudentListPage";
 import TrainerListPage from "./pages/classesPage/trainerList/TrainerListPage";
 import BranchList from "./pages/branch/List";
+import CourseList from "./pages/course/assigncourse";
 function App() {
   return (
     <Router>
@@ -48,6 +49,7 @@ function App() {
         <Route path="/yeni-kare-kod-olustur" element={<RegenerateQrCode />} />
         <Route element={<PrivateRoutes />}>
         <Route path="/subeler" element={<BranchList />} />
+        <Route path="/kurslar" element={<CourseList />} />
           <Route path="/yonetici-sayfasi" element={<AdminHomePage />} exact />
           <Route path="/anket-gonder" element={<SendSurvey />} />
           <Route path="/sinifa-egitmen-atama" element={<TrainerToClass/>} />
