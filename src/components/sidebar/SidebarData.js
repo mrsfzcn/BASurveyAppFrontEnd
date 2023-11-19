@@ -4,6 +4,7 @@ export const items = [
     content: [
       { name: "Tüm Kullanıcılar", href: "/kullanici" },
       { name: "Tüm Şubeler", href: "/subeler" },
+      { name: "Tüm Kurslar", href: "/kurslar" },
       { name: "Kullanıcı Ekle", href: "/kullanici/ekle" },
     ],
   },
