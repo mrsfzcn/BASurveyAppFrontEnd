@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL
 const GETALL = `${BASE_URL}/api/v1/student/students`
 const DELETE = `${BASE_URL}/api/v1/student/delete-student-by-id`
 const UPDATE_STUDENT = `${BASE_URL}/api/v1/student/assign-student-tag`
-const FIND_USER_ID_BY_EMAIL_TOKEN = `${BASE_URL}/api/v1/user/find-user-by-email-token`
+const FIND_USER_ID_BY_EMAIL_TOKEN = `${BASE_URL}/api/v1/user/find-user-by-email-token/`
 
 class StudentService {
 

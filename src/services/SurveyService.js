@@ -6,12 +6,13 @@ const UPDATE = `${BASE_URL}/api/v1/survey/update`
 const QUESTIONS = `${BASE_URL}/api/v1/questions/find-all-question`
 const ADD_QUESTIONS_TO_SURVEY = `${BASE_URL}/api/v1/survey/add-questions-to-survey`
 const LIST = `${BASE_URL}/api/v1/survey/list`
-const FIND_SURVEY_BY_EMAIL_TOKEN = `${BASE_URL}/api/v1/survey/find-survey-by-email-token`
+const FIND_SURVEY_BY_EMAIL_TOKEN = `${BASE_URL}/api/v1/survey/find-survey-by-email-token/`
 const DELETE = `${BASE_URL}/api/v1/survey/full-delete`
 const GET_SURVEY_BY_ID = `${BASE_URL}/api/v1/survey/find-survey-by-id`
 const GET_ALL_TAG = `${BASE_URL}/api/v1/student-tag/student-tags`
 const ASSIGN = `${BASE_URL}/api/v1/survey/assign`
 const DEFAULT_SURVEY = `${BASE_URL}/api/v1/survey`
+const SETREQUIREDQUESTIONINDEXES=`${BASE_URL}/api/v1/survey/add-required-question-indexes`
 
 class SurveyService {
   create(survey) {
@@ -156,7 +157,19 @@ class SurveyService {
     }
     
   }
+
+  setRequiredQuestions(SetRequiredQuestionIndexesDto) {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(SetRequiredQuestionIndexesDto);
+    return axios.put(SETREQUIREDQUESTIONINDEXES, SetRequiredQuestionIndexesDto, config);
+  }
 }
+
 
 export default new SurveyService();
 
