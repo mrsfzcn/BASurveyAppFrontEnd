@@ -1,7 +1,6 @@
 // axiosInstance.js
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const axiosInstance = (baseURL) => {
   const instance = axios.create({
@@ -15,6 +14,7 @@ const axiosInstance = (baseURL) => {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
         console.error("Yetki hatası");
+        window.location.href="/giris";
         return Promise.reject(new Error("Yetki hatası"));
       }
       return config;
@@ -34,9 +34,9 @@ const axiosInstance = (baseURL) => {
           console.warn("Token not found");
           return;
         }
-        localStorage.removeItem("token");
-        const navigate = useNavigate();
-        navigate("/login"); // Yetkisiz erişim durumunda login sayfasına yönlendir
+        localStorage.removeItem("token"); // token'ı sil
+        localStorage.removeItem("auth"); // protected route'ta tutulan auth başlığını sil
+        window.location.href="/giris"; // Yetkisiz erişim durumunda login sayfasına yönlendir
         return Promise.reject(new Error("Yetki hatası"));
       }
       return Promise.reject(error);
@@ -46,7 +46,9 @@ const axiosInstance = (baseURL) => {
   return instance;
 };
 
-const baseURL = "http://localhost:8090/api/v1";
+// URL -> .env dosyasına göre revize edildi.
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const baseURL = `${BASE_URL}/api/v1`;
 
 const axiosInstanceGlobal = axiosInstance(`${baseURL}`);
 
