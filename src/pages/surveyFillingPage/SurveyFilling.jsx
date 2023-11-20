@@ -21,6 +21,7 @@ function SurveyFilling() {
   const [questions, setQuestions] = useState([]);
   const [masterTrainers, setMasterTrainers] = useState({});
   const [assistantTrainers, setAssistantTrainers] = useState({});
+  const[requiredIndexes,setRequiredIndexes]=useState([]);
   useEffect(() => {
     console.log(tokenValue);
 
@@ -65,7 +66,8 @@ function SurveyFilling() {
     const fetchData = async () => {
       try {
         const response = await SurveyService.findSurveyByEmailToken(tokenValue);
-        console.log(response);
+        console.log(response.data.requiredQuestionIndexes);
+        setRequiredIndexes(response.data.requiredQuestionIndexes);
         setQuestions(response.data.questions);
         setSurveyTitle(response.data.surveyTitle);
       } catch (error) {
@@ -164,7 +166,7 @@ function SurveyFilling() {
             <div key={index} className="m-2 p-2">
               <p className="">
                 {index + 1}. {question.questionString}
-                {question.required && (
+                {requiredIndexes.includes(index) && (
                   <span className="text-red-700 text-xl"> *</span>
                 )}
               </p>
