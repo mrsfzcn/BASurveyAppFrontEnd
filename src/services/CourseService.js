@@ -1,23 +1,8 @@
-import axios from "axios";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL
-const GETALL = `${BASE_URL}/api/v1/course/find-all`
-
+import { axiosInstanceGlobal } from "../axiosControl/axiosInstance/axiosInstance";
 
 class CourseService {
-
-    
   async list() {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    return await axios.get(GETALL, config);
-}
-    
-   
-   
+    return await axiosInstanceGlobal.get("/course/find-all");
+  }
 }
 export default new CourseService();
