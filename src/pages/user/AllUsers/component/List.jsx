@@ -11,6 +11,9 @@ import DeleteIcon from "../svg/delete-svg";
 import Alert from "../../.../../../../components/Alert";
 import Input from "../../../../components/Input";
 import BreadCrumbs from "../../../../components/BreadCrumbs";
+import LocalStorageServiceAuth from "../../../../store/auth-store.js";
+import LocalStorageServiceUser from "../../../../store/user-store.js"
+
 
 export default function List() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -19,7 +22,7 @@ export default function List() {
   const [userList, setUserList] = useState([]);
   const [search, setSeach] = useState("");
   const [searchedList, setSearchedList] = useState([]);
-  const token = localStorage.getItem("token");
+  const token = LocalStorageServiceAuth.getToken();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemPerPage] = useState(10);
   const [paginationLength, setPaginationLength] = useState();
@@ -148,7 +151,8 @@ export default function List() {
 
   const handleEditClick = async (oid) => {
     console.log(oid);
-    localStorage.setItem("userId", oid);
+    // localStorage.setItem("userId", oid);
+    LocalStorageServiceUser.setTokenUserOid(oid);
     navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
   };
 

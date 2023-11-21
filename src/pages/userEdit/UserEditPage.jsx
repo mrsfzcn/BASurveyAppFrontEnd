@@ -6,6 +6,8 @@ import "./UserEditPage.css";
 import { useNavigate } from "react-router-dom";
 import Layout from '../../components/Layout';
 import Dropdown from '../../components/Dropdown';
+import LocalStorageServiceAuth from "../../store/auth-store.js";
+import LocalStorageServiceUser from "../../store/user-store.js";
 
 const UserEditPage = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL
@@ -14,10 +16,10 @@ const UserEditPage = () => {
     const [mail, setMail] = useState("");
     const [role, setRole] = useState("");
     //const [userId] = useState(2); // Geçici olarak konulmuştur localstorege'a eklendiğinde kendiliğinden veriyi çekecektir.
-    const userId = localStorage.getItem("userId");
+    const userId = LocalStorageServiceUser.getUserIdToken();
     const [userEmail, setUserEmail] = useState("");
-    const token = localStorage.getItem("token");
-    const selectedRole = localStorage.getItem("selectedRole")
+    const token = LocalStorageServiceAuth.getToken();
+    const selectedRole = LocalStorageServiceUser.getUserSelectedRoleToken();
     const navigate = useNavigate();    
     
     const [initialUserData, setInitialUserData] = useState({
@@ -96,11 +98,11 @@ const UserEditPage = () => {
        
         switch (selectedRole) {
             case "Student":
-                localStorage.removeItem("selectedRole")
+                LocalStorageServiceUser.removeSelectedRoleToken();
                 navigate("/ogrenci-listesi");
                 break;
-            case "Trainer":
-                localStorage.removeItem("selectedRole")
+            case "Trainer":                
+                LocalStorageServiceUser.removeSelectedRoleToken();
                 navigate("/egitmen-listesi");
                 break;
             default:

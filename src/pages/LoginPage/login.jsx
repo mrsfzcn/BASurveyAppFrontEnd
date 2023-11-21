@@ -7,6 +7,7 @@ import vektor6 from "../../assets/images/Login/Vector6.png";
 import vektor7 from "../../assets/images/Login/Vector7.png";
 import { decrypt } from "../../utils/encrypt.js";
 import backgroundImage from "../../assets/images/Login/loginbacground.png";
+import LocalStorageServiceAuth from "../../store/auth-store.js";
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ function Login() {
   };
 
   useEffect(() => {
-    const authItem = localStorage.getItem("auth");
+    const authItem = LocalStorageServiceAuth.getAuthToken();
     if (authItem && decrypt(authItem) === "true") {
       navigate("/yonetici-sayfasi");
     }
@@ -54,8 +55,8 @@ function Login() {
       password,
     };
     AuthService.login(loginData)
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
+      .then((response) => {        
+        LocalStorageServiceAuth.setToken(response.data.token)
         if (response.data.qrCode === null) {
           navigate("/kod", { state: { codePage: true } });
         } else

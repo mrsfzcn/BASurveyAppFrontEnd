@@ -279,7 +279,7 @@ const QuestionAddPage = ({ props }) => {
           }}
         />
       );
-    }else if(selectedOption === "Çok Seçenekli Çok Seçilebilir Ve Seçenek Girilebilir"){
+    }else if(selectedOption === "Çok Seçenekli Çok Seçilebilir ve Seçenek Girilebilir"){
       return (
         <MultiOptionalMultiSelectableAndOther questionString={createQuestion.questionString}
           veriTasi={(veri) => {

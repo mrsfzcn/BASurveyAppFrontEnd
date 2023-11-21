@@ -1,4 +1,5 @@
 import axios from "axios";
+import LocalStorageServiceAuth from "../store/auth-store";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 const GET_ALL_TRAINER = `${BASE_URL}/api/v1/trainer/find-all-trainers`
@@ -10,7 +11,7 @@ const ASSIGN_TRAINER = `${BASE_URL}/api/v1/trainer/assign-trainer-tag`
 class TrainerService {
 
     async list() {
-        const token = localStorage.getItem("token");
+        const token = LocalStorageServiceAuth.getToken();
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -20,7 +21,7 @@ class TrainerService {
     }
     
     async getAllTrainerTags() {
-      const token = localStorage.getItem("token");
+      const token = LocalStorageServiceAuth.getToken();
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,7 +30,7 @@ class TrainerService {
       return await axios.get(GET_ALL_TRAINER_TAGS , config);
     }
     assign(trainer) {
-        const token = localStorage.getItem("token");
+      const token = LocalStorageServiceAuth.getToken();
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ class TrainerService {
         return axios.post(ASSIGN_TRAINER,trainer,config);
       }
       async delete(id) {
-        const token = localStorage.getItem("token");
+        const token = LocalStorageServiceAuth.getToken();
         const config = {
             headers: {
             Authorization: `Bearer ${token}`,

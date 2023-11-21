@@ -6,6 +6,7 @@ import Table from '../../../components/Table/Table';
 import Layout from '../../../components/Layout'
 import StudentService from '../../../services/StudentService';
 import BreadCrumbs from '../../../components/BreadCrumbs'
+import LocalStorageServiceUser from "../../../store/user-store"
 
 function StudentListPage() {
 
@@ -32,8 +33,10 @@ function StudentListPage() {
     const handleEditClick = (rowData) => {
       console.log(rowData.oid);
       console.log(rowData)
-      localStorage.setItem("userId", rowData.oid);
-      localStorage.setItem("selectedRole","Student")
+      // localStorage.setItem("userId", rowData.oid)
+      LocalStorageServiceUser.setTokenUserOid(rowData.oid);
+      // localStorage.setItem("selectedRole","Student")
+      LocalStorageServiceUser.setTokenUserStudentAndRoleAsStudent();
       // localStorage.setItem("selectedRole",rowData.authorizedRole)
       navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
       // navigate(`/kullanici-bilgileri-guncelle/${rowData.oid}`, { state: rowData });
