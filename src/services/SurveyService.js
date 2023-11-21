@@ -83,7 +83,6 @@ class SurveyService {
   }
 }
 
-
 export default new SurveyService();
 
 
