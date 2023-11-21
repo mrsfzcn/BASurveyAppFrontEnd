@@ -54,10 +54,9 @@ const AnketDuzenle = () => {
       courseTopic,
     };
     SurveyService.update(updateSurveyData)
-    .then(() => {
-      navigate("/anketler")
-      console.log(surveyOid)
-    })
+    .then(
+      window.location.href="/anketler"
+    )
     .catch((error) => {
       console.log(error.response);
       if (error.response && error.response.data && error.response.data.customMessage) {
