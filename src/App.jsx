@@ -39,6 +39,8 @@ import StudentListPage from "./pages/classesPage/studentList/StudentListPage";
 import TrainerListPage from "./pages/classesPage/trainerList/TrainerListPage";
 import BranchList from "./pages/branch/List";
 import CourseList from "./pages/course/assigncourse";
+import ClassListPage from "./pages/classesPage/classList/ClassListPage";
+
 function App() {
   return (
     <Router>
@@ -108,6 +110,11 @@ function App() {
               <Route index element={<UpdateType />} />
             </Route> */}
           </Route>
+          <Route>
+            <Route path="/sinif-listesi">
+              <Route index element={<ClassListPage />} />
+            </Route>
+          </Route> 
 
         </Route>
       </Routes>

@@ -25,6 +25,7 @@ export const items = [
     content: [
       { name: "Öğrenci Listeleme", href: "/ogrenci-listesi" },
       { name: "Eğitmen Listeleme", href: "/egitmen-listesi" },
+      { name: "Sınıf Listeleme", href: "/sinif-listesi" },
       { name: "Sınıfa Eğitmen Atama", href: "/sinifa-egitmen-atama" },
       { name: "Sınıfa Öğrenci Atama", href: "/sinifa-ogrenci-atama" },
     ],
