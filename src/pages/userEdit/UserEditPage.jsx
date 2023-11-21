@@ -8,6 +8,7 @@ import Layout from '../../components/Layout';
 import Dropdown from '../../components/Dropdown';
 import LocalStorageServiceAuth from "../../store/auth-store.js";
 import LocalStorageServiceUser from "../../store/user-store.js";
+import { axiosInstanceGlobal } from '../../axiosControl/axiosInstance/axiosInstance.js';
 
 const UserEditPage = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL
@@ -39,26 +40,14 @@ const UserEditPage = () => {
             let response;
          switch (selectedRole) {
             case "Student":
-                 response = await axios.get(`${BASE_URL}/api/v1/student/find-user-by-student-oid/${userId}`, {
-           headers: {
-               Authorization: `Bearer ${token}`,
-           },
-       });
+                 response = await axiosInstanceGlobal.get(`/student/find-user-by-student-oid/${userId}`);
                 break;
             case "Trainer":
-                 response = await axios.get(`${BASE_URL}/api/v1/trainer/find-user-by-trainer-oid/${userId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                 response = await axiosInstanceGlobal.get(`/trainer/find-user-by-trainer-oid/${userId}`);
          
                 break;
          
-             default: response = await axios.get(`${BASE_URL}/api/v1/user/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+             default: response = await axiosInstanceGlobal.get(`/user/${userId}`);
                 break;
          }
 
@@ -135,20 +124,14 @@ const UserEditPage = () => {
         const email = mail;
         const authorizedRole = role;
         console.log(role); 
-        axios.put(
-            `${BASE_URL}/api/v1/user/update/${userEmail}`,
+        axiosInstanceGlobal.put(
+            `${BASE_URL}/user/update/${userEmail}`,
             {
                 firstName: name,
                 lastName: surname,
                 email: email,
                 authorizedRole: authorizedRole,
-            },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }
+            }            
         ).then((response) => {
             console.log("Update successful:", response.data)            
         })

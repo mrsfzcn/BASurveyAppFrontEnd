@@ -37,7 +37,7 @@ function TrainerListPage() {
       // localStorage.setItem("userId", rowData.oid);
       LocalStorageServiceUser.setTokenUserOid(rowData.oid);
       // localStorage.setItem("selectedRole","Trainer")
-      LocalStorageServiceUser.setTokenUserStudentAndRoleAsTrainer();
+      LocalStorageServiceUser.setSelectedRole("Trainer");
       navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
       // navigate(`/kullanici-bilgileri-guncelle/${rowData.oid}`, { state: rowData });
     };

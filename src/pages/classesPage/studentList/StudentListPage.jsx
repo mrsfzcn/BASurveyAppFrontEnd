@@ -36,7 +36,7 @@ function StudentListPage() {
       // localStorage.setItem("userId", rowData.oid)
       LocalStorageServiceUser.setTokenUserOid(rowData.oid);
       // localStorage.setItem("selectedRole","Student")
-      LocalStorageServiceUser.setTokenUserStudentAndRoleAsStudent();
+      LocalStorageServiceUser.setTokenBerkAktas("Student");
       // localStorage.setItem("selectedRole",rowData.authorizedRole)
       navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
       // navigate(`/kullanici-bilgileri-guncelle/${rowData.oid}`, { state: rowData });
