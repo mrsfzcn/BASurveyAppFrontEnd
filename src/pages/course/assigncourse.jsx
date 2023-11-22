@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import "./list.css";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import Layout from "../../components/Layout.jsx";
 import SortIcon from "../user/AllUsers/svg/sort-solid.jsx";
 import Alert from "../../components/Alert.jsx";
 import Input from "../../components/Input.jsx";
 import BreadCrumbs from "../../components/BreadCrumbs.jsx";
-import LocalStorageServiceAuth from "../../store/auth-store.js";
+import AssignCourseService from "../../services/AssignCourseService.js";
 
 export default function CourseList() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -17,42 +15,28 @@ export default function CourseList() {
   const [courseList, setcourseList] = useState([]);
   const [search, setSeach] = useState("");
   const [searchedList, setSearchedList] = useState([]);
-  const token = LocalStorageServiceAuth.getToken();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemPerPage] = useState(10);
   const [paginationLength, setPaginationLength] = useState();
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const navigate = useNavigate();
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
-  const [sortSurname, setSortSurname] = useState();
-  const BASE_URL = import.meta.env.VITE_BASE_URL
 
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/v1/course/active-course`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  useEffect(()=>{
+    AssignCourseService.getData()
+    .then((response)=>{
       setcourseList(response.data);
       setSearchedList(response.data);
       console.log(response.data);
       setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
-    } catch (error) {
+    })
+    .catch((error)=>{
       setcourseList([]);
       console.error(error);
-    }
-  };
+    })
+  })
+
   const filterCourses = (courseList, search, currentPage, itemsPerPage) => {
     const filteredList = courseList.filter((item) =>
       item.name.toLowerCase().trim().includes(search.toLowerCase().trim())

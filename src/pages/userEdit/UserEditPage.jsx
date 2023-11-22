@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import { useState, useEffect } from 'react';
 import ContentHeading from '../../components/ContentHeading';
-import Sidebar from '../../components/sidebar/Sidebar'
 import "./UserEditPage.css";
 import { useNavigate } from "react-router-dom";
 import Layout from '../../components/Layout';
-import Dropdown from '../../components/Dropdown';
 import LocalStorageServiceUser from "../../store/user-store.js";
-import { axiosInstanceGlobal } from '../../axiosControl/axiosInstance/axiosInstance.js';
+import UserEditService from '../../services/UserEditService.js';
 
 const UserEditPage = () => {
-  const BASE_URL = import.meta.env.VITE_BASE_URL
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [mail, setMail] = useState("");
@@ -38,14 +34,12 @@ const UserEditPage = () => {
       let response;
       switch (selectedRole) {
         case "Student":
-          response = await axiosInstanceGlobal.get(`/student/find-user-by-student-oid/${userId}`);
+          response = await UserEditService.getStudent(userId);
           break;
         case "Trainer":
-          response = await axiosInstanceGlobal.get(`/trainer/find-user-by-trainer-oid/${userId}`);
-
+          response = await UserEditService.getTrainer(userId);
           break;
-
-        default: response = await axiosInstanceGlobal.get(`/user/${userId}`);
+        default: response = await UserEditService.get(userId);
           break;
       }
 
@@ -122,8 +116,7 @@ const UserEditPage = () => {
     const email = mail;
     const authorizedRole = role;
     console.log(role);
-    axiosInstanceGlobal.put(
-      `${BASE_URL}/user/update/${userEmail}`,
+    await UserEditService.update(userEmail,
       {
         firstName: name,
         lastName: surname,
