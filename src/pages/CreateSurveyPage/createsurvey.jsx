@@ -17,7 +17,7 @@ function CreateSurvey() {
   const [customComboBoxData, setCustomComboBoxData] = useState([]);
   const [createSurvey, setCreateSurvey] = useState({
 
-    tagOids: [],
+    surveyTags: [],
 });
   const [errorTitle, setErrorTitle] = useState(""); 
   const [errorTopic, setErrorTopic] = useState("");
@@ -29,9 +29,9 @@ function CreateSurvey() {
 
     const fetchDataTags = async () => {
         try {
-            const response = await QuestionService.getAllQuestionTags();
-            const types = response.data;
-
+            const response = await SurveyService.getAllSurveyTags();
+            
+            const types = response;
             setSurveyTagsOptions(types.map((type) => ({ label: type.tagString, value: type.tagStringId })));
 
         } catch (error) {
@@ -60,7 +60,7 @@ function CreateSurvey() {
     const a = data.map((i) =>
         i.value
     );
-    setCreateSurvey({ ...createSurvey, tagOids: a })
+    setCreateSurvey({ ...createSurvey, surveyTags: a })
 
 };
 
@@ -85,6 +85,7 @@ function CreateSurvey() {
     const createSurveyData = {
       surveyTitle,
       courseTopic,
+      surveyTagIds:createSurvey.surveyTags,
     };
 
     SurveyService.create(createSurveyData)

@@ -5,8 +5,8 @@ class SurveyService {
     return axiosInstanceGlobal.post("/survey", survey);
   }
 
-  update(survey) {
-    return axiosInstanceGlobal.put("/survey/update", survey);
+  async update(survey) {
+    return await axiosInstanceGlobal.put("/survey/update", survey);
   }
 
   assign(survey) {
@@ -40,6 +40,16 @@ class SurveyService {
   async getAllTag() {
     try {
       const response = await axiosInstanceGlobal.get("/student-tag/student-tags");
+      return response.data; 
+    } catch (error) {
+      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      return []; 
+    }
+  }
+
+  async getAllSurveyTags(){
+    try {
+      const response = await axiosInstanceGlobal.get("/surveytag/findall");
       return response.data; 
     } catch (error) {
       console.error("Tag verileri alınırken bir hata oluştu:", error);

@@ -6,6 +6,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import { useParams } from "react-router-dom";
 import SurveyService from "../../services/SurveyService";
+import MultiDropdown from "../../components/MultiDropdown";
 
 const AnketDuzenle = () => {
   const location = useLocation();
@@ -24,7 +25,27 @@ const AnketDuzenle = () => {
     setCourseTopic(rowData.courseTopic);
   }
 
+  const tagArr = rowData.surveyTags ? rowData.surveyTags.split(", "): [];
 
+  const [options,setOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState(tagArr);
+  useEffect(()=>{
+    SurveyService.getAllSurveyTags().then(resp => {
+      const multiDropdownTags = resp.map(tag => {
+        const modifiedTag = {value:tag.tagStringId,label: tag.tagString};
+        console.log(modifiedTag);
+        return modifiedTag;
+      })
+      setOptions(multiDropdownTags)
+      setSelectedOptions(multiDropdownTags.filter(tag=>tagArr.includes(tag.label)))
+    })
+  },[])
+
+  const handleSelectedOptionsChange = (updatedOptions) => {
+    setSelectedOptions(updatedOptions);
+  };
+
+  
 
   useEffect(() => {
     if (params.id) {
@@ -32,9 +53,9 @@ const AnketDuzenle = () => {
         .then((response) => {
           setsurveyOid(response.data.oid);
           setSurveyTitle(response.data.surveyTitle);
-          const rendered = response.data.surveyTags.map((tag)=> tag.name).join(", ");
+          const rendered = response.data.surveyTags.map((tag) => tag.name).join(", ");
           setSurveyTag(rendered);
-          
+
           setCourseTopic(response.data.courseTopic);
         })
         .catch((error) => {
@@ -43,28 +64,30 @@ const AnketDuzenle = () => {
     }
   }, [params.id]);
 
-  
-  
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(surveyOid, surveyTitle, survayTag, courseTopic);
+    const surveyTagIds = selectedOptions.map(option => option.value);
     const updateSurveyData = {
       surveyOid,
       surveyTitle,
       courseTopic,
+      surveyTagIds
     };
     SurveyService.update(updateSurveyData)
-    .then(
-      window.location.href="/anketler"
-    )
-    .catch((error) => {
-      console.log(error.response);
-      if (error.response && error.response.data && error.response.data.customMessage) {
-        console.log("Error:"+ error.response.data.customMessage)
-      } else {
-        console.log("Bir hata oluştu...")
-      }
-    });
+      .then(
+        window.location.href = "/anketler"
+      )
+      .catch((error) => {
+        console.log(error.response);
+        if (error.response && error.response.data && error.response.data.customMessage) {
+          console.log("Error:" + error.response.data.customMessage)
+        } else {
+          console.log("Bir hata oluştu...")
+        }
+      });
   };
 
   const header = { header: "Anket Güncelle", href: "/anketler/guncelle" };
@@ -121,15 +144,15 @@ const AnketDuzenle = () => {
                     full
                   />
                 </div>
-                <div className="flex items-center w-[600px]">
-                  <label className="font-semibold w-[150px]">
+                <div className="flex items-center w-[600px] gap-6">
+                  <label className="font-semibold w-[100px]">
                     Anket Etiketi
                   </label>
-                  <Input
-                    onChange={(e) => setSurveyTag(e.target.value)}
-                    value={survayTag}
-                    full
-                  />
+                  <MultiDropdown
+                    options={options}
+                    selectedOptions={selectedOptions}
+                    extraClassName={"w-[480px]"}
+                    onChange={handleSelectedOptionsChange} />
                 </div>
               </div>
               <div className="flex justify-center gap-7 flex-wrap">

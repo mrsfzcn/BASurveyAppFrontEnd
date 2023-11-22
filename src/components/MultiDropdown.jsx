@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Panel from "./dropdown/Panel";
 import { GoChevronDown } from "react-icons/go";
 
-function MultiDropdown({ options, selectedOptions, onChange }) {
+function MultiDropdown({ options, selectedOptions, onChange,extraClassName }) {
   const [isOpen, setIsOpen] = useState(false);
   const divEl = useRef();
 
@@ -62,14 +62,14 @@ function MultiDropdown({ options, selectedOptions, onChange }) {
   return (
     <div ref={divEl} className="w-48 relative">
       <Panel
-        className="flex justify-between items-center cursor-pointer font-semibold "
+        className={`flex justify-between items-center cursor-pointer font-semibold ${extraClassName && extraClassName}`}
         onClick={handleClick}
       >
         {selectedOptions.length === 0 ? "Seçim yapınız" : "Seçim yapınız"}
         <GoChevronDown className="text-xs" />
       </Panel>
       {isOpen && (
-        <Panel className=" absolute top-full z-10 ">{renderedOptions}</Panel>
+        <Panel className={`absolute top-full z-10 ${extraClassName && extraClassName}`}>{renderedOptions}</Panel>
       )}
     </div>
   );
