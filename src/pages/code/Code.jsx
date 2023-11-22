@@ -59,7 +59,7 @@ const Code = () => {
       .then((response) => {
         if (response.data === true) {
           const decodedToken = TokenService.decodeToken(code.token);
-          LocalStorageServiceAuth.setAuthToken();
+          LocalStorageServiceAuth.setIsAuthenticated();
           if (decodedToken && decodedToken.role === "ADMIN") {
             navigate("/yonetici-sayfasi");
           }
@@ -75,7 +75,7 @@ const Code = () => {
 
   useEffect(() => {
     
-    const authItem = LocalStorageServiceAuth.getAuthToken();
+    const authItem = LocalStorageServiceAuth.getIsAuthenticated();
     if (authItem && decrypt(authItem) === "true") {
       navigate("/yonetici-sayfasi");
     }

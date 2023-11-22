@@ -1,35 +1,33 @@
 import { encrypt } from "../utils/encrypt";
 
-class LocalStorageServiceAuth{    
+class LocalStorageServiceAuth {
 
-    getToken(){
+    getToken() {
         return localStorage.getItem("token")
     }
 
-    setToken(token){
+    setToken(token) {
         localStorage.setItem("token", token);
     }
-    getAuthToken(){
+
+    getIsAuthenticated() {
         return localStorage.getItem("auth")
     }
 
-
-    setAuthToken(){
+    setIsAuthenticated() {
         localStorage.setItem("auth", encrypt("true"));
     }
-    
 
-    removeToken(){
+    removeToken() {
         localStorage.removeItem("token")
     }
-    removeAuthToken(){
+
+    removeIsAuthenticated() {
         localStorage.removeItem("auth")
     }
 
-    clearLocalStorage(){
+    clearLocalStorage() {
         localStorage.clear()
     }
-    
 }
-
 export default new LocalStorageServiceAuth();

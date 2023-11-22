@@ -12,7 +12,7 @@ import Alert from "../../.../../../../components/Alert";
 import Input from "../../../../components/Input";
 import BreadCrumbs from "../../../../components/BreadCrumbs";
 import LocalStorageServiceAuth from "../../../../store/auth-store.js";
-import LocalStorageServiceUser from "../../../../store/user-store.js"
+import LocalStorageServiceUser from "../../../../store/user-store.js";
 
 
 export default function List() {
@@ -149,16 +149,13 @@ export default function List() {
   };
 
 
-  const handleEditClick = async (oid) => {
-    console.log(oid);
-    // localStorage.setItem("userId", oid);
-    LocalStorageServiceUser.setTokenUserOid(oid);
+  const handleEditClick = async (oid) => {    
+    LocalStorageServiceUser.setUserOid(oid);
     navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
   };
 
   const handleDeleteClick = async (oid) => {
     setAlert({ type: "", message: "" });
-    console.log(oid);
     try {
       const response = await axios.delete(
         `${BASE_URL}/api/v1/user/delete/${oid}`,

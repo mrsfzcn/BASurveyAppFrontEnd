@@ -27,7 +27,7 @@ function Login() {
   };
 
   useEffect(() => {
-    const authItem = LocalStorageServiceAuth.getAuthToken();
+    const authItem = LocalStorageServiceAuth.getIsAuthenticated();
     if (authItem && decrypt(authItem) === "true") {
       navigate("/yonetici-sayfasi");
     }

@@ -1,20 +1,20 @@
-class LocalStorageServiceUser{
+class LocalStorageServiceUser {
 
-    getUserIdToken(){
+    getUserId() {
         return localStorage.getItem("userId")
     }
-    getUserSelectedRoleToken(){
+    getUserSelectedRole() {
         return localStorage.getItem("selectedRole")
     }
-    removeSelectedRoleToken(){
+    removeSelectedRole() {
         localStorage.removeItem("selectedRole")
     }
 
-    setTokenUserOid(oid){
-        localStorage.setItem("userId",oid)
+    setUserOid(oid) {
+        localStorage.setItem("userId", oid)
     }
 
-    setSelectedRole(role){
+    setSelectedRole(role) {
         localStorage.setItem("selectedRole", role)
     }
 

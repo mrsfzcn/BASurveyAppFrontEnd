@@ -15,7 +15,7 @@ const axiosInstance = (baseURL) => {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
         console.error("Yetki hatası");
-        window.location.href="/giris";
+        window.location.href = "/giris";
         return Promise.reject(new Error("Yetki hatası"));
       }
       return config;
@@ -36,8 +36,8 @@ const axiosInstance = (baseURL) => {
           return;
         }
         LocalStorageServiceAuth.removeToken(); // token'ı sil
-        LocalStorageServiceAuth.removeAuthToken() // protected route'ta tutulan auth başlığını sil
-        window.location.href="/giris"; // Yetkisiz erişim durumunda login sayfasına yönlendir
+        LocalStorageServiceAuth.removeIsAuthenticated() // protected route'ta tutulan auth başlığını sil
+        window.location.href = "/giris"; // Yetkisiz erişim durumunda login sayfasına yönlendir
         return Promise.reject(new Error("Yetki hatası"));
       }
       return Promise.reject(error);
