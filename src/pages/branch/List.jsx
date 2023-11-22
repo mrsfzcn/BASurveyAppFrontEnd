@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./list.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import Layout from "../../components/Layout.jsx";
@@ -10,6 +9,7 @@ import Input from "../../components/Input.jsx";
 import BreadCrumbs from "../../components/BreadCrumbs.jsx";
 import RefreshIcon from "../user/AllUsers/svg/refresh-svg.jsx";
 import LocalStorageServiceAuth from "../../store/auth-store.js";
+import BranchListService from "../../services/BranchListService.js";
 
 export default function BranchList() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -28,30 +28,19 @@ export default function BranchList() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
   const [sortCity, setSortCity] = useState();
-  const BASE_URL = import.meta.env.VITE_BASE_URL  
 
-  useEffect(() => {
-    fetchData();
+  useEffect(()=>{
+    BranchListService.getData()
+  .then((response)=>{
+    setBranchList(response.data);
+    setSearchedList(response.data);
+    setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
+  })
+  .catch((error)=>{
+    setBranchList([]);
+    console.error(error);
+  });
   }, []);
-    const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/v1/branch/active-branches`,
-        {
-          headers: {
-            Authorization: `Bearer ${LocalStorageServiceAuth.getToken()}`,
-          },
-        }
-      );
-      setBranchList(response.data);
-      setSearchedList(response.data);
-      console.log(response.data);
-      setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
-    } catch (error) {
-      setBranchList([]);
-      console.error(error);
-    }
-  };
 
   const filterBranhces = (branchList, search, currentPage, itemsPerPage) => {
     const filteredList = branchList.filter((item) =>
@@ -77,75 +66,74 @@ export default function BranchList() {
     setSeach(e.target.value);
   };
 
-  const handleSortName = () => {  
-     const status = !sortName;   
-     setSortName(status);    
-     const branchListCopy = [...branchList];    
-     if (status) {     
-      branchListCopy.sort((a, b) => a.name.localeCompare(b.name));       
-    } else {     
-      branchListCopy.sort((a, b) => b.name.localeCompare(a.name));     
-    }   
-    setBranchList(branchListCopy); };
+  const handleSortName = () => {
+    const status = !sortName;
+    setSortName(status);
+    const branchListCopy = [...branchList];
+    if (status) {
+      branchListCopy.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      branchListCopy.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    setBranchList(branchListCopy);
+  };
 
   const handleSortCity = () => {
     const status = !sortCity;
     setSortCity(status);
 
-    const branchListCopy = [...branchList];    
-    if (status) {     
-      branchListCopy.sort((a, b) => a.city.localeCompare(b.city));       
-   } else {     
-    branchListCopy.sort((a, b) => b.city.localeCompare(a.city));     
-   }   
-   setBranchList(branchListCopy); 
+    const branchListCopy = [...branchList];
+    if (status) {
+      branchListCopy.sort((a, b) => a.city.localeCompare(b.city));
+    } else {
+      branchListCopy.sort((a, b) => b.city.localeCompare(a.city));
+    }
+    setBranchList(branchListCopy);
   };
 
-  
+  const handleRefreshClick = async (apiId, setSpinner) => {
+    BranchListService.updateData(apiId)
+      .then((resp) => {
+        setSpinner("success");
+        setBranchList(
+          branchList.map((branch) => {
+            if (branch.oid == resp.data.oid) return resp.data;
+            return branch;
+          })
+        );
+        setSearchedList(
+          searchedList.map((branch) => {
+            if (branch.oid == resp.data.oid) return resp.data;
+            return branch;
+          })
+        );
+        setAlert({ type: "success", message: "Güncelleme başarılı!" });
+        setTimeout(() => {
+          setSpinner("default");
+          setAlert({ type: "", message: "" });
+        }, 3000);
+      })
+      .catch((err) => {
+        setSpinner("error");
+        if (
+          err.response.data.exceptionMessage.includes("Bu şube kapatılmıştır.")
+        ) {
+          setBranchList(branchList.filter((branch) => branch.apiId != apiId));
+          setSearchedList(
+            searchedList.filter((branch) => branch.apiId != apiId)
+          );
+        }
 
-
-  const handleRefreshClick = async ( apiId,setSpinner) => {
-      
-    axios.put(
-      `http://localhost:8090/api/v1/branch/refresh/${apiId}`,null,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).then(resp => {
-      setSpinner("success")
-      setBranchList(branchList.map(branch => {
-        if(branch.oid == resp.data.oid)
-        return resp.data
-        return branch
-      }))
-      setSearchedList(searchedList.map(branch => {
-        if(branch.oid == resp.data.oid)
-        return resp.data
-      return branch;
-      }));
-      setAlert({type:"success",message:"Güncelleme başarılı!"})
-      setTimeout(() => {
-        setSpinner("default")
-        setAlert({type:"",message:""})
-      }, 3000);
-    })
-    .catch(err => {
-      setSpinner("error")
-      if(err.response.data.exceptionMessage.includes("Bu şube kapatılmıştır.")){
-        setBranchList(branchList.filter(branch => branch.apiId != apiId))
-        setSearchedList(searchedList.filter(branch => branch.apiId != apiId));
-      }
-      
-      setAlert({type:"error",message:err.response.data.exceptionMessage})
-      setTimeout(() => {
-        setSpinner("default")
-        setAlert({type:"",message:""})
-      }, 3000);
-    });
-};
-
+        setAlert({
+          type: "error",
+          message: err.response.data.exceptionMessage,
+        });
+        setTimeout(() => {
+          setSpinner("default");
+          setAlert({ type: "", message: "" });
+        }, 3000);
+      });
+  };
 
   const filteredBranchList = branchList.filter((item) =>
     item.name.toLowerCase().trim().includes(search.toLowerCase().trim())
@@ -156,19 +144,21 @@ export default function BranchList() {
     indexOfLastItem
   );
   const header = {
-    header: "Tüm Şubeler", href: "/subeler", describe:
-      "Şube görünteleme sayfasına hoşgeldiniz buradan bütün şubeleri görüntüleyebilirsiniz." }
+    header: "Tüm Şubeler",
+    href: "/subeler",
+    describe:
+      "Şube görünteleme sayfasına hoşgeldiniz buradan bütün şubeleri görüntüleyebilirsiniz.",
+  };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi"
+      href: "/yonetici-sayfasi",
     },
     {
       title: "Şubeler",
-      href: "/subeler"
-    }
-  ]
-  
+      href: "/subeler",
+    },
+  ];
 
   return (
     <>
@@ -176,9 +166,9 @@ export default function BranchList() {
         <div className="background ">
           <div>
             <div className="allUsersHeaderDiv ">
-              <div style={{marginLeft: "70px"}}>
+              <div style={{ marginLeft: "70px" }}>
                 <BreadCrumbs header={header} subtitle={subtitle} />
-              </div>                         
+              </div>
             </div>
           </div>
           <div className="list ">
@@ -211,36 +201,46 @@ export default function BranchList() {
                   marginTop: "3rem",
                   height: "58vh",
                   marginLeft: "5%",
-                  
                 }}
               >
                 <div className="flex justify-center content-center">
-                <table >
-                  <thead>
-                    <tr>
-                      <th style={{ width: "13rem", paddingBottom: "2rem"  }}>
-                        <span>Şube Adı</span>
-                        <button className="bottomSort" onClick={handleSortName}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "13rem", paddingBottom: "2rem" }}>
-                        <span>Şehir</span>
-                        <button className="bottomSort" onClick={handleSortCity}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "15rem", paddingBottom: "2rem" }}>
-                        <span>Güncelle</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="lineTableBody ">
-                  {currentItems.map((branch, index) => (
-                     <TableRow branch={branch} key={branch.oid} index={index} handleRefreshClick={handleRefreshClick}/>
-                    ))}
-                  </tbody>
-                </table>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: "13rem", paddingBottom: "2rem" }}>
+                          <span>Şube Adı</span>
+                          <button
+                            className="bottomSort"
+                            onClick={handleSortName}
+                          >
+                            <SortIcon />
+                          </button>
+                        </th>
+                        <th style={{ width: "13rem", paddingBottom: "2rem" }}>
+                          <span>Şehir</span>
+                          <button
+                            className="bottomSort"
+                            onClick={handleSortCity}
+                          >
+                            <SortIcon />
+                          </button>
+                        </th>
+                        <th style={{ width: "15rem", paddingBottom: "2rem" }}>
+                          <span>Güncelle</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="lineTableBody ">
+                      {currentItems.map((branch, index) => (
+                        <TableRow
+                          branch={branch}
+                          key={branch.oid}
+                          index={index}
+                          handleRefreshClick={handleRefreshClick}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div className="footer mobile:m-0">
@@ -252,7 +252,10 @@ export default function BranchList() {
                 </div>
                 <div>
                   {currentPage > 1 && (
-                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage - 1)}>
+                    <button
+                      className="beforeAndNextButton"
+                      onClick={() => paginate(currentPage - 1)}
+                    >
                       ÖNCEKİ
                     </button>
                   )}
@@ -262,7 +265,11 @@ export default function BranchList() {
                     currentPage - 1 === index || currentPage === index ? (
                       <button
                         key={index}
-                        className={currentPage === index + 1 ? "paginationButton active" : "paginationButton"}
+                        className={
+                          currentPage === index + 1
+                            ? "paginationButton active"
+                            : "paginationButton"
+                        }
                         onClick={() => paginate(index + 1)}
                       >
                         {index + 1}
@@ -271,7 +278,10 @@ export default function BranchList() {
                   )}
 
                   {currentPage < paginationLength && (
-                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage + 1)}>
+                    <button
+                      className="beforeAndNextButton"
+                      onClick={() => paginate(currentPage + 1)}
+                    >
                       SONRAKİ
                     </button>
                   )}
@@ -286,19 +296,27 @@ export default function BranchList() {
   );
 }
 
-function TableRow({branch,handleRefreshClick}){
-  
+function TableRow({ branch, handleRefreshClick }) {
   const [spinner, setSpinner] = useState("default");
-  return <tr className={`tableRow rowBackground ${spinner=="success"&&"rowBackgroundSuccessFade"} ${spinner=="error"&&"rowBackgroundErrorFade"}`} key={branch.oid}>
-  <td style={{ width: "13rem" }}>{branch.name}</td>
-  <td style={{ width: "13rem" }}>{branch.city}</td>
-  <td style={{ width: "15rem" }}>
-    <button
-      className={`refreshButton ${spinner=="default"&& "refreshTrigger"}`}
-      onClick={() => handleRefreshClick(branch.apiId,setSpinner)}
+  return (
+    <tr
+      className={`tableRow rowBackground ${
+        spinner == "success" && "rowBackgroundSuccessFade"
+      } ${spinner == "error" && "rowBackgroundErrorFade"}`}
+      key={branch.oid}
     >
-      <RefreshIcon />
-    </button>
-  </td>
-</tr>
+      <td style={{ width: "13rem" }}>{branch.name}</td>
+      <td style={{ width: "13rem" }}>{branch.city}</td>
+      <td style={{ width: "15rem" }}>
+        <button
+          className={`refreshButton ${
+            spinner == "default" && "refreshTrigger"
+          }`}
+          onClick={() => handleRefreshClick(branch.apiId, setSpinner)}
+        >
+          <RefreshIcon />
+        </button>
+      </td>
+    </tr>
+  );
 }

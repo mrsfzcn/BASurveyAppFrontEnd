@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./list.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import Layout from "../../../../components/Layout";
@@ -11,8 +10,9 @@ import DeleteIcon from "../svg/delete-svg";
 import Alert from "../../.../../../../components/Alert";
 import Input from "../../../../components/Input";
 import BreadCrumbs from "../../../../components/BreadCrumbs";
-import LocalStorageServiceAuth from "../../../../store/auth-store.js";
 import LocalStorageServiceUser from "../../../../store/user-store.js";
+import { axiosInstanceGlobal } from "../../../../axiosControl/axiosInstance/axiosInstance.js";
+import UserService from "../../../../services/UserService.js";
 
 
 export default function List() {
@@ -22,7 +22,6 @@ export default function List() {
   const [userList, setUserList] = useState([]);
   const [search, setSeach] = useState("");
   const [searchedList, setSearchedList] = useState([]);
-  const token = LocalStorageServiceAuth.getToken();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemPerPage] = useState(10);
   const [paginationLength, setPaginationLength] = useState();
@@ -35,31 +34,20 @@ export default function List() {
   const [sortEposta, setSortEposta] = useState();
   const [sortKullaniciRolu, setSortKullaniciRolu] = useState();
   const [sortKayitTarihi, setSortKayitTarihi] = useState();
-  const BASE_URL = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/api/v1/user/find-all-user-details`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    UserService.get()
+    .then((response)=>{
       setUserList(response.data);
       setSearchedList(response.data);
       console.log(response.data);
       setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
-    } catch (error) {
+    })
+    .catch((error)=>{
       setUserList([]);
       console.error(error);
-    }
-  };
+    })
+  }, []);
 
   const filterUsers = (userList, search, currentPage, itemsPerPage) => {
     const filteredList = userList.filter((item) =>
@@ -157,16 +145,9 @@ export default function List() {
   const handleDeleteClick = async (oid) => {
     setAlert({ type: "", message: "" });
     try {
-      const response = await axios.delete(
-        `${BASE_URL}/api/v1/user/delete/${oid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      UserService.delete(oid);
       setAlert({ type: "success", message: "Kullanıcı başarıyla silindi." });
-      fetchData();
+      setUserList(userList.filter(user=>user.oid!=oid));
     } catch (error) {
       console.error(error);
       setAlert({
