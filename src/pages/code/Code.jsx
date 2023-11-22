@@ -64,7 +64,7 @@ const Code = () => {
             navigate("/yonetici-sayfasi");
           }
         } else {
-          alert("hata var");
+          alert("QR kod hatalı. Lütfen tekrar deneyiniz.");
         }
       })
       .catch((error) => {

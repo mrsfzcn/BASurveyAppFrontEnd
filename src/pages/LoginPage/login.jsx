@@ -43,7 +43,7 @@ function Login() {
     }
 
     if (!validateEmail(email)) {
-      setError("Lütfen geçerli bir e-mail adresi giriniz.");
+      setError("Lütfen bilgeadamboost.com, bilgeadamakademi.com veya bilgeadam.com uzantılı bir e-posta adresi giriniz.");
       return;
     }
     if (password.length < 8) {
