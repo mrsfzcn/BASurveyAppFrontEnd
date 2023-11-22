@@ -7,8 +7,8 @@ import vektor5 from "../../assets/images/Login/Vector5.png";
 import vektor6 from "../../assets/images/Login/Vector6.png";
 import vektor7 from "../../assets/images/Login/Vector7.png";
 import { decrypt } from "../../utils/encrypt";
-import { encrypt } from "../../utils/encrypt";
 import backgroundImage from "../../assets/images/Login/loginbacground.png";
+import LocalStorageServiceAuth from "../../store/auth-store.js";
 const QrCode = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,7 +16,7 @@ const QrCode = () => {
   const qrCode = location.state?.qrCode;
   const [code, setCode] = useState({
     twoFactoryKey: "",
-    token: localStorage.getItem("token") || "",
+    token: LocalStorageServiceAuth.getToken() || "",
   });
 
   const handleTwoFactoryChange = (e) => {
@@ -41,7 +41,7 @@ const QrCode = () => {
       .then((response) => {
         if (response.data === true) {
           const decodedToken = TokenService.decodeToken(code.token);
-          localStorage.setItem("auth", encrypt("true"));
+          LocalStorageServiceAuth.setIsAuthenticated();
           if (decodedToken && decodedToken.role === "ADMIN") {
             navigate("/yonetici-sayfasi");
           }
@@ -56,7 +56,7 @@ const QrCode = () => {
   };
 
   useEffect(() => {
-    const authItem = localStorage.getItem("auth");
+    const authItem = LocalStorageServiceAuth.getIsAuthenticated();
     if (authItem && decrypt(authItem) === "true") {
       navigate("/yonetici-sayfasi");
     }

@@ -79,7 +79,7 @@ class SurveyService {
   }
 
   setRequiredQuestions(SetRequiredQuestionIndexesDto) {
-    return axiosInstanceGlobal.put("/api/v1/survey/add-required-question-indexes", SetRequiredQuestionIndexesDto);
+    return axiosInstanceGlobal.put("/survey/add-required-question-indexes", SetRequiredQuestionIndexesDto);
   }
 }
 

@@ -6,6 +6,8 @@ import Table from '../../../components/Table/Table';
 import Layout from '../../../components/Layout'
 import TrainerService from '../../../services/TrainerService';
 import BreadCrumbs from '../../../components/BreadCrumbs'
+import LocalStorageServiceUser from "../../../store/user-store"
+
 
 function TrainerListPage() {
 
@@ -32,10 +34,9 @@ function TrainerListPage() {
     const handleEditClick = (rowData) => {
       console.log(rowData.oid);
       console.log(rowData)
-      localStorage.setItem("userId", rowData.oid);
-      localStorage.setItem("selectedRole","Trainer")
+      LocalStorageServiceUser.setUserOid(rowData.oid);
+      LocalStorageServiceUser.setSelectedRole("Trainer");
       navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
-      // navigate(`/kullanici-bilgileri-guncelle/${rowData.oid}`, { state: rowData });
     };
   
     // To get all list 

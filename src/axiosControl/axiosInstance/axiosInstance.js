@@ -1,6 +1,7 @@
 // axiosInstance.js
 
 import axios from "axios";
+import LocalStorageServiceAuth from "../../store/auth-store";
 
 const axiosInstance = (baseURL) => {
   const instance = axios.create({
@@ -9,12 +10,12 @@ const axiosInstance = (baseURL) => {
 
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("token");
+      const token = LocalStorageServiceAuth.getToken();
       if (token && token.trim() !== "") {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
         console.error("Yetki hatası");
-        window.location.href="/giris";
+        window.location.href = "/giris";
         return Promise.reject(new Error("Yetki hatası"));
       }
       return config;
@@ -29,14 +30,14 @@ const axiosInstance = (baseURL) => {
     (error) => {
       if (error.response.status === 401 || error.response.status === 403) {
         console.error("Yetki hatası");
-        const token = localStorage.getItem("token");
+        const token = LocalStorageServiceAuth.getToken();
         if (!token) {
           console.warn("Token not found");
           return;
         }
-        localStorage.removeItem("token"); // token'ı sil
-        localStorage.removeItem("auth"); // protected route'ta tutulan auth başlığını sil
-        window.location.href="/giris"; // Yetkisiz erişim durumunda login sayfasına yönlendir
+        LocalStorageServiceAuth.removeToken(); // token'ı sil
+        LocalStorageServiceAuth.removeIsAuthenticated() // protected route'ta tutulan auth başlığını sil
+        window.location.href = "/giris"; // Yetkisiz erişim durumunda login sayfasına yönlendir
         return Promise.reject(new Error("Yetki hatası"));
       }
       return Promise.reject(error);

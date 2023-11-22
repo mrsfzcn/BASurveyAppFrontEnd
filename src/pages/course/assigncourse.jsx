@@ -8,6 +8,7 @@ import SortIcon from "../user/AllUsers/svg/sort-solid.jsx";
 import Alert from "../../components/Alert.jsx";
 import Input from "../../components/Input.jsx";
 import BreadCrumbs from "../../components/BreadCrumbs.jsx";
+import LocalStorageServiceAuth from "../../store/auth-store.js";
 
 export default function CourseList() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -16,7 +17,7 @@ export default function CourseList() {
   const [courseList, setcourseList] = useState([]);
   const [search, setSeach] = useState("");
   const [searchedList, setSearchedList] = useState([]);
-  const token = localStorage.getItem("token");
+  const token = LocalStorageServiceAuth.getToken();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemPerPage] = useState(10);
   const [paginationLength, setPaginationLength] = useState();

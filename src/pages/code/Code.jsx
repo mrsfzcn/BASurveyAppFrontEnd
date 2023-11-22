@@ -10,17 +10,18 @@ import vektor7 from "../../assets/images/Login/Vector7.png";
 import { encrypt } from "../../utils/encrypt";
 import { decrypt } from "../../utils/encrypt";
 import backgroundImage from "../../assets/images/Login/loginbacground.png";
+import LocalStorageServiceAuth from "../../store/auth-store.js";
 const Code = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const [code, setCode] = useState({
     twoFactoryKey: "",
-    token: localStorage.getItem("token") || "",
+    token: LocalStorageServiceAuth.getToken() || "",
   });
 
   const [regenerateQrCode, setRegenerateQrCode] = useState({
-    token: localStorage.getItem("token") || "",
+    token: LocalStorageServiceAuth.getToken() || "",
   });
 
   const [newQrCode, setNewQrCode] = useState("");
@@ -58,7 +59,7 @@ const Code = () => {
       .then((response) => {
         if (response.data === true) {
           const decodedToken = TokenService.decodeToken(code.token);
-          localStorage.setItem("auth", encrypt("true"));
+          LocalStorageServiceAuth.setIsAuthenticated();
           if (decodedToken && decodedToken.role === "ADMIN") {
             navigate("/yonetici-sayfasi");
           }
@@ -73,7 +74,8 @@ const Code = () => {
   };
 
   useEffect(() => {
-    const authItem = localStorage.getItem("auth");
+    
+    const authItem = LocalStorageServiceAuth.getIsAuthenticated();
     if (authItem && decrypt(authItem) === "true") {
       navigate("/yonetici-sayfasi");
     }

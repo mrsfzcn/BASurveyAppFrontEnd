@@ -9,6 +9,7 @@ import Alert from "../../components/Alert.jsx";
 import Input from "../../components/Input.jsx";
 import BreadCrumbs from "../../components/BreadCrumbs.jsx";
 import RefreshIcon from "../user/AllUsers/svg/refresh-svg.jsx";
+import LocalStorageServiceAuth from "../../store/auth-store.js";
 
 export default function BranchList() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -17,7 +18,7 @@ export default function BranchList() {
   const [branchList, setBranchList] = useState([]);
   const [search, setSeach] = useState("");
   const [searchedList, setSearchedList] = useState([]);
-  const token = localStorage.getItem("token");
+  const token = LocalStorageServiceAuth.getToken();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemPerPage] = useState(10);
   const [paginationLength, setPaginationLength] = useState();
@@ -32,14 +33,13 @@ export default function BranchList() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const fetchData = async () => {
+    const fetchData = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}/api/v1/branch/active-branches`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${LocalStorageServiceAuth.getToken()}`,
           },
         }
       );

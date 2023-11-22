@@ -1,8 +1,9 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { decrypt } from "./encrypt.js";
+import LocalStorageServiceAuth from "../store/auth-store"
 
 const PrivateRoutes = ({ children, ...rest }) => {
-  let auth = localStorage.getItem("auth");
+  let auth = LocalStorageServiceAuth.getIsAuthenticated();
 
   if (!auth) {
     return <Navigate to="/giris" />;

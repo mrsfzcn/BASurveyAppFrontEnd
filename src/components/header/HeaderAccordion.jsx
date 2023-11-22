@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import LocalStorageServiceAuth from "../../store/auth-store"
 function HeaderAccordion({ items, mobile }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -13,7 +14,7 @@ function HeaderAccordion({ items, mobile }) {
   };
 
   const handleClickLogout = () => {
-    localStorage.clear();
+    LocalStorageServiceAuth.clearLocalStorage();
     window.location.reload();
   };
 
