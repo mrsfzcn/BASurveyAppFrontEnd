@@ -5,8 +5,8 @@ class SurveyService {
     return axiosInstanceGlobal.post("/survey", survey);
   }
 
-  update(survey) {
-    return axiosInstanceGlobal.put("/survey/update", survey);
+  async update(survey) {
+    return await axiosInstanceGlobal.put("/survey/update", survey);
   }
 
   assign(survey) {
@@ -47,6 +47,16 @@ class SurveyService {
     }
   }
 
+  async getAllSurveyTags(){
+    try {
+      const response = await axiosInstanceGlobal.get("/surveytag/findall");
+      return response.data; 
+    } catch (error) {
+      console.error("Tag verileri alınırken bir hata oluştu:", error);
+      return []; 
+    }
+  }
+
   async getAllSurveys() {
     try {
       const response = await axiosInstanceGlobal.get("/survey/list");
@@ -79,7 +89,7 @@ class SurveyService {
   }
 
   setRequiredQuestions(SetRequiredQuestionIndexesDto) {
-    return axiosInstanceGlobal.put("/api/v1/survey/add-required-question-indexes", SetRequiredQuestionIndexesDto);
+    return axiosInstanceGlobal.put("/survey/add-required-question-indexes", SetRequiredQuestionIndexesDto);
   }
 }
 
