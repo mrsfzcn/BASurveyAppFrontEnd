@@ -10,6 +10,10 @@ import MultiOptionalMultiSelectableAndOtherSurvey from "./MultiOptionalMultiSele
 import LikertSurvey from "./LikertSurvey";
 import OpenEndedSurvey from "./OpenEndedSurvey.jsx";
 import MatrixSurveyPreview from "./MatrixSurvey.jsx";
+import LocalStorageServiceAuth from "../../store/auth-store.js"
+import LocalStorageServiceUser from "../../store/user-store.js"
+import axios from "axios";
+import AuthService from "../../services/AuthService.js";
 function SurveyFilling() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -53,12 +57,16 @@ function SurveyFilling() {
     };
     const fetchStudentData = async () => {
       try {
-        const response = await StudentService.findUserIdByEmailToken(
+        const response = await AuthService.findSurveyByEmail(
           tokenValue
         );
-        console.log(response);
-        setFirstName(response.data.firstName);
-        setLastName(response.data.lastName);
+        
+         LocalStorageServiceAuth.setToken(response.data.token)
+         LocalStorageServiceAuth.setIsAuthenticated();
+         setFirstName(response.data.firstName);
+         setLastName(response.data.lastName);
+        fetchTrainersData();
+        fetchData();
       } catch (error) {
         console.error(error);
       }
@@ -74,9 +82,9 @@ function SurveyFilling() {
         console.error(error);
       }
     };
-    fetchTrainersData();
+    
     fetchStudentData();
-    fetchData();
+    
   }, []);
   const [upData, setUpData] = useState([]);
   const renderComponent = (type, options, questionId, question) => {
@@ -104,7 +112,7 @@ function SurveyFilling() {
     } else if (type === "Açık Uçlu") {
       return <OpenEndedSurvey />;
     } else if (
-      type === "Çok Seçenekli Çok Seçilebilir Ve Seçenek Girilebilir"
+      type === "Çok Seçenekli Çok Seçilebilir ve Seçenek Girilebilir"
     ) {
       return (
         <MultiOptionalMultiSelectableAndOtherSurvey
@@ -131,7 +139,7 @@ function SurveyFilling() {
 
   return (
     <div className="flex flex-col grid-flow-col  items-center bg-[#8dc2ec] min-h-screen  rounded relative">
-      <div className="bg-white mt-9 rounded flex flex-col bg-[#e8f2fb] w-1/2 px-8  ">
+      <div className="bg-white mt-9 rounded flex flex-col bg-[#e8f2fb] w-1/2 p-8">
         <h2 className="text-3xl font-bold text-center mb-4 pt-4 ">
           {surveyTitle}
         </h2>
@@ -192,7 +200,6 @@ function SurveyFilling() {
             </div>
           )
         )}
-        ;
       </div>
     </div>
   );
