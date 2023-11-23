@@ -80,7 +80,7 @@ function PreviewSurvey() {
 
   const closePopup = () => {
     setIsPopupOpen(false);
-    navigate("/yonetici-sayfasi");
+    navigate("/anketler");
   };
   const header = { header: "Anket Oluşturma", href: "/anket-olustur" };
 
