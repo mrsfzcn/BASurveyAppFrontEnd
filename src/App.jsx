@@ -49,6 +49,7 @@ function App() {
         <Route path="/kare-kod" element={<Qrcode />} />
         <Route path="/kod" element={<Code />} />
         <Route path="/yeni-kare-kod-olustur" element={<RegenerateQrCode />} />
+        <Route path="/anket-doldurma-sayfası" element={<SurveyFilling />} />
         <Route element={<PrivateRoutes />}>
         <Route path="/subeler" element={<BranchList />} />
         <Route path="/kurslar" element={<CourseList />} />
@@ -60,7 +61,6 @@ function App() {
           <Route path="/sinifa-ogrenci-atama" element={<AssignStudentToClass />} />
           <Route path="/soru-ekle" element={<AddQuestion />} />
           <Route path="/on-izleme" element={<PreviewSurvey />} />
-          <Route path="/anket-doldurma-sayfası" element={<SurveyFilling />} />
           <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/etiket">
             <Route index element={<AddTag />} />
