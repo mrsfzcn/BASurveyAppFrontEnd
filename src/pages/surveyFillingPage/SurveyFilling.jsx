@@ -174,7 +174,7 @@ function SurveyFilling() {
             <div key={index} className="m-2 p-2">
               <p className="">
                 {index + 1}. {question.questionString}
-                {requiredIndexes.includes(index) && (
+                {requiredIndexes.includes(question.oid) && (
                   <span className="text-red-700 text-xl"> *</span>
                 )}
               </p>

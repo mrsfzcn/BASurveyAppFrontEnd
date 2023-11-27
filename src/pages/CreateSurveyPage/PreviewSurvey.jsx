@@ -27,15 +27,11 @@ function PreviewSurvey() {
   const handleSendSurvey = () => {
     console.log(selectedQuestions);
 
-    selectedQuestions.forEach((question, index) => {
+    selectedQuestions.forEach((question) => {
       if (question.required) {
-        console.log(question.questionOid);
-        requiredIndexes.push(index);
+        requiredIndexes.push(question.questionOid);
       }
     });
-
-    console.log(surveyOid);
-    console.log(requiredIndexes);
 
     const oid = surveyOid;
 
