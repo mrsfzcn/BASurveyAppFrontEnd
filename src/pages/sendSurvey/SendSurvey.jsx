@@ -30,6 +30,20 @@ const SendSurvey = () => {
     selectedDate: null,
   });
 
+  useEffect(() => {
+    const setDefaultDate = () => {
+      const today = new Date();
+      const todayISOString = today.toISOString().split("T")[0];
+      
+      setData((prevData) => ({
+        ...prevData,
+        selectedDate: todayISOString,
+      }));
+    };
+
+    
+    setDefaultDate();
+  }, []);
 
   const numberOptions = [];
   for (let i = 1; i <= 10; i++) {
