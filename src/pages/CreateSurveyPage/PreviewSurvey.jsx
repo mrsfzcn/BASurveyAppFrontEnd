@@ -1,11 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Button from "../../components/Button";
 import SurveyService from "../../services/SurveyService.js";
 import "./createsurvey.css";
 import icon from "../../assets/icons/icons8-arrow-30.png";
+import QuestionService from "../../services/QuestionService.js";
+import Input from "../../components/Input.jsx";
+import MatriksInput from "../../components/QuestionMatriksInput.jsx";
+import QuestionUpdateComboBoxPlus from "../questionPage/QuestionUpdateComboBoxPlus.jsx";
+import QuestionTypeService from "../../services/QuestionTypeService.js";
 
 function PreviewSurvey() {
   const location = useLocation();
@@ -18,10 +23,66 @@ function PreviewSurvey() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] =
     useState(false);
+  const [editQuestion, setEditQuestion] = useState(false);
+  const [questionString, setQuestionString] = useState();
+  const [questionType, setQuestionType] = useState();
+  const [questionTagIds, setQuestionTagIds] = useState();
+  const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
+  const [questionTagsOptions, setQuestionTagsOptions] = useState([]);
+  let defaultQuestion = null;
+
+  /*
+  Long questionOid;
+    Long questionTypeOid;
+    List<Long> tagOids;
+    String questionString;
+*/
+  const [updateQuestion, setUpdateQuestion] = useState({
+    questionOid: undefined,
+    questionTypeOid: undefined,
+    tagOids: [],
+    questionString: undefined,
+  });
+
+  function updateQuestionEdit(e) {
+    e.preventDefault();
+    setEditQuestion(false);
+
+    // QuestionService.updateQuestion(updateQuestionDto)
+    //   .then((resp)=>{
+    //   console.log(resp.data);
+    // })
+    //   .catch((error)=>{
+    //   console.log(error);
+    // });
+  }
+
+  const handleCancelEditQuestion = () => {
+    setEditQuestion(false);
+    setUpdateQuestion(defaultQuestion);
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const updatedQuestion = {
+      ...updateQuestion,
+      [e.target.placeholder] : e.target.value
+    }
+    setUpdateQuestion(updatedQuestion);
+  };
 
   const handleCancel = (e) => {
     e.preventDefault();
     setIsCancelConfirmationOpen(true);
+  };
+
+  const handleEditQuestion = (questionOid) => {
+    QuestionService.questionGetById(questionOid).then((resp) => {
+      const changingQuestion = {...resp.data};
+      setUpdateQuestion(changingQuestion);
+      defaultQuestion = {...changingQuestion};
+      setEditQuestion(true);
+    });
   };
 
   const handleSendSurvey = () => {
@@ -94,6 +155,51 @@ function PreviewSurvey() {
       href: "/anket-olustur",
     },
   ];
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      // Databasedeki tüm QuestionTypes geliyor.
+      try {
+        const response = await QuestionTypeService.getAllType();
+        const types = response.data;
+
+        setQuestionTypeOptions(
+          types.map((type) => ({
+            label: type.questionType,
+            value: type.questionTypeId,
+          }))
+        );
+      } catch (error) {
+        console.error("Tag verileri alınırken bir hata oluştu:", error);
+      }
+    };
+    const fetchDataTags = async () => {
+      // Databasedeki tüm QuestionTags geliyor.
+      try {
+        const response = await QuestionService.getAllQuestionTags();
+        const types = response.data;
+
+        setQuestionTagsOptions(
+          types.map((type) => ({
+            label: type.tagString,
+            value: type.tagStringId,
+          }))
+        );
+        console.log(types);
+      } catch (error) {
+        console.error("Tag verileri alınırken bir hata oluştu:", error);
+      }
+    };
+    fetchDataTags();
+    fetchData();
+  }, []);
+
+  const handleCustomComboBoxPlusData = (data) => {
+    console.log(data);
+    const a = data.map((i) => i.value);
+    setQuestionTagIds(a);
+    setUpdateQuestion({ ...updateQuestion, tagOids: a })
+  };
   return (
     <Layout>
       <div className="flex flex-col h-full">
@@ -129,6 +235,137 @@ function PreviewSurvey() {
                     {index + 1}. {question.questionString}
                     {question.required && (
                       <span className="text-red-700 text-xl"> *</span>
+                    )}
+                    <Button
+                      primary
+                      rounded
+                      className="mt-8"
+                      onClick={() => handleEditQuestion(question.questionOid)}
+                    >
+                      {" "}
+                      Soruyu Düzenle
+                    </Button>
+                    {editQuestion && (
+                      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-75 bg-gray-800">
+                        <div className="bg-white p-8 rounded shadow">
+                          <form className="class1 flex justify-center align-center">
+                            <div className="class2 bg-[#F1F1F1] flex justify-center align-center m-auto ">
+                              <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col gap-14 ">
+                                <div className="flex flex-col gap-14 justify-center items-center mt-7">
+                                  <div className="flex items-center justify-between w-[600px] ">
+                                    <label className="font-semibold w-[150px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[200px]">
+                                      Soru Id
+                                    </label>
+                                    <Input disabled value={updateQuestion.questionOid} full />
+                                  </div>
+                                  <div className="flex items-center   w-[600px] ">
+                                    <label className="font-semibold w-[150px]">
+                                      Soru Metni
+                                    </label>
+                                    {questionType != "Matriks" ? (
+                                      <Input
+                                        placeholder={"questionString"}
+                                        onChange={handleChange}
+                                        value={updateQuestion.questionString}
+                                        full
+                                        className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
+                                      />
+                                    ) : (
+                                      <MatriksInput
+                                        questionString={questionString}
+                                        setQuestionString={setQuestionString}
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="flex items-center w-[600px]">
+                                    <label className="font-semibold  w-[150px]">
+                                      Soru Tipi
+                                    </label>
+
+                                    <div
+                                      className="flex items-center"
+                                      style={{
+                                        paddingLeft: "5vw",
+                                        position: "relative",
+                                        height: "100%",
+                                        left: "12vw",
+                                      }}
+                                    >
+                                      <div
+                                        style={{
+                                          top: "0.1vh",
+                                          width: "20vw",
+                                          right: "17.0vw",
+                                          position: "relative",
+                                        }}
+                                      >
+                                        <Input
+                                          value={updateQuestion.questionType}
+                                          disabled={true}
+                                          full
+                                          className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
+                                        />
+                                        {/* <CustomComboBox options={questionTypeOptions} placeholder= "Seçiniz" onGetCustomData={handleCustomComboBoxData} className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"/>  input ile değişti -Doruk Tokinan*/}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center w-[600px]">
+                                    <label className="font-semibold  w-[150px]">
+                                      Soru Etiketi
+                                    </label>
+
+                                    <div
+                                      className="flex items-center"
+                                      style={{
+                                        paddingLeft: "5vw",
+                                        position: "relative",
+                                        height: "100%",
+                                        left: "12.1vw",
+                                      }}
+                                    >
+                                      <div
+                                        style={{
+                                          top: "0.1vh",
+                                          width: "20vw",
+                                          right: "17.0vw",
+                                          position: "relative",
+                                        }}
+                                      >
+                                        <QuestionUpdateComboBoxPlus
+                                          options={questionTagsOptions}
+                                          placeholder="Giriniz"
+                                          onGetCustomPlusData={
+                                            handleCustomComboBoxPlusData
+                                          }
+                                          className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex justify-center gap-7 flex-wrap mt-24 sm:mt-6 md:mt-8">
+                                  <Button
+                                    primary
+                                    rounded
+                                    className="mt-4"
+                                    onClick={updateQuestionEdit}
+                                  >
+                                    Onayla
+                                  </Button>
+                                  <Button
+                                    secondary
+                                    rounded
+                                    className="mt-4 mr-2"
+                                    onClick={handleCancelEditQuestion}
+                                  >
+                                    İptal
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
                     )}
                   </p>
                 </div>
