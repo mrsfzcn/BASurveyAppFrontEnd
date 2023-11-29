@@ -3,6 +3,7 @@ export const items = [
     label: "Kullanıcı İşlemleri",
     content: [
       { name: "Tüm Kullanıcılar", href: "/kullanici" },
+      { name: "Tüm Eğitmenler", href: "/egitmenler" },
       { name: "Tüm Şubeler", href: "/subeler" },
       { name: "Tüm Kurslar", href: "/kurslar" },
       { name: "Kullanıcı Ekle", href: "/kullanici/ekle" },

@@ -40,6 +40,7 @@ import TrainerListPage from "./pages/classesPage/trainerList/TrainerListPage";
 import BranchList from "./pages/branch/List";
 import CourseList from "./pages/course/assigncourse";
 import ClassListPage from "./pages/classesPage/classList/ClassListPage";
+import TrainerPage from "./pages/trainerPage/TrainerPage";
 
 function App() {
   return (
@@ -74,6 +75,13 @@ function App() {
               <Route index element={<UserRegistration />} />
             </Route>
           </Route>
+          <Route path="/egitmenler">
+            <Route index element={<TrainerPage />} />
+            {/* <Route path="guncelle/:id">
+              <Route index element={<UpdateType />} />
+            </Route> */}
+          </Route>
+
           <Route path="/anketler">
             <Route index element={<TumAnketler />} />
             <Route path="guncelle/:id">
