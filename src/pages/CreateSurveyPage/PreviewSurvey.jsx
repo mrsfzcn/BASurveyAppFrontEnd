@@ -11,6 +11,12 @@ import Input from "../../components/Input.jsx";
 import MatriksInput from "../../components/QuestionMatriksInput.jsx";
 import QuestionUpdateComboBoxPlus from "../questionPage/QuestionUpdateComboBoxPlus.jsx";
 import QuestionTypeService from "../../services/QuestionTypeService.js";
+import MultipleChoiceSurvey from "../surveyFillingPage/MultipleChoiceSurvey.jsx";
+import MultiOptionalMultiSelectableSurvey from "../surveyFillingPage/MultiOptionalMultiSelectableSurvey.jsx";
+import MultiOptionalMultiSelectableAndOtherSurvey from "../surveyFillingPage/MultiOptionalMultiSelectableAndOtherSurvey.jsx";
+import LikertSurvey from "../surveyFillingPage/LikertSurvey.jsx";
+import MatrixSurveyPreview from "../surveyFillingPage/MatrixSurvey.jsx";
+import OpenEnded from "../surveyFillingPage/OpenEndedSurvey.jsx";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 function PreviewSurvey() {
@@ -69,7 +75,7 @@ function PreviewSurvey() {
     e.preventDefault();
     const updatedQuestion = {
       ...updateQuestion,
-      [e.target.placeholder] : e.target.value
+      [e.target.placeholder]: e.target.value
     }
     setUpdateQuestion(updatedQuestion);
   };
@@ -81,9 +87,9 @@ function PreviewSurvey() {
 
   const handleEditQuestion = (questionOid) => {
     QuestionService.questionGetById(questionOid).then((resp) => {
-      const changingQuestion = {...resp.data};
+      const changingQuestion = { ...resp.data };
       setUpdateQuestion(changingQuestion);
-      defaultQuestion = {...changingQuestion};
+      defaultQuestion = { ...changingQuestion };
       setEditQuestion(true);
     });
   };
@@ -158,7 +164,7 @@ function PreviewSurvey() {
       href: "/anket-olustur",
     },
   ];
-  
+
   useEffect(() => {
     const fetchData = async () => {
       // Databasedeki tüm QuestionTypes geliyor.
@@ -196,6 +202,55 @@ function PreviewSurvey() {
     fetchDataTags();
     fetchData();
   }, []);
+  const [upData, setUpData] = useState([]);
+  const renderComponent = (type, options, questionId, question) => {
+    console.log(type);
+    if (type === "Çoktan Seçmeli") {
+      return (
+        <MultipleChoiceSurvey
+          multipleQuestionOid={questionId}
+          multipleOptions={options}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    } else if (type === "Likert") {
+      return (
+        <LikertSurvey
+          likertQuestionOid={questionId}
+          likertOptions={options}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    } else if (type === "Açık Uçlu") {
+      return <OpenEnded />;
+    } else if (
+      type === "Çok Seçenekli Çok Seçilebilir ve Seçenek Girilebilir"
+    ) {
+      return (
+        <MultiOptionalMultiSelectableAndOtherSurvey
+          multiOptionalMultiSelectableAndOtherQuestionOid={questionId}
+          multiOptionalMultiSelectableAndOtherOptions={options}
+        />
+      );
+    } else if (type === "Çok Seçenekli Çok Seçilebilir") {
+      return (
+        <MultiOptionalMultiSelectableSurvey
+          multiOptionalMultiSelectableOid={questionId}
+          multiOptionalMultiSelectableOptions={options}
+        />
+      );
+    } else if (type === "Matriks") {  //Matrix durumu icin kontrol
+      return (
+        <MatrixSurveyPreview options={options} question={question} />
+      )
+    } else {
+      return null;
+    }
+  };
 
   const handleCustomComboBoxPlusData = (data) => {
     console.log(data);
@@ -253,7 +308,7 @@ function PreviewSurvey() {
                                 return (
                                   <div key={index} {...prov.dragHandleProps} {...prov.draggableProps} ref={prov.innerRef} className="m-2 p-2">
                                     <p className="mb-16">
-                                      {index + 1}. {question.questionString}
+                                      {question.questionType !== "Matriks" ? `${index + 1}. ${question.questionString}` : `${index + 1}`}
                                       {question.required && (
                                         <span className="text-red-700 text-xl"> *</span>
                                       )}
@@ -267,6 +322,14 @@ function PreviewSurvey() {
                                         Soruyu Düzenle
                                       </Button>
                                     </p>
+                                    <div className="flex flex-row">
+                {renderComponent(
+                  question.questionType,
+                  question.questionOptions,
+                  question.oid,
+                  question.questionString
+                )}
+              </div>
                                   </div>
                                 )
                               }}
