@@ -11,6 +11,13 @@ import Input from "../../components/Input.jsx";
 import MatriksInput from "../../components/QuestionMatriksInput.jsx";
 import QuestionUpdateComboBoxPlus from "../questionPage/QuestionUpdateComboBoxPlus.jsx";
 import QuestionTypeService from "../../services/QuestionTypeService.js";
+import MultipleChoiceSurvey from "../surveyFillingPage/MultipleChoiceSurvey.jsx";
+import MultiOptionalMultiSelectableSurvey from "../surveyFillingPage/MultiOptionalMultiSelectableSurvey.jsx";
+import MultiOptionalMultiSelectableAndOtherSurvey from "../surveyFillingPage/MultiOptionalMultiSelectableAndOtherSurvey.jsx";
+import LikertSurvey from "../surveyFillingPage/LikertSurvey.jsx";
+import MatrixSurveyPreview from "../surveyFillingPage/MatrixSurvey.jsx";
+import OpenEnded from "../surveyFillingPage/OpenEndedSurvey.jsx";
+
 
 function PreviewSurvey() {
   const location = useLocation();
@@ -194,6 +201,56 @@ function PreviewSurvey() {
     fetchData();
   }, []);
 
+  const [upData, setUpData] = useState([]);
+  const renderComponent = (type, options, questionId, question) => {
+    console.log(type);
+    if (type === "Çoktan Seçmeli") {
+      return (
+        <MultipleChoiceSurvey
+          multipleQuestionOid={questionId}
+          multipleOptions={options}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    } else if (type === "Likert") {
+      return (
+        <LikertSurvey
+          likertQuestionOid={questionId}
+          likertOptions={options}
+          veriTasi={(veri) => {
+            setUpData(veri);
+          }}
+        />
+      );
+    } else if (type === "Açık Uçlu") {
+      return <OpenEnded />;
+    } else if (
+      type === "Çok Seçenekli Çok Seçilebilir ve Seçenek Girilebilir"
+    ) {
+      return (
+        <MultiOptionalMultiSelectableAndOtherSurvey
+          multiOptionalMultiSelectableAndOtherQuestionOid={questionId}
+          multiOptionalMultiSelectableAndOtherOptions={options}
+        />
+      );
+    } else if (type === "Çok Seçenekli Çok Seçilebilir") {
+      return (
+        <MultiOptionalMultiSelectableSurvey
+          multiOptionalMultiSelectableOid={questionId}
+          multiOptionalMultiSelectableOptions={options}
+        />
+      );
+    } else if (type === "Matriks") {  //Matrix durumu icin kontrol
+
+      return(
+        <MatrixSurveyPreview options={options} question={question}/>
+      )} else {
+      return null;
+    }
+  };
+
   const handleCustomComboBoxPlusData = (data) => {
     console.log(data);
     const a = data.map((i) => i.value);
@@ -231,8 +288,8 @@ function PreviewSurvey() {
 
               {selectedQuestions.map((question, index) => (
                 <div key={index} className="m-2 p-2">
-                  <p className="mb-16">
-                    {index + 1}. {question.questionString}
+                  {console.log(question)}
+                  <p className="mb-16">{question.questionType !== "Matriks" ? `${index + 1}. ${question.questionString}` : `${index + 1}`}
                     {question.required && (
                       <span className="text-red-700 text-xl"> *</span>
                     )}
@@ -368,6 +425,14 @@ function PreviewSurvey() {
                       </div>
                     )}
                   </p>
+                  <div className="flex flex-row">
+                {renderComponent(
+                  question.questionType,
+                  question.questionOptions,
+                  question.oid,
+                  question.questionString
+                )}
+              </div>
                 </div>
               ))}
             </div>
