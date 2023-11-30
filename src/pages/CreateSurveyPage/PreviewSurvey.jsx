@@ -8,7 +8,7 @@ import "./createsurvey.css";
 import icon from "../../assets/icons/icons8-arrow-30.png";
 import QuestionService from "../../services/QuestionService.js";
 import Input from "../../components/Input.jsx";
-import MatriksInput from "../../components/QuestionMatriksInput.jsx";
+import MatriksInput from "../../components/QuestionMatriksInput";
 import QuestionUpdateComboBoxPlus from "../questionPage/QuestionUpdateComboBoxPlus.jsx";
 import QuestionTypeService from "../../services/QuestionTypeService.js";
 import MultipleChoiceSurvey from "../surveyFillingPage/MultipleChoiceSurvey.jsx";
@@ -21,31 +21,27 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 function PreviewSurvey() {
   const location = useLocation();
-  const surveyTitle = location.state.surveyTitle;
-  const surveyOid = location.state.surveyOid;
-  const selectedQuestions = location.state.selectedQuestions;
-  const selectedQuestionsWithStringIds = selectedQuestions.map(question => { return { ...question, questionOid: `${question.questionOid}` } })
-  const [questionPack, setQuestionPack] = useState(selectedQuestionsWithStringIds);
+  const surveyTitle = location.state ? location.state.surveyTitle : "HATA VAR";
+  const surveyOid = location.state ? location.state.surveyOid : "HATA VAR";
+  const selectedQuestions = location.state ? location.state.selectedQuestions : [];
+  const selectedQuestionsWithStringIds = selectedQuestions.map((question) => {
+    return { ...question, questionOid: `${question.questionOid}` };
+  });
+  const [questionPack, setQuestionPack] = useState(
+    selectedQuestionsWithStringIds
+  );
   const navigate = useNavigate();
   var requiredIndexes = [];
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] =
-    useState(false);
+  const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] = useState(false);
   const [editQuestion, setEditQuestion] = useState(false);
   const [questionString, setQuestionString] = useState();
   const [questionType, setQuestionType] = useState();
   const [questionTagIds, setQuestionTagIds] = useState();
   const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
   const [questionTagsOptions, setQuestionTagsOptions] = useState([]);
-  let defaultQuestion = null;
-
-  /*
-  Long questionOid;
-    Long questionTypeOid;
-    List<Long> tagOids;
-    String questionString;
-*/
+  const [defaultQuestion, setDefaultQuestion] = useState();
   const [updateQuestion, setUpdateQuestion] = useState({
     questionOid: undefined,
     questionTypeOid: undefined,
@@ -56,28 +52,46 @@ function PreviewSurvey() {
   function updateQuestionEdit(e) {
     e.preventDefault();
     setEditQuestion(false);
+    let tagOids = [];
+    
+    const defaultQuestionTagStrings = defaultQuestion.questionTags.map(tag => tag.tagString);
+    const selectedTagOption = questionTagsOptions.filter(tagOption => defaultQuestionTagStrings.includes(tagOption.label));
 
-    // QuestionService.updateQuestion(updateQuestionDto)
-    //   .then((resp)=>{
-    //   console.log(resp.data);
-    // })
-    //   .catch((error)=>{
-    //   console.log(error);
-    // });
+    if(selectedTagOption.length > 0){
+      tagOids = selectedTagOption.map(tag=>tag.value)
+    }
+    const updateQuestionDto = {
+      questionOid: defaultQuestion.questionOid,
+      questionTypeOid: questionTypeOptions.find(type => type.label === defaultQuestion.questionType).value,
+      tagOids: tagOids,
+      questionString: questionString,
+    }
+    QuestionService.updateQuestion(updateQuestionDto)
+      .then((resp)=>{
+      console.log(resp.data);
+      QuestionService.questionGetById(updateQuestionDto.questionOid).then((resp)=>{
+        console.log(resp.data);
+        setQuestionPack(questionPack.map(question=>{
+          if(question.questionOid == resp.data.questionOid){
+            const newQuestion = {...question, questionString: resp.data.questionString}
+            return newQuestion;
+          }
+          return question;
+        }));
+      })
+    })
+      .catch((error)=>{
+      console.log(error);
+    });
+  }
+
+  const handleChangeQuestionString = (e) => {
+    setQuestionString(e.target.value);
   }
 
   const handleCancelEditQuestion = () => {
     setEditQuestion(false);
     setUpdateQuestion(defaultQuestion);
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    const updatedQuestion = {
-      ...updateQuestion,
-      [e.target.placeholder]: e.target.value
-    }
-    setUpdateQuestion(updatedQuestion);
   };
 
   const handleCancel = (e) => {
@@ -89,14 +103,14 @@ function PreviewSurvey() {
     QuestionService.questionGetById(questionOid).then((resp) => {
       const changingQuestion = { ...resp.data };
       setUpdateQuestion(changingQuestion);
-      defaultQuestion = { ...changingQuestion };
+      setQuestionString(changingQuestion.questionString);
+      setDefaultQuestion(changingQuestion);
+      setQuestionType(changingQuestion.questionType);
       setEditQuestion(true);
     });
   };
 
   const handleSendSurvey = () => {
-    console.log(selectedQuestions);
-
     questionPack.forEach((question) => {
       if (question.required) {
         requiredIndexes.push(parseInt(question.questionOid));
@@ -194,7 +208,6 @@ function PreviewSurvey() {
             value: type.tagStringId,
           }))
         );
-        console.log(types);
       } catch (error) {
         console.error("Tag verileri alınırken bir hata oluştu:", error);
       }
@@ -202,9 +215,9 @@ function PreviewSurvey() {
     fetchDataTags();
     fetchData();
   }, []);
+
   const [upData, setUpData] = useState([]);
   const renderComponent = (type, options, questionId, question) => {
-    console.log(type);
     if (type === "Çoktan Seçmeli") {
       return (
         <MultipleChoiceSurvey
@@ -243,28 +256,24 @@ function PreviewSurvey() {
           multiOptionalMultiSelectableOptions={options}
         />
       );
-    } else if (type === "Matriks") {  //Matrix durumu icin kontrol
-      return (
-        <MatrixSurveyPreview options={options} question={question} />
-      )
+    } else if (type === "Matriks") {
+      //Matrix durumu icin kontrol
+      return <MatrixSurveyPreview options={options} question={question} />;
     } else {
       return null;
     }
   };
 
   const handleCustomComboBoxPlusData = (data) => {
-    console.log(data);
     const a = data.map((i) => i.value);
     setQuestionTagIds(a);
-    setUpdateQuestion({ ...updateQuestion, tagOids: a })
+    setUpdateQuestion({ ...updateQuestion, tagOids: a });
   };
   function handleDragDrop(result) {
     const newOrderedPack = [...questionPack];
     const { source, destination } = result;
     const [movedItem] = newOrderedPack.splice(source.index, 1);
     newOrderedPack.splice(destination.index, 0, movedItem);
-    console.log(newOrderedPack);
-    console.log(questionPack);
     setQuestionPack(newOrderedPack);
   }
   return (
@@ -294,49 +303,70 @@ function PreviewSurvey() {
                 e-posta adresinizi görür.
                 <br /> <br /> <br />
                 <strong className="text-red-700">Gerekli*</strong>
-
               </p>
               <DragDropContext onDragEnd={handleDragDrop}>
-                <Droppable key="drag-drop-field" droppableId="drop-area" type="group">
+                <Droppable
+                  key="drag-drop-field"
+                  droppableId="drop-area"
+                  type="group"
+                >
                   {(provided) => {
                     return (
                       <div {...provided.droppableProps} ref={provided.innerRef}>
-                        {
-                          questionPack.map((question, index) => (
-                            <Draggable key={question.questionOid} draggableId={`${question.questionOid}`} index={index}>
-                              {(prov) => {
-                                return (
-                                  <div key={index} {...prov.dragHandleProps} {...prov.draggableProps} ref={prov.innerRef} className="m-2 p-2">
-                                    <p className="mb-16">
-                                      {question.questionType !== "Matriks" ? `${index + 1}. ${question.questionString}` : `${index + 1}`}
-                                      {question.required && (
-                                        <span className="text-red-700 text-xl"> *</span>
-                                      )}
-                                      <Button
-                                        primary
-                                        rounded
-                                        className="mt-8"
-                                        onClick={() => handleEditQuestion(parseInt(question.questionOid))}
-                                      >
+                        {questionPack.map((question, index) => (
+                          <Draggable
+                            key={question.questionOid}
+                            draggableId={`${question.questionOid}`}
+                            index={index}
+                          >
+                            {(prov) => {
+                              return (
+                                <div
+                                  key={index}
+                                  {...prov.dragHandleProps}
+                                  {...prov.draggableProps}
+                                  ref={prov.innerRef}
+                                  className="m-2 p-2"
+                                >
+                                  <p className="mb-16">
+                                    {question.questionType !== "Matriks"
+                                      ? `${index + 1}. ${question.questionString}`: `${index + 1}`}
+                                    {question.required && (
+                                      <span className="text-red-700 text-xl">
                                         {" "}
-                                        Soruyu Düzenle
-                                      </Button>
-                                    </p>
-                                    <div className="flex flex-row">
-                {renderComponent(
-                  question.questionType,
-                  question.questionOptions,
-                  question.oid,
-                  question.questionString
-                )}
-              </div>
+                                        *
+                                      </span>
+                                    )}
+                                    <Button
+                                      primary
+                                      rounded
+                                      className="mt-8"
+                                      onClick={() =>
+                                        handleEditQuestion(
+                                          parseInt(question.questionOid)
+                                        )
+                                      }
+                                    >
+                                      {" "}
+                                      Soruyu Düzenle
+                                    </Button>
+                                  </p>
+                                  <div className="flex flex-row">
+                                    {renderComponent(
+                                      question.questionType,
+                                      question.questionOptions,
+                                      parseInt(question.questionOid),
+                                      question.questionString
+                                    )}
                                   </div>
-                                )
-                              }}
-                            </Draggable>))}
+                                </div>
+                              );
+                            }}
+                          </Draggable>
+                        ))}
                         {provided.placeholder}
                       </div>
-                    )
+                    );
                   }}
                 </Droppable>
               </DragDropContext>
@@ -419,7 +449,11 @@ function PreviewSurvey() {
                         <label className="font-semibold w-[150px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[200px]">
                           Soru Id
                         </label>
-                        <Input disabled value={updateQuestion.questionOid} full />
+                        <Input
+                          disabled
+                          value={updateQuestion.questionOid}
+                          full
+                        />
                       </div>
                       <div className="flex items-center   w-[600px] ">
                         <label className="font-semibold w-[150px]">
@@ -428,8 +462,8 @@ function PreviewSurvey() {
                         {questionType != "Matriks" ? (
                           <Input
                             placeholder={"questionString"}
-                            onChange={handleChange}
-                            value={updateQuestion.questionString}
+                            onChange={handleChangeQuestionString}
+                            value={questionString}
                             full
                             className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
                           />
@@ -495,11 +529,11 @@ function PreviewSurvey() {
                             }}
                           >
                             <QuestionUpdateComboBoxPlus
+                              disabled={true}
                               options={questionTagsOptions}
-                              placeholder="Giriniz"
-                              onGetCustomPlusData={
-                                handleCustomComboBoxPlusData
-                              }
+                              placeholder="Değiştirilemez"
+                              onGetCustomPlusData={handleCustomComboBoxPlusData}
+                              qId={defaultQuestion.questionOid}
                               className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"
                             />
                           </div>
