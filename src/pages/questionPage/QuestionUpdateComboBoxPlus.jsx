@@ -8,7 +8,7 @@ import QuestionAddPage from './QuestionAddPage';
 import QuestionService from "../../services/QuestionService";
 import QuestionTypeService from "../../services/QuestionTypeService";
 
-const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData}) => {
+const QuestionUpdateComboBoxPlus = ({ qId ,options, placeholder , onGetCustomPlusData, disabled}) => {
 
   let params = useParams();
   const location = useLocation();
@@ -34,13 +34,25 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
           if (selectedData != []) {
             setShowSelected(true);
           }
-
         })
         .catch((error) => {
           alert(params.id + "nolu soru bulunamamıştır");
         });
-    }
-
+      }
+      else if(qId != null){
+        QuestionService.questionGetById(qId)
+        .then((response) => {
+          console.log(qId);
+          setSelectedData(response.data.questionTags.map((questionTag) => ({ label: questionTag.tagString, value: questionTag.tagStringId })))
+          onGetCustomPlusData(response.data.questionTags.map((questionTag) => ({ value: questionTag.tagStringId })));
+          if (selectedData != []) {
+            setShowSelected(true);
+          }
+        })
+        .catch((error) => {
+          alert(qId + "nolu soru bulunamamıştır");
+        });
+      }
   },[]);
 
   const handleOptionSelect = (option) => {
@@ -78,12 +90,14 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
   return (
     <div style={{ position: 'relative' }}>
       <input
+        disabled={disabled && true}
         type="text"
         value={searchTerm}
         placeholder={placeholder}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+        className='disabled:text-white disabled:bg-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed'
         style={{
           width: '60%',
           height: '50%',
@@ -95,7 +109,7 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
           lineHeight: '1.5rem',
           textAlign: 'left',
           outline: 'none',
-          cursor: 'pointer',
+          cursor: disabled!=true ? 'pointer' : 'cursor-not-allowed',
         }}
       />
       {isOpen && (
@@ -131,7 +145,8 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
           ))}
         </ul>
       )}
-      <button
+      { disabled!=true&&
+        <button
         onClick={handleQuestionPlusIconClick}
         style={{
           top: '1.3vh',
@@ -141,7 +156,7 @@ const QuestionUpdateComboBoxPlus = ({ options, placeholder , onGetCustomPlusData
         }}
       >
         <QuestionPlusIcon />
-      </button>
+      </button>}
       {showSelected && (
         <div style={{ top: '9vh', left: '0.1vw', position: 'absolute' ,display: 'flex', flexDirection: 'row',  flexWrap: 'wrap'}}>
           {selectedData.map((data, index) => (
