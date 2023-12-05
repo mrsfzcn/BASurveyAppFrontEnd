@@ -52,10 +52,10 @@ function MatriksInput({ questionString , setQuestionString}) {
             className="flex md:w-[80%] lg:w-[70%] xl:w-[60%] p-2 border rounded"
           />
           {questions.length >1 &&
-          <button onClick={()=>handleDeleteClick(index)}><BsFillTrashFill className="delete-btn" /></button>}
+          <button type="button" onClick={()=>handleDeleteClick(index)}><BsFillTrashFill className="delete-btn" /></button>}
           </section>
         ))}
-        <button className="mx-1 my-1" onClick={handleClick}>
+        <button type="button" className="mx-1 my-1" onClick={handleClick}>
         <QuestionPlusIcon />
       </button>
       </div>
