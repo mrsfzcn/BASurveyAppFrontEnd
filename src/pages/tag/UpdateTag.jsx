@@ -21,7 +21,7 @@ const UpdateTag = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [updateTag, setUpdateTag] = useState({
     tagString: rowData.tagName,
-    newTagString: "",
+    newTagString: rowData.tagName,
     tagClass: rowData.tagClasses,
   });
 
@@ -120,11 +120,10 @@ const UpdateTag = () => {
           <div className="class2 bg-[#F1F1F1] flex justify-center align-center m-auto ">
             <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col justify-center gap-14 ">
               <div className="flex flex-col gap-14 justify-center items-center">
-                <Input half disabled value={rowData.tagName} />
-
+                <Input half disabled value={rowData.tagName+" (Mevcut Etiket Adı)"} />
             <div className="flex flex-col gap-2 w-1/2 ">
               <Input
-                placeholder="Yeni Etiketi Giriniz"
+                placeholder="Yeni Etiket Adını Giriniz."
                 full
                 required
                 onChange={onChange}
