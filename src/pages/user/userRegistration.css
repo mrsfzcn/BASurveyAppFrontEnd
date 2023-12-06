@@ -8,4 +8,33 @@
 .class3{
     height: 87%;
     width: 87%;
+    max-height: 75vh;
+    overflow: hidden auto;
 }
+.class4{
+    height: 87%;
+    width: 100%;
+    padding: 0 24px 16px;
+    max-height: 75vh;
+    overflow: hidden auto;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

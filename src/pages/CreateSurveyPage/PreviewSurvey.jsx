@@ -21,9 +21,13 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 function PreviewSurvey() {
   const location = useLocation();
-  const surveyTitle = location.state ? location.state.surveyTitle : "HATA VAR";
-  const surveyOid = location.state ? location.state.surveyOid : "HATA VAR";
-  const selectedQuestions = location.state ? location.state.selectedQuestions : [];
+  const surveyTitle = location.state
+    ? location.state.surveyTitle
+    : "HATA OLUŞTU";
+  const surveyOid = location.state ? location.state.surveyOid : "HATA OLUŞTU";
+  const selectedQuestions = location.state
+    ? location.state.selectedQuestions
+    : [];
   const selectedQuestionsWithStringIds = selectedQuestions.map((question) => {
     return { ...question, questionOid: `${question.questionOid}` };
   });
@@ -34,7 +38,8 @@ function PreviewSurvey() {
   var requiredIndexes = [];
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] = useState(false);
+  const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] =
+    useState(false);
   const [editQuestion, setEditQuestion] = useState(false);
   const [questionString, setQuestionString] = useState();
   const [questionType, setQuestionType] = useState();
@@ -53,41 +58,54 @@ function PreviewSurvey() {
     e.preventDefault();
     setEditQuestion(false);
     let tagOids = [];
-    
-    const defaultQuestionTagStrings = defaultQuestion.questionTags.map(tag => tag.tagString);
-    const selectedTagOption = questionTagsOptions.filter(tagOption => defaultQuestionTagStrings.includes(tagOption.label));
 
-    if(selectedTagOption.length > 0){
-      tagOids = selectedTagOption.map(tag=>tag.value)
+    const defaultQuestionTagStrings = defaultQuestion.questionTags.map(
+      (tag) => tag.tagString
+    );
+    const selectedTagOption = questionTagsOptions.filter((tagOption) =>
+      defaultQuestionTagStrings.includes(tagOption.label)
+    );
+
+    if (selectedTagOption.length > 0) {
+      tagOids = selectedTagOption.map((tag) => tag.value);
     }
     const updateQuestionDto = {
       questionOid: defaultQuestion.questionOid,
-      questionTypeOid: questionTypeOptions.find(type => type.label === defaultQuestion.questionType).value,
+      questionTypeOid: questionTypeOptions.find(
+        (type) => type.label === defaultQuestion.questionType
+      ).value,
       tagOids: tagOids,
       questionString: questionString,
-    }
+    };
     QuestionService.updateQuestion(updateQuestionDto)
-      .then((resp)=>{
-      console.log(resp.data);
-      QuestionService.questionGetById(updateQuestionDto.questionOid).then((resp)=>{
+      .then((resp) => {
         console.log(resp.data);
-        setQuestionPack(questionPack.map(question=>{
-          if(question.questionOid == resp.data.questionOid){
-            const newQuestion = {...question, questionString: resp.data.questionString}
-            return newQuestion;
+        QuestionService.questionGetById(updateQuestionDto.questionOid).then(
+          (resp) => {
+            console.log(resp.data);
+            setQuestionPack(
+              questionPack.map((question) => {
+                if (question.questionOid == resp.data.questionOid) {
+                  const newQuestion = {
+                    ...question,
+                    questionString: resp.data.questionString,
+                  };
+                  return newQuestion;
+                }
+                return question;
+              })
+            );
           }
-          return question;
-        }));
+        );
       })
-    })
-      .catch((error)=>{
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   const handleChangeQuestionString = (e) => {
     setQuestionString(e.target.value);
-  }
+  };
 
   const handleCancelEditQuestion = () => {
     setEditQuestion(false);
@@ -330,7 +348,10 @@ function PreviewSurvey() {
                                 >
                                   <p className="mb-16">
                                     {question.questionType !== "Matriks"
-                                      ? `${index + 1}. ${question.questionString}`: `${index + 1}`}
+                                      ? `${index + 1}. ${
+                                          question.questionString
+                                        }`
+                                      : `${index + 1}`}
                                     {question.required && (
                                       <span className="text-red-700 text-xl">
                                         {" "}
@@ -443,7 +464,7 @@ function PreviewSurvey() {
             <div className="bg-white p-8 rounded shadow">
               <form className="class1 flex justify-center align-center">
                 <div className="class2 bg-[#F1F1F1] flex justify-center align-center m-auto ">
-                  <div className="class3 bg-[#FEFEFE] m-auto  flex flex-col gap-14 ">
+                  <div className="class4 bg-[#F1F1F1] m-auto flex flex-col gap-14 ">
                     <div className="flex flex-col gap-14 justify-center items-center mt-7">
                       <div className="flex items-center justify-between w-[600px] ">
                         <label className="font-semibold w-[150px] sm:w-[120px] md:w-[150px] lg:w-[180px] xl:w-[200px]">
@@ -534,29 +555,42 @@ function PreviewSurvey() {
                               placeholder="Değiştirilemez"
                               onGetCustomPlusData={handleCustomComboBoxPlusData}
                               qId={defaultQuestion.questionOid}
-                              className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"
+                              className="class5 w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"
+                              additionalStyle={{
+                                width: "60%",
+                                height: "50%",
+                                padding: "0.5rem",
+                                borderRadius: "0.25rem",
+                                border: "1px solid #ccc",
+                                fontFamily: "Poppins",
+                                fontSize: "1rem",
+                                lineHeight: "1.5rem",
+                                textAlign: "left",
+                                outline: "none",
+                                cursor: "cursor-not-allowed",
+                              }}
                             />
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex justify-center gap-7 flex-wrap mt-24 sm:mt-6 md:mt-8">
-                      <Button
-                        primary
-                        rounded
-                        className="mt-4"
-                        onClick={updateQuestionEdit}
-                      >
-                        Onayla
-                      </Button>
-                      <Button
-                        secondary
-                        rounded
-                        className="mt-4 mr-2"
-                        onClick={handleCancelEditQuestion}
-                      >
-                        İptal
-                      </Button>
+                      <div className="flex justify-center gap-7 flex-wrap mt-24 sm:mt-6 md:mt-8">
+                        <Button
+                          primary
+                          rounded
+                          className="mt-4 w-[91px]"
+                          onClick={updateQuestionEdit}
+                        >
+                          Onayla
+                        </Button>
+                        <Button
+                          secondary
+                          rounded
+                          className="mt-4 w-[91px]"
+                          onClick={handleCancelEditQuestion}
+                        >
+                          İptal
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>

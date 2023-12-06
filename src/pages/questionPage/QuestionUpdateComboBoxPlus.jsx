@@ -8,7 +8,7 @@ import QuestionAddPage from './QuestionAddPage';
 import QuestionService from "../../services/QuestionService";
 import QuestionTypeService from "../../services/QuestionTypeService";
 
-const QuestionUpdateComboBoxPlus = ({ qId ,options, placeholder , onGetCustomPlusData, disabled}) => {
+const QuestionUpdateComboBoxPlus = ({ qId ,options, placeholder , onGetCustomPlusData, disabled, additionalStyle}) => {
 
   let params = useParams();
   const location = useLocation();
@@ -98,19 +98,7 @@ const QuestionUpdateComboBoxPlus = ({ qId ,options, placeholder , onGetCustomPlu
         onFocus={() => setIsOpen(true)}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         className='disabled:text-white disabled:bg-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed'
-        style={{
-          width: '60%',
-          height: '50%',
-          padding: '0.5rem',
-          borderRadius: '0.25rem',
-          border: '1px solid #ccc',
-          fontFamily: 'Poppins',
-          fontSize: '1rem',
-          lineHeight: '1.5rem',
-          textAlign: 'left',
-          outline: 'none',
-          cursor: disabled!=true ? 'pointer' : 'cursor-not-allowed',
-        }}
+        style={additionalStyle}
       />
       {isOpen && (
         <ul
@@ -172,7 +160,8 @@ const QuestionUpdateComboBoxPlus = ({ qId ,options, placeholder , onGetCustomPlu
                   onClick={() => handleRemoveSelectedData(data)}
                   style={{  position: 'relative', top: '-0.55vh', right: '0.12vw', cursor: 'pointer' ,paddingLeft: '0.01vw'}}
                 >
-                  <CrossIcon/>
+                  {location.pathname == "/on-izleme" ? null : <CrossIcon/>}
+                  
                 </button>
               </span>
             </div>

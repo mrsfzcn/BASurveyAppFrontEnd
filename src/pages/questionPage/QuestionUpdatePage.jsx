@@ -284,14 +284,32 @@ export default function QuestionUpdatePage() {
                       right: '17.0vw',
                       position: 'relative',
                     }}>
-                      < QuestionUpdateComboBoxPlus options={questionTagsOptions} placeholder="Giriniz" onGetCustomPlusData={handleCustomComboBoxPlusData} className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]" />
+                      < QuestionUpdateComboBoxPlus 
+                      options={questionTagsOptions} 
+                      placeholder="Giriniz" 
+                      onGetCustomPlusData={handleCustomComboBoxPlusData} 
+                      className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%]"
+                      additionalStyle={{
+                        width: '60%',
+                        height: '50%',
+                        padding: '0.5rem',
+                        borderRadius: '0.25rem',
+                        border: '1px solid #ccc',
+                        fontFamily: 'Poppins',
+                        fontSize: '1rem',
+                        lineHeight: '1.5rem',
+                        textAlign: 'left',
+                        outline: 'none',
+                        cursor: 'pointer',
+                      }} 
+                      />
                     </div>
 
                   </div>
                 </div>
 
               </div>
-              <div className="flex justify-center gap-7 flex-wrap mt-24 sm:mt-6 md:mt-8">
+              <div className="flex justify-center gap-7 flex-wrap pb-4 mt-24 sm:mt-6 md:mt-8">
                 <Button primary rounded bold
                   onClick={handleUpdateQuestion}
                   className="">
@@ -304,7 +322,7 @@ export default function QuestionUpdatePage() {
                   rounded
                   bold
                 >
-                  VAZGEÇ
+                  Vazgeç
                 </Button>
               </div>
             </div>
