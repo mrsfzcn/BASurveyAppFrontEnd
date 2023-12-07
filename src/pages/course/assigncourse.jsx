@@ -35,7 +35,7 @@ export default function CourseList() {
       setcourseList([]);
       console.error(error);
     })
-  })
+  },[]);
 
   const filterCourses = (courseList, search, currentPage, itemsPerPage) => {
     const filteredList = courseList.filter((item) =>
