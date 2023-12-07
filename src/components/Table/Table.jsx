@@ -60,11 +60,14 @@ const Table = ({
       if (key === "studentTags" || key === "trainerTags") {
         const tagNames = value.map(tag => tag.tagString).join(", ");
         return <td key={colIndex}>{tagNames}</td>;
+      } else if (key=="endDate" || key=="startDate") {
+        const matriksQuestions = value.reverse().join("/")
+        return <td key={colIndex} >{matriksQuestions}</td>
       } else if (key == "questionString" && value.includes(" $$ ") && rowData.questionType == "Matriks") {
         const matriksQuestions = value.split(" $$ ").join(", ")
         return <td key={colIndex}>{matriksQuestions}</td>
       } else if (Array.isArray(value)) {
-        return <td key={colIndex}>{value.join(", ")}</td>;
+        return <td key={colIndex} >{value.map(option => <>{option}<br/></>)}</td>;
       } else {
         return <td key={colIndex}>{value}</td>;
       }

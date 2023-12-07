@@ -10,7 +10,7 @@ function QuestionListPage() {
 
   const [surveys, setSurveys] = useState([]);
 
-  const header = ["No", "Soru", "Soru Tipi", "Soru Etiketleri"];
+  const header = ["No", "Soru", "Soru Tipi", "Soru Etiketleri","Seçenekler"];
 
   // To delete selected question
   const deleteTableRows = async (index, rowData) => {
