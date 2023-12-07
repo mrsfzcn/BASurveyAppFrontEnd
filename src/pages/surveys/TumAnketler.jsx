@@ -194,7 +194,7 @@ const TumAnketler = () => {
                       }`}
                     key={index}
                   >
-                    {index + 1} - {item.questionString}{" "}
+                    {index + 1} - {item.questionType=="Matriks"? item.questionString.split(" $$ ").join(", ") : item.questionString}{" "} 
                     <RiDeleteBin6Line
                       onClick={() => handleRemoveQuestion(index, item)}
                       className="w-6 h-6 text-red-500 cursor-pointer"
