@@ -12,10 +12,9 @@ const LikertSurvey = (props) => {
 
   const handleValueSelect = (value) => {
     setOptions(value);
-    console.log("Seçilen Değer:", value,"Soru oid:",likertQuestionOid);
+    props.onSelected(value);
+    console.log("Likert - Seçilen Değer:", value, "Soru oid:", likertQuestionOid);
   };
-
-
 
   const renderScale = () => {
     const scaleValues = Array.from({ length: endValue - startValue + 1 }, (_, index) => startValue + index);

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const OpenEnded = (props) => {
   const [isFocused, setIsFocused] = React.useState(false);
+  const [answer, setAnswer] = React.useState('');
+
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -11,8 +13,8 @@ const OpenEnded = (props) => {
     setIsFocused(false);
   };
   const handleChange = (e) => {
-    const text = e.target.value;
-  console.log(text);
+    setAnswer(e.target.value)
+    props.onSelected(e.target.value)
   };
   const borderColor = isFocused ? "#00a4e4" : "#ccc";
 
@@ -23,6 +25,7 @@ const OpenEnded = (props) => {
               <textarea
                 name="text"
                 rows="4"
+                value={answer}
                 cols="50"
                 id="myTextarea"
                 className="w-[99%] px-4 py-1 text-base leading-[1.5rem]  text-left break-words"

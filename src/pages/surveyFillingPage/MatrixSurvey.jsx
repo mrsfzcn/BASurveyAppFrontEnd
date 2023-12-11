@@ -1,14 +1,26 @@
+import { useState } from "react";
+
 const MatrixSurveyPreview = (props)=>{
 
     const columns=props.options; //cevaplarimiz aslinda bizim kolonlarimiz
     const rows = props.question.split(" $$ "); //sorularimiz ise String ve soru1 $$ soru2 gibi bir yapida oldugundan split ile bir diziye topladik
+    const [answers, setAnswers] = useState([])
 
 
     const handleRadioClick = (value) => {
         const [row, column] = value.split(",");
+        const newAnswers = [...answers]
         console.log(`Tıklanan Butonun Konumu: Satır ${row}, Sütun ${column}`);
+
+        newAnswers[rows.findIndex(name => name==row)] = column
+        setAnswers(newAnswers)
+
+
+        props.onSelected(newAnswers.join(", "));
+
+
       };
-    
+
 
      return (
         <div className="flex justify-center items-center  ">
