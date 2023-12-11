@@ -41,6 +41,7 @@ import BranchList from "./pages/branch/List";
 import CourseList from "./pages/course/assigncourse";
 import ClassListPage from "./pages/classesPage/classList/ClassListPage";
 import TrainerPage from "./pages/trainerPage/TrainerPage";
+import SurveyReport from "./pages/reportPage/SurveyReport";
 
 function App() {
   return (
@@ -52,11 +53,11 @@ function App() {
         <Route path="/yeni-kare-kod-olustur" element={<RegenerateQrCode />} />
         <Route path="/anket-doldurma-sayfası" element={<SurveyFilling />} />
         <Route element={<PrivateRoutes />}>
-        <Route path="/subeler" element={<BranchList />} />
-        <Route path="/kurslar" element={<CourseList />} />
+          <Route path="/subeler" element={<BranchList />} />
+          <Route path="/kurslar" element={<CourseList />} />
           <Route path="/yonetici-sayfasi" element={<AdminHomePage />} exact />
           <Route path="/anket-gonder" element={<SendSurvey />} />
-          <Route path="/sinifa-egitmen-atama" element={<TrainerToClass/>} />
+          <Route path="/sinifa-egitmen-atama" element={<TrainerToClass />} />
           <Route path="/kullanici-bilgileri-guncelle" element={<UserEditPage />} />
           <Route path="/anket-olustur" element={<CreateSurveyPage />} />
           <Route path="/sinifa-ogrenci-atama" element={<AssignStudentToClass />} />
@@ -122,8 +123,12 @@ function App() {
             <Route path="/sinif-listesi">
               <Route index element={<ClassListPage />} />
             </Route>
-          </Route> 
-
+          </Route>
+        </Route>
+        <Route>
+          <Route path="/anket-raporlama">
+            <Route index element={<SurveyReport />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

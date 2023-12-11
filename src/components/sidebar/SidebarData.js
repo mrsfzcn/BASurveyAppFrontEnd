@@ -43,7 +43,7 @@ export const items = [
   {
     label: "Raporlama",
     content: [
-      { name: "Sonuçlanmış Anketler", href: "" },
+      { name: "Sonuçlanmış Anketler", href: "/anket-raporlama" },
       { name: "Sınıfa Göre Anket Sonuçları", href: "" },
       { name: "Kişiye Göre Anket Sonuçları", href: "" },
     ],
