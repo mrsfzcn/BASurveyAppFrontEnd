@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineQuestion } from "react-icons/ai";
+import { Link } from "react-router-dom";
 const BreadCrumbs = ({ header, subtitle }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -13,9 +14,8 @@ const BreadCrumbs = ({ header, subtitle }) => {
 
   const renderedSubtitle = subtitle.map((item, index) => (
     <span key={index}>
-      <a className="ml-0.5" href={item.href}>
-        {item.title}
-      </a>
+      
+      <Link to={item.href} className="ml-0.5">{item.title}</Link>
       {index === subtitle.length - 1 ? "" : ">"}
     </span>
   ));
@@ -26,8 +26,8 @@ const BreadCrumbs = ({ header, subtitle }) => {
         <h6
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
-        >
-          <a href={header.href}>{header.header} | </a>
+        >          
+          <Link to={header.href}>{header.header}</Link>
           {showTooltip && (
             <div className="absolute bg-white border border-gray-200 rounded p-2 shadow-md w-72 tablet:w-96 mt-2 z-10 font-thin text-sm ">
               <p>{header.describe}</p>
