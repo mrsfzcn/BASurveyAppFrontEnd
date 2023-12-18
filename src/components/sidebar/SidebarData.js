@@ -1,5 +1,9 @@
 export const items = [
   {
+    label: "Pano",
+    content: [{ name: "Pano", href: "/pano" }],
+  },
+  {
     label: "Kullanıcı İşlemleri",
     content: [
       { name: "Tüm Kullanıcılar", href: "/kullanici" },

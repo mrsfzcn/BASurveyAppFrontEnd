@@ -42,6 +42,7 @@ import CourseList from "./pages/course/assigncourse";
 import ClassListPage from "./pages/classesPage/classList/ClassListPage";
 import TrainerPage from "./pages/trainerPage/TrainerPage";
 import SurveyReport from "./pages/reportPage/SurveyReport";
+import Pano from "./pages/pano/Pano";
 
 function App() {
   return (
@@ -130,6 +131,8 @@ function App() {
             <Route index element={<SurveyReport />} />
           </Route>
         </Route>
+        <Route path="/pano" element={<Pano />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
   );
