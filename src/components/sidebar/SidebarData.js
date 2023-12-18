@@ -2,50 +2,50 @@ export const items = [
   {
     label: "Kullanıcı İşlemleri",
     content: [
-      { name: "Tüm Kullanıcılar", href: "/kullanici" },
-      { name: "Tüm Eğitmenler", href: "/egitmenler" },
-      { name: "Tüm Şubeler", href: "/subeler" },
-      { name: "Tüm Kurslar", href: "/kurslar" },
-      { name: "Kullanıcı Ekle", href: "/kullanici/ekle" },
+      { name: "Tüm Kullanıcılar", to: "/kullanici" },
+      { name: "Tüm Eğitmenler", to: "/egitmenler" },
+      { name: "Tüm Şubeler", to: "/subeler" },
+      { name: "Tüm Kurslar", to: "/kurslar" },
+      { name: "Kullanıcı Ekle", to: "/kullanici/ekle" },
     ],
   },
   {
     label: "Etiket İşlemleri",
-    content: [{ name: "Tüm Etiketler", href: "/etiket" }],
+    content: [{ name: "Tüm Etiketler", to: "/etiket" }],
   },
   {
     label: "Soru İşlemleri",
     content: [
-      { name: "Tüm Sorular", href: "/soru-listesi" },
+      { name: "Tüm Sorular", to: "/soru-listesi" },
       // { name: "Soru Tipi İşlemleri", href: "/soru-tipi-listesi" },
-      { name: "Soru Ekle", href: "/soru-listesi/ekle" },
+      { name: "Soru Ekle", to: "/soru-listesi/ekle" },
     ],
   },
   {
     label: "Sınıf İşlemleri",
     content: [
-      { name: "Öğrenci Listeleme", href: "/ogrenci-listesi" },
-      { name: "Eğitmen Listeleme", href: "/egitmen-listesi" },
-      { name: "Sınıf Listeleme", href: "/sinif-listesi" },
-      { name: "Sınıfa Eğitmen Atama", href: "/sinifa-egitmen-atama" },
-      { name: "Sınıfa Öğrenci Atama", href: "/sinifa-ogrenci-atama" },
+      { name: "Öğrenci Listeleme", to: "/ogrenci-listesi" },
+      { name: "Eğitmen Listeleme", to: "/egitmen-listesi" },
+      { name: "Sınıf Listeleme", to: "/sinif-listesi" },
+      { name: "Sınıfa Eğitmen Atama", to: "/sinifa-egitmen-atama" },
+      { name: "Sınıfa Öğrenci Atama", to: "/sinifa-ogrenci-atama" },
     ],
   },
   {
     label: "Anket İşlemleri",
     content: [
-      { name: "Tüm Anketler", href: "/anketler" },
-      { name: "Anket Ekle", href: "/anket-olustur" },
-      { name: "Anket Gönder", href: "/anket-gonder" },
+      { name: "Tüm Anketler", to: "/anketler" },
+      { name: "Anket Ekle", to: "/anket-olustur" },
+      { name: "Anket Gönder", to: "/anket-gonder" },
     ],
   },
 
   {
     label: "Raporlama",
     content: [
-      { name: "Sonuçlanmış Anketler", href: "/anket-raporlama" },
-      { name: "Sınıfa Göre Anket Sonuçları", href: "" },
-      { name: "Kişiye Göre Anket Sonuçları", href: "" },
+      { name: "Sonuçlanmış Anketler", to: "/anket-raporlama" },
+      { name: "Sınıfa Göre Anket Sonuçları", to: "" },
+      { name: "Kişiye Göre Anket Sonuçları", to: "" },
     ],
   },
 ];
