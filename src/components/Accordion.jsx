@@ -1,6 +1,7 @@
 // Accordion.js
 import React, { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { Link } from "react-router-dom";
 function Accordion({ items }) {
   const [expandedIndex, setExpandedIndex] = useState(-1);
 
@@ -17,7 +18,8 @@ function Accordion({ items }) {
             className="mt-2 mb-1 text-sm tablet:text-base"
             key={contentItem.href}
           >
-            <a href={contentItem.href}>{contentItem.name}</a>
+            {/* <a href={contentItem.href}>{contentItem.name}</a> */}
+            <Link to={contentItem.to}>{contentItem.name}</Link>
           </li>
         ))}
       </ul>

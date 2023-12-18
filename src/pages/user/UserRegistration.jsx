@@ -8,6 +8,9 @@ import Alert from "../../components/Alert";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import MultiDropdown from "../../components/MultiDropdown";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UserRegistration = () => {
   const [user, setUser] = useState({
     password: passwordGenerator(),
@@ -32,38 +35,47 @@ const UserRegistration = () => {
     setUser({ ...user, roles: a })
 
   };
+
+  const successNotify = (string,string2) => toast.success(string+" rolüne sahip kullanıcı eklendi. Mail adresi: "+string2);
+  const errorNotify = (string)=> toast.error(string);
+
   const handleCreate = (event) => {
     event.preventDefault();
     if (user.firstName.length < 2) {
-      setAlert({ type: "error", message: "Ad 2 karakterden uzun olmalıdır." });
+      //setAlert({ type: "error", message: "Ad 2 karakterden uzun olmalıdır." });
+      errorNotify("Ad 2 karakterden uzun olmalıdır.")
       return;
     }
     if (user.lastName.length < 2) {
-      setAlert({
-        type: "error",
-        message: "Soyad 2 karakterden uzun olmalıdır.",
-      });
+      // setAlert({
+      //   type: "error",
+      //   message: "Soyad 2 karakterden uzun olmalıdır.",
+      // });
+      errorNotify("Soyad 2 karakterden uzun olmalıdır.")
       return;
     }    
     if (user.roles.length < 1) {
-      setAlert({ type: "error", message: "Rol seçiniz." });
+      // setAlert({ type: "error", message: "Rol seçiniz." });
+      errorNotify("Rol seçiniz.")
       return;
     }
     console.log(user);
     AuthService.register(user)
       .then((response) => {
         const selectedRoles = selectedOptions.map((option) => option.label).join(', ');
-        setAlert({
-          type: "success",
-          message: `${selectedRoles} rolüne sahip kullanıcı eklendi. Mail adresi: ${response.data.email}`,
-        });
+        // setAlert({
+        //   type: "success",
+        //   message: `${selectedRoles} rolüne sahip kullanıcı eklendi. Mail adresi: ${response.data.email}`,
+        // });
+        successNotify(`${selectedRoles} rolüne sahip kullanıcı eklendi. Mail adresi: ${response.data.email}`)
       })
       .catch((error) => {
-        setAlert({
-          type: "error",
-          message:
-            "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message:
+        //     "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
+        // });
+        errorNotify("Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.")
       });
   };
   const handleRedirect = () => {
@@ -161,6 +173,7 @@ const UserRegistration = () => {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </Layout>
   );
