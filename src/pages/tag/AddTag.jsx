@@ -8,6 +8,9 @@ import Button from "../../components/Button";
 import TagService from "../../services/TagService";
 import MultiDropdown from "../../components/MultiDropdown";
 import Alert from "../../components/Alert";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function AddTag() {
   const navigate = useNavigate();
   //Breadcrumb
@@ -50,6 +53,9 @@ function AddTag() {
     navigate(`/etiket/guncelle/` + rowData.tagName, { state: rowData });
   };
 
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
 
   const deleteTableRows = async (index, rowData) => {
     const shouldDelete = window.confirm("Bu etiketi silmek istediğinize emin misiniz?");
@@ -80,11 +86,13 @@ function AddTag() {
     e.preventDefault();
 
     if (tag.tagName.length < 1) {
-      setAlert({ type: "error", message: "Etiket adı boş bırakılamaz." });
+      //setAlert({ type: "error", message: "Etiket adı boş bırakılamaz." });
+      warnNotify("Etiket adı boş bırakılamaz.")
       return;
     }
     if (tag.tagClass.length < 1) {
-      setAlert({ type: "error", message: "Etiket sınıfı boş bırakılamaz." });
+      //setAlert({ type: "error", message: "Etiket sınıfı boş bırakılamaz." });
+      warnNotify("Etiket sınıfı boş bırakılamaz.")
       setTimeout(()=>{
         setAlert({type: "", message: ""});
       },3000);
@@ -100,11 +108,13 @@ function AddTag() {
   );
 
   if (existingTag) {
-    setAlert({
-      type: "error",
-      message: `Bu etiket ve sınıf kombinasyonu zaten mevcut: Etiket Adı -
-       ${existingTag.tagName}\nMevcut etiket sınıfı - ${existingTag.tagClasses}`,
-    });
+    // setAlert({
+    //   type: "error",
+    //   message: `Bu etiket ve sınıf kombinasyonu zaten mevcut: Etiket Adı -
+    //    ${existingTag.tagName}\nMevcut etiket sınıfı - ${existingTag.tagClasses}`,
+    // });
+    warnNotify(`Bu etiket ve sınıf kombinasyonu zaten mevcut: Etiket Adı -
+        ${existingTag.tagName}\nMevcut etiket sınıfı - ${existingTag.tagClasses}`)
     setTimeout(() => {
       setAlert({ type: "", message: "" });
     }, 5000);
@@ -113,7 +123,8 @@ function AddTag() {
 
     TagService.createTag({...tag, tagName : upperCaseTagName})
       .then((response) => {
-        setAlert({ type: "success", message: "Etiket başarıyla eklendi." });
+        //setAlert({ type: "success", message: "Etiket başarıyla eklendi." });
+        successNotify("Etiket başarıyla eklendi.")
         setTimeout(()=>{
           setAlert({type: "", message: ""});
         },3000);
@@ -123,7 +134,8 @@ function AddTag() {
         setSelectedOptions([]);
       })
       .catch((error) => {
-        setAlert({ type: "error", message: "Bir hata meydana geldi." });
+        //setAlert({ type: "error", message: "Bir hata meydana geldi." });
+        errorNotify("Bir hata meydana geldi.")
       });
   };
 
@@ -218,6 +230,7 @@ function AddTag() {
           />
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   );
 }

@@ -36,7 +36,7 @@ const UserRegistration = () => {
 
   };
 
-  const successNotify = (string,string2) => toast.success(string+" rolüne sahip kullanıcı eklendi. Mail adresi: "+string2);
+  const successNotify = (string) => toast.success(string);
   const errorNotify = (string)=> toast.error(string);
 
   const handleCreate = (event) => {
