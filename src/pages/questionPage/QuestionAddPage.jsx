@@ -352,15 +352,15 @@ const QuestionAddPage = ({ props }) => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/soru-listesi",
+      to: "/soru-listesi",
     },
     {
       title: "Soru Ekle",
-      href: "/soru-listesi/ekle",
+      to: "/soru-listesi/ekle",
     },
   ];
   const borderColor = error ? "#ff3333" : isFocused ? "#00a4e4" : "#ccc";
