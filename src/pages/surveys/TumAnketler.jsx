@@ -133,26 +133,26 @@ const TumAnketler = () => {
   }, [deleteSurvey]);
 
   const header2 = {
-    header: "Tüm Anketler", href: "/anketler", describe:
+    header: "Tüm Anketler", to: "/anketler", describe:
       "Anket görüntüleme sayfasına hoşgeldiniz buradan anketleri görüntüleyebilir, güncelleyebilir veya silebilirsiniz."
   };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Anket İşlemleri",
-      href: "/anketler",
+      to: "/anketler",
     },
     {
       title: "Anket Oluşturma",
-      href: "/anket-olustur"
+      to: "/anket-olustur"
     },
     {
       title: "Tüm Anketler",
-      href: "/anketler",
+      to: "/anketler",
     },
   ];
 

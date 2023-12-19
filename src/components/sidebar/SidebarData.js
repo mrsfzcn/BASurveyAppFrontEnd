@@ -1,7 +1,7 @@
 export const items = [
   {
     label: "Pano",
-    content: [{ name: "Pano", href: "/pano" }],
+    content: [{ name: "Pano", to: "/pano" }],
   },
   {
     label: "Kullanıcı İşlemleri",
@@ -21,7 +21,6 @@ export const items = [
     label: "Soru İşlemleri",
     content: [
       { name: "Tüm Sorular", to: "/soru-listesi" },
-      // { name: "Soru Tipi İşlemleri", href: "/soru-tipi-listesi" },
       { name: "Soru Ekle", to: "/soru-listesi/ekle" },
     ],
   },

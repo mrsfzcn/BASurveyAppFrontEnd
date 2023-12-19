@@ -1,10 +1,10 @@
 import Accordion from "../Accordion";
 import { items } from "./SidebarData";
 import Btlogo from "../../assets/images/bilgeteknolojilogo";
+import { Link } from "react-router-dom";
 function Sidebar() {
   // items sidebar'da gözükmesini istediğimiz liste
   // content kısmı ise label'a tıkladıktan sonra açılan listedeki content elemanları
-  // href oluşturduğunuz sayfanın linki
 
   return (
     <div
@@ -18,10 +18,10 @@ function Sidebar() {
     tablet:pt-1
     xldesktop:pt-3
      "
-    >
-      <a href="/yonetici-sayfasi">
+    >      
+      <Link to={"/yonetici-sayfasi"}>
         <Btlogo />
-      </a>
+      </Link>
 
       <Accordion items={items} />
     </div>

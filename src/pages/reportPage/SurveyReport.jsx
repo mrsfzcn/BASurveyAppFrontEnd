@@ -47,15 +47,15 @@ function SurveyReport() {
     }
     getFile();
   }
-  const header2 = { header: "Anket Raporlama", href: "/anket-raporlama", describe: "Sınıflara ait anket raporlarına buradan ulaşabilirsiniz" };
+  const header2 = { header: "Anket Raporlama", to: "/anket-raporlama", describe: "Sınıflara ait anket raporlarına buradan ulaşabilirsiniz" };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Anket Raporları",
-      href: "/anket-raporlama",
+      to: "/anket-raporlama",
     },
   ];
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./header.css";
 import logoImage from "../../assets/images/Login/bilgeAdamAkademi.png";
+import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,11 +19,11 @@ const HeaderComponent = () => {
     <header>
       <section className="header-content">
         <h1 className="brand-logo">
-          <a href="#" className="logo">
+          <Link to="/yonetici-sayfasi" className="logo">
             <img src={logoImage} alt="Logo" />
             <div className="logo-line"></div>
             <span className="logo-text">Survey App</span>
-          </a>
+          </Link>          
         </h1>
         <div className="circle-button" onClick={toggleProfile}></div>
       </section>
