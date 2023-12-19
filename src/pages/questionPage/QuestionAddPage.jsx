@@ -19,8 +19,10 @@ import Matrix from "../../components/options/Matrix";
 import MultiOptionalMultiSelectable from "../../components/options/MultiOptionalMultiSelectable";
 import MultiOptionalMultiSelectableAndOther from "../../components/options/MultiOptionalMultiSelectableAndOther";
 import OpenEnded from "../../components/options/OpenEnded";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const QuestionAddPage = ({ props }) => {
@@ -329,13 +331,13 @@ const QuestionAddPage = ({ props }) => {
   };
 
   const handleRedirect = () => {
-    window.location.href = "/soru-listesi";
+    <Link to="/soru-listesi" />
   };
 
   const header = {
-    header: "Soru Ekle", href: "/soru-listesi/ekle", describe:
+    header: "Soru Ekle", to: "/soru-listesi/ekle", describe:
       "Soru ekleme sayfasına hoşgeldiniz buradan soru ekleme işlemi yapabilirsiniz."
-};
+  };
 
   const [isFocused, setIsFocused] = React.useState(false);
 
