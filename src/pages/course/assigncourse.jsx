@@ -23,19 +23,19 @@ export default function CourseList() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
 
-  useEffect(()=>{
+  useEffect(() => {
     AssignCourseService.getData()
-    .then((response)=>{
-      setcourseList(response.data);
-      setSearchedList(response.data);
-      console.log(response.data);
-      setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
-    })
-    .catch((error)=>{
-      setcourseList([]);
-      console.error(error);
-    })
-  },[]);
+      .then((response) => {
+        setcourseList(response.data);
+        setSearchedList(response.data);
+        console.log(response.data);
+        setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
+      })
+      .catch((error) => {
+        setcourseList([]);
+        console.error(error);
+      })
+  }, []);
 
   const filterCourses = (courseList, search, currentPage, itemsPerPage) => {
     const filteredList = courseList.filter((item) =>
@@ -84,137 +84,137 @@ export default function CourseList() {
 
 
   const header = {
-    header: "Tüm Kurslar", href: "/kurslar", describe:
-        "Kurs görünteleme sayfasına hoşgeldiniz buradan bütün kursları görüntüleyebilirsiniz."
-}
-const subtitle = [
+    header: "Tüm Kurslar", to: "/kurslar", describe:
+      "Kurs görünteleme sayfasına hoşgeldiniz buradan bütün kursları görüntüleyebilirsiniz."
+  }
+  const subtitle = [
     {
-        title: "Anasayfa",
-        href: "/yonetici-sayfasi"
+      title: "Anasayfa",
+      to: "/yonetici-sayfasi"
     },
     {
-        title: "Kurslar",
-        href: "/kurslar"
+      title: "Kurslar",
+      to: "/kurslar"
     }
-]
+  ]
 
 
-return (
-  <>
-    <Layout>
-      <div className="background ">
-        <div>
-          <div className="allUsersHeaderDiv ">
-            <div style={{marginLeft: "70px"}}>
-              <BreadCrumbs header={header} subtitle={subtitle} />
-            </div>                         
-          </div>
-        </div>
-        <div className="list ">
+  return (
+    <>
+      <Layout>
+        <div className="background ">
           <div>
-            <div className="flexColumnContainer ">
-              <div className="listPageShow ">
-                <span>Göster: </span>
-                <div>
-                  <select
-                    className="combo-box"
-                    value={selectedCombo}
-                    onChange={handleCombo}
-                  >
-                    <option value={2}>2</option>
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                  </select>
-                </div>
-                <span> Satır</span>
-              </div>
-              <div className="listAra">
-                <span>Ara: </span>
-                <Input className="araButton" onChange={handleSearch} />
-              </div>
-            </div>
-            <div
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "3rem",
-                height: "58vh",
-                marginLeft: "5%",
-                
-              }}
-            >
-              <div className="flex justify-center content-center">
-              <table >
-                <thead>
-                  <tr>
-                    <th style={{ width: "13rem", paddingBottom: "2rem"  }}>
-                      <span>Kurs Adı</span>
-                      <button className="bottomSort" onClick={handleSortName}>
-                        <SortIcon />
-                      </button>
-                    </th>
-                  </tr>
-                  
-                </thead>
-                <tbody className="lineTableBody ">
-                  {currentItems.map((course, index) => (
-                     <TableRow course={course} key={course.oid} index={index} />
-                    ))}
-                  </tbody>
-              </table>
-              </div>
-            </div>
-            <div className="footer mobile:m-0">
-              <div>
-                <p style={{ marginBottom: "2rem" }}>
-                  {courseList.length} Kurstan {currentItems.length} tanesi
-                  gösteriliyor.
-                </p>
-              </div>
-              <div>
-                {currentPage > 1 && (
-                  <button className="beforeAndNextButton" onClick={() => paginate(currentPage - 1)}>
-                    ÖNCEKİ
-                  </button>
-                )}
-                {Array.from({
-                  length: paginationLength,
-                }).map((_, index) =>
-                  currentPage - 1 === index || currentPage === index ? (
-                    <button
-                      key={index}
-                      className={currentPage === index + 1 ? "paginationButton active" : "paginationButton"}
-                      onClick={() => paginate(index + 1)}
-                    >
-                      {index + 1}
-                    </button>
-                  ) : null
-                )}
-
-                {currentPage < paginationLength && (
-                  <button className="beforeAndNextButton" onClick={() => paginate(currentPage + 1)}>
-                    SONRAKİ
-                  </button>
-                )}
+            <div className="allUsersHeaderDiv ">
+              <div style={{ marginLeft: "70px" }}>
+                <BreadCrumbs header={header} subtitle={subtitle} />
               </div>
             </div>
           </div>
+          <div className="list ">
+            <div>
+              <div className="flexColumnContainer ">
+                <div className="listPageShow ">
+                  <span>Göster: </span>
+                  <div>
+                    <select
+                      className="combo-box"
+                      value={selectedCombo}
+                      onChange={handleCombo}
+                    >
+                      <option value={2}>2</option>
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                    </select>
+                  </div>
+                  <span> Satır</span>
+                </div>
+                <div className="listAra">
+                  <span>Ara: </span>
+                  <Input className="araButton" onChange={handleSearch} />
+                </div>
+              </div>
+              <div
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "3rem",
+                  height: "58vh",
+                  marginLeft: "5%",
+
+                }}
+              >
+                <div className="flex justify-center content-center">
+                  <table >
+                    <thead>
+                      <tr>
+                        <th style={{ width: "13rem", paddingBottom: "2rem" }}>
+                          <span>Kurs Adı</span>
+                          <button className="bottomSort" onClick={handleSortName}>
+                            <SortIcon />
+                          </button>
+                        </th>
+                      </tr>
+
+                    </thead>
+                    <tbody className="lineTableBody ">
+                      {currentItems.map((course, index) => (
+                        <TableRow course={course} key={course.oid} index={index} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="footer mobile:m-0">
+                <div>
+                  <p style={{ marginBottom: "2rem" }}>
+                    {courseList.length} Kurstan {currentItems.length} tanesi
+                    gösteriliyor.
+                  </p>
+                </div>
+                <div>
+                  {currentPage > 1 && (
+                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage - 1)}>
+                      ÖNCEKİ
+                    </button>
+                  )}
+                  {Array.from({
+                    length: paginationLength,
+                  }).map((_, index) =>
+                    currentPage - 1 === index || currentPage === index ? (
+                      <button
+                        key={index}
+                        className={currentPage === index + 1 ? "paginationButton active" : "paginationButton"}
+                        onClick={() => paginate(index + 1)}
+                      >
+                        {index + 1}
+                      </button>
+                    ) : null
+                  )}
+
+                  {currentPage < paginationLength && (
+                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage + 1)}>
+                      SONRAKİ
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          {alert.type && <Alert type={alert.type} message={alert.message} />}
         </div>
-        {alert.type && <Alert type={alert.type} message={alert.message} />}
-      </div>
-    </Layout>
-  </>
-);
+      </Layout>
+    </>
+  );
 }
 
-function TableRow({course}){
-  
+function TableRow({ course }) {
+
   const [spinner, setSpinner] = useState("default");
-  return <tr className={`tableRow rowBackground ${spinner=="success"&&"rowBackgroundSuccessFade"} ${spinner=="error"&&"rowBackgroundErrorFade"}`} key={course.oid}>
-  {console.log(course)}
-  <td style={{ width: "13rem" }}>{course.oid}</td>
-  <td style={{ width: "13rem" }}>{course.name}</td>
-  <td style={{ width: "15rem" }}>
-  </td>
-</tr>
+  return <tr className={`tableRow rowBackground ${spinner == "success" && "rowBackgroundSuccessFade"} ${spinner == "error" && "rowBackgroundErrorFade"}`} key={course.oid}>
+    {console.log(course)}
+    <td style={{ width: "13rem" }}>{course.oid}</td>
+    <td style={{ width: "13rem" }}>{course.name}</td>
+    <td style={{ width: "15rem" }}>
+    </td>
+  </tr>
 }

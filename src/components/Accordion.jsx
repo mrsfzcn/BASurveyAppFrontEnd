@@ -16,9 +16,8 @@ function Accordion({ items }) {
         {item.content.map((contentItem) => (
           <li
             className="mt-2 mb-1 text-sm tablet:text-base"
-            key={contentItem.href}
+            key={contentItem.to}
           >
-            {/* <a href={contentItem.href}>{contentItem.name}</a> */}
             <Link to={contentItem.to}>{contentItem.name}</Link>
           </li>
         ))}

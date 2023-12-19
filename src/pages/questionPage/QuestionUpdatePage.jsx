@@ -207,19 +207,19 @@ export default function QuestionUpdatePage() {
     // BACKEND TARAFINDA DÜZELENME YAPILMASI ŞART !!
   };
 
-  const header2 = { header: "Soru Listesi", href: "/soru-listesi" };
+  const header2 = { header: "Soru Listesi", to: "/soru-listesi" };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/soru-listesi",
+      to: "/soru-listesi",
     },
     {
       title: "Soru Listesi",
-      href: "/soru-listesi/guncelle/",
+      to: "/soru-listesi/guncelle/",
     },
   ];
 

@@ -19,6 +19,7 @@ import Matrix from "../../components/options/Matrix";
 import MultiOptionalMultiSelectable from "../../components/options/MultiOptionalMultiSelectable";
 import MultiOptionalMultiSelectableAndOther from "../../components/options/MultiOptionalMultiSelectableAndOther";
 import OpenEnded from "../../components/options/OpenEnded";
+import { Link } from "react-router-dom";
 
 const QuestionAddPage = ({ props }) => {
   const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
@@ -86,7 +87,7 @@ const QuestionAddPage = ({ props }) => {
     setCreateQuestion({ ...createQuestion, tagOids: a });
   };
 
-  function matrixSpecialKeywordError(){
+  function matrixSpecialKeywordError() {
     setAlert({
       type: "error",
       message: "Soru '$$' içeremez! ",
@@ -100,15 +101,15 @@ const QuestionAddPage = ({ props }) => {
   const handleCreate = (event) => {
     const newDataArray = [
       {
-        questionString: selectedOption!="Matriks" ? createQuestion.questionString: matrixQuestions.join(" $$ "),
+        questionString: selectedOption != "Matriks" ? createQuestion.questionString : matrixQuestions.join(" $$ "),
         order: createQuestion.order,
         questionTypeOid: createQuestion.questionTypeOid,
         tagOids: createQuestion.tagOids,
         options: upData,
       },
     ];
-    
-    if(selectedOption != "Açık Uçlu"){
+
+    if (selectedOption != "Açık Uçlu") {
       if (upData.length === 0) {  //Matriks upData içini doldurmadığı için zaten çalışmıyordu ama burda da hataya giriyor...
         setAlert({
           type: "error",
@@ -122,8 +123,8 @@ const QuestionAddPage = ({ props }) => {
         return;
       }
     }
-    
-    if (selectedOption==="Likert" && upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
+
+    if (selectedOption === "Likert" && upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
       setAlert({
         type: "error",
         message: "Sol Etiket boş olamaz",
@@ -136,8 +137,8 @@ const QuestionAddPage = ({ props }) => {
       return;
 
     }
-    
-    if (selectedOption==="Likert" && upData[3] === "") {
+
+    if (selectedOption === "Likert" && upData[3] === "") {
       setAlert({
         type: "error",
         message: "Sağ Etiket boş olamaz",
@@ -146,14 +147,14 @@ const QuestionAddPage = ({ props }) => {
       setTimeout(() => {
         setError(false);
         setAlert({ type: "", message: "" });
-      }, 5000); 
+      }, 5000);
       return;
     }
-      if (
+    if (
       newDataArray[0].questionString.length > 1 &&
       createQuestion.questionTypeOid !== null
     ) {
-            if (createQuestion.tagOids.length === 0 && !isEmptyTagOids) {
+      if (createQuestion.tagOids.length === 0 && !isEmptyTagOids) {
         setShowConfirmPopup(true);
       } else {
         event.preventDefault();
@@ -161,8 +162,8 @@ const QuestionAddPage = ({ props }) => {
           .then((response) => {
             setAlert({ type: "success", message: "Soru başarıyla eklendi." });
             setCreateQuestion({ ...createQuestion, questionString: "" });
-            if(selectedOption!="Matriks")
-            document.getElementById("myTextarea").value = "";
+            if (selectedOption != "Matriks")
+              document.getElementById("myTextarea").value = "";
             setTimeout(() => {
               window.location.reload(); //ekle butona tıklayınca etiket ve tip temizlensin diye eklendi.
             }, 1000);
@@ -197,7 +198,7 @@ const QuestionAddPage = ({ props }) => {
       }
     } else {
       setIsEmptyTagOids(false);
-      if (selectedOption!="Matriks" && createQuestion.questionString.length <= 1) {
+      if (selectedOption != "Matriks" && createQuestion.questionString.length <= 1) {
         setError(true);
         setAlert({
           type: "error",
@@ -271,7 +272,7 @@ const QuestionAddPage = ({ props }) => {
           }}
         />
       );
-    }else if(selectedOption === "Çok Seçenekli Çok Seçilebilir"){
+    } else if (selectedOption === "Çok Seçenekli Çok Seçilebilir") {
       return (
         <MultiOptionalMultiSelectable questionString={createQuestion.questionString}
           veriTasi={(veri) => {
@@ -279,7 +280,7 @@ const QuestionAddPage = ({ props }) => {
           }}
         />
       );
-    }else if(selectedOption === "Çok Seçenekli Çok Seçilebilir ve Seçenek Girilebilir"){
+    } else if (selectedOption === "Çok Seçenekli Çok Seçilebilir ve Seçenek Girilebilir") {
       return (
         <MultiOptionalMultiSelectableAndOther questionString={createQuestion.questionString}
           veriTasi={(veri) => {
@@ -287,35 +288,35 @@ const QuestionAddPage = ({ props }) => {
           }}
         />
       );
-    }else if(selectedOption === "Matriks"){
+    } else if (selectedOption === "Matriks") {
       return (
         <Matrix questionString={createQuestion.questionString}
           veriTasi={(veri) => {
-            setUpData(veri); 
-          }} 
+            setUpData(veri);
+          }}
           setMatrixQuestions={setMatrixQuestions}
-          matrixSpecialKeywordError ={matrixSpecialKeywordError}
+          matrixSpecialKeywordError={matrixSpecialKeywordError}
         />
       );
-    }else if(selectedOption === "Açık Uçlu"){
+    } else if (selectedOption === "Açık Uçlu") {
       return (
         <OpenEnded questionString={createQuestion.questionString}
         />
       );
     }
-     else {
-      return null; 
+    else {
+      return null;
     }
   };
 
   const handleRedirect = () => {
-    window.location.href = "/soru-listesi";
+    <Link to="/soru-listesi" />
   };
 
   const header = {
-    header: "Soru Ekle", href: "/soru-listesi/ekle", describe:
+    header: "Soru Ekle", to: "/soru-listesi/ekle", describe:
       "Soru ekleme sayfasına hoşgeldiniz buradan soru ekleme işlemi yapabilirsiniz."
-};
+  };
 
   const [isFocused, setIsFocused] = React.useState(false);
 
@@ -330,15 +331,15 @@ const QuestionAddPage = ({ props }) => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/soru-listesi",
+      to: "/soru-listesi",
     },
     {
       title: "Soru Ekle",
-      href: "/soru-listesi/ekle",
+      to: "/soru-listesi/ekle",
     },
   ];
   const borderColor = error ? "#ff3333" : isFocused ? "#00a4e4" : "#ccc";
@@ -388,32 +389,32 @@ const QuestionAddPage = ({ props }) => {
         <BreadCrumbs header={header} subtitle={subtitle} />
         <div className="flex flex-col items-center h-90">
           <div className="flex justify-center items-center bg-[#F1F1F1]  w-[66%] h-[79.8vh] rounded-lg absolute flex-col  p-8 mobile:w-[95%]">
-          {selectedOption!="Matriks" ? <>  <div className="flex justify-center left-[4vh] top-8  font-Poppins text-base leading-6 text-left absolute">
+            {selectedOption != "Matriks" ? <>  <div className="flex justify-center left-[4vh] top-8  font-Poppins text-base leading-6 text-left absolute">
               <p>Soru metninizi giriniz:</p>
             </div>
-            <div className="flex justify-center  m-auto absolute h-[20%] w-11/12 top-16">
-              <textarea
-                name="text"
-                rows="12"
-                cols="50"
-                id="myTextarea"
-                className="w-[99%] p-4 text-base leading-[1.5rem] font-poppins text-left break-words"
-                style={{
-                  border: `1px solid ${borderColor}`,
-                  boxSizing: "border-box",
-                  resize: "none",
-                  overflow: "auto",
-                  outline: "none",
-                  transition: "border-color 0.2s ease-in-out",
-                }}
-                placeholder={selectedOption=="Matriks" ? "Lütfen Matriks soru satırını alt kısımdan ekleyin.": "Metni Giriniz..."}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                required
-                onChange={handleChange}
-                disabled={selectedOption=="Matriks" && true}
-              />
-            </div></>: <h2 className="flex justify-center top-8 text-2xl font-Poppins font-medium absolute">Lütfen Matriks soru satırını alt kısımdan ekleyin.</h2>}
+              <div className="flex justify-center  m-auto absolute h-[20%] w-11/12 top-16">
+                <textarea
+                  name="text"
+                  rows="12"
+                  cols="50"
+                  id="myTextarea"
+                  className="w-[99%] p-4 text-base leading-[1.5rem] font-poppins text-left break-words"
+                  style={{
+                    border: `1px solid ${borderColor}`,
+                    boxSizing: "border-box",
+                    resize: "none",
+                    overflow: "auto",
+                    outline: "none",
+                    transition: "border-color 0.2s ease-in-out",
+                  }}
+                  placeholder={selectedOption == "Matriks" ? "Lütfen Matriks soru satırını alt kısımdan ekleyin." : "Metni Giriniz..."}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  required
+                  onChange={handleChange}
+                  disabled={selectedOption == "Matriks" && true}
+                />
+              </div></> : <h2 className="flex justify-center top-8 text-2xl font-Poppins font-medium absolute">Lütfen Matriks soru satırını alt kısımdan ekleyin.</h2>}
             <div className="flex flex-row justify-start mb-[12vh] items-center space-x-[12.8rem] ">
               <div className="flex ml-10">
                 <div className="flex items-center space-x-1">
@@ -424,12 +425,12 @@ const QuestionAddPage = ({ props }) => {
                 <div className="flex items-center">
                   <span className="mr-3">:</span>
                   <div className="w-[20vw] left-5.8vw mobile:w-50">
-                  <div><CustomComboBox
+                    <div><CustomComboBox
                       options={questionTypeOptions}
                       placeholder="Seçiniz"
                       onGetCustomData={handleCustomComboBoxData}
                     />
-                  </div>
+                    </div>
                   </div>
                   <div className="flex flex-row items-center  absolute top-[35vh] ">
                     {renderComponent()}
@@ -438,8 +439,8 @@ const QuestionAddPage = ({ props }) => {
               </div>
               <div className="flex items-center">
                 <div className="flex items-center space-x-1">
-                <p className="text-base font-medium mobile:w-24 ">Soru</p>
-                <p className="text-base font-medium mobile:w-24 ">Etiketi</p>
+                  <p className="text-base font-medium mobile:w-24 ">Soru</p>
+                  <p className="text-base font-medium mobile:w-24 ">Etiketi</p>
                 </div>
                 <div className="flex items-center">
                   <span className="mr-3">:</span>

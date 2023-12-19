@@ -10,6 +10,7 @@ import { useState } from "react";
 import MobileSidebar from "../sidebar/mobile-sidebar/MobileSidebar";
 import Logo from "../../assets/images/logo.png";
 import Btlogo from "../../assets/images/bilgeteknolojilogo";
+import { Link } from "react-router-dom";
 function Header() {
   const headerAccordion = [
     { label: "Profil Bilgileri", icon: <BiSolidUser /> },
@@ -28,10 +29,10 @@ function Header() {
     <div className="h-20 laptop:h-24 xldesktop:h-28  bg-firstColor flex items-center justify-between gap-x-4">
       <p className="ml-4 hidden tablet:block text-white font-medium text-3xl xldektop:text-4xl ">
         Survey App
-      </p>
-      <a href="/yonetici-sayfasi" className="tablet:hidden">
+      </p>     
+      <Link to={"/yonetici-sayfasi"} className="tablet:hidden">
         <Btlogo />
-      </a>
+      </Link>
       <div className="hidden tablet:block mr-10 tablet:flex-col-reverse">
         <HeaderAccordion items={headerAccordion} />
       </div>

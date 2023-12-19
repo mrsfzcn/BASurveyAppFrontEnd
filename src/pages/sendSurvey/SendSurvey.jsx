@@ -162,7 +162,7 @@ const SendSurvey = () => {
     navigate("/anketler");
   };
   const header = {
-    header: "Anket Gönderme", href: "/anket-gonder", describe:
+    header: "Anket Gönderme", to: "/anket-gonder", describe:
       "Anket oluşturma sayfasına hoşgeldiniz buradan anketlerinizi oluşturabilirsiniz." };
 
   const handleCancel = () => {
@@ -172,19 +172,19 @@ const SendSurvey = () => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Anket İşlemleri",
-      href: "/anketler",
+      to: "/anketler",
     },
     {
       title: "Anket Oluşturma",
-      href: "/anket-olustur",
+      to: "/anket-olustur",
     },
     {
       title: "Anket Gönderme",
-      href: "anket-gonder"
+      to: "anket-gonder"
     }
   ];
   return (

@@ -145,18 +145,18 @@ export default function BranchList() {
   );
   const header = {
     header: "Tüm Şubeler",
-    href: "/subeler",
+    to: "/subeler",
     describe:
       "Şube görünteleme sayfasına hoşgeldiniz buradan bütün şubeleri görüntüleyebilirsiniz.",
   };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Şubeler",
-      href: "/subeler",
+      to: "/subeler",
     },
   ];
 

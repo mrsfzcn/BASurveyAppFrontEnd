@@ -64,7 +64,7 @@ const UpdateType = () => {
 
   const header = {
     header: "Soru Tipi Güncelle",
-    href: "/soru-tipi-listesi/guncelle",
+    to: "/soru-tipi-listesi/guncelle",
     describe:
       "Soru Tipi Güncelleme sayfasıdır. Bu sayfada etiket güncelleyebilirsiniz.",
   };
@@ -72,15 +72,15 @@ const UpdateType = () => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/",
+      to: "/",
     },
     {
       title: "Soru Tipi İşlemleri",
-      href: "/soru-tipi-listesi",
+      to: "/soru-tipi-listesi",
     },
     {
       title: "Soru Tipi Güncelle",
-      href: "/soru-tipi-listesi/guncelle",
+      to: "/soru-tipi-listesi/guncelle",
     },
   ];
 

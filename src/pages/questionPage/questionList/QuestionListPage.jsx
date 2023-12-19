@@ -54,20 +54,20 @@ function QuestionListPage() {
   }, []);
 
   const header2 = {
-    header: "Soru Listesi", href: "/soru-listesi", describe:
+    header: "Soru Listesi", to: "/soru-listesi", describe:
       "Soru listesi sayfasına hoşgeldiniz buradan soruları görüntüleyebilirsiniz." };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/soru-listesi",
+      to: "/soru-listesi",
     },
     {
       title: "Soru Listesi",
-      href: "/soru-listesi",
+      to: "/soru-listesi",
     },
   ];
     return (

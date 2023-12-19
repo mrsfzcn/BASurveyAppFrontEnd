@@ -89,7 +89,7 @@ const UpdateTag = () => {
 
   const header = {
     header: "Etiket Güncelle",
-    href: "/etiket/guncelle",
+    to: "/etiket/guncelle",
     describe:
       "Etiket Güncelleme sayfasıdır. Bu sayfada etiket güncelleyebilirsiniz.",
   };
@@ -97,15 +97,15 @@ const UpdateTag = () => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/",
+      to: "/",
     },
     {
       title: "Etiket İşlemleri",
-      href: "/etiket",
+      to: "/etiket",
     },
     {
       title: "Etiket Güncelle",
-      href: "/etiket/guncelle",
+      to: "/etiket/guncelle",
     },
   ];
 
