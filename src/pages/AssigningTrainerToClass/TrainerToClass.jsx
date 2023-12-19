@@ -113,21 +113,21 @@ const TrainerToClass = () => {
   };
 
   const header = {
-    header: "Eğitmen Atama", href: "/sinifa-egitmen-atama", describe:
+    header: "Eğitmen Atama", to: "/sinifa-egitmen-atama", describe:
       "Eğitmen atama sayfasına hoşgeldiniz buradan eğitmenleri ilgili olduğu sınıflara atayabilirsiniz." };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Sınıf İşlemleri",
-      href: "/sinifa-egitmen-atama",
+      to: "/sinifa-egitmen-atama",
     },
     {
       title: "Sınıfa Eğitmen Atama ",
-      href: "/sinifa-egitmen-atama",
+      to: "/sinifa-egitmen-atama",
     },
   ];
   return (

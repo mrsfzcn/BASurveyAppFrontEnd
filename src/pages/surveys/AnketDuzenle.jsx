@@ -78,7 +78,7 @@ const AnketDuzenle = () => {
     };
     SurveyService.update(updateSurveyData)
       .then(
-        window.location.href = "/anketler"
+        navigate("/anketler")
       )
       .catch((error) => {
         console.log(error.response);
@@ -90,20 +90,20 @@ const AnketDuzenle = () => {
       });
   };
 
-  const header = { header: "Anket Güncelle", href: "/anketler/guncelle" };
+  const header = { header: "Anket Güncelle", to: "/anketler/guncelle" };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Anket İşlemleri",
-      href: "/anketler",
+      to: "/anketler",
     },
     {
       title: "Anket Güncelle",
-      href: "/anketler/guncelle",
+      to: "/anketler/guncelle",
     },
   ];
 

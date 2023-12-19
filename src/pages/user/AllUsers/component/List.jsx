@@ -166,16 +166,16 @@ export default function List() {
     indexOfLastItem
   );
   const header = {
-    header: "Tüm Kullanıcılar", href: "/kullanici", describe:
+    header: "Tüm Kullanıcılar", to: "/kullanici", describe:
       "Kullanıcı görünteleme sayfasına hoşgeldiniz buradan bütün kullanıcıları görüntüleyebilirsiniz." }
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi"
+      to: "/yonetici-sayfasi"
     },
     {
       title: "Kullanıcı İşlemleri",
-      href: "/kullanici"
+      to: "/kullanici"
     }
   ]
   

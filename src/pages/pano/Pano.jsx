@@ -15,7 +15,7 @@ function Pano() {
   console.log(ogrenciSayisi);
   const header = {
     header: "Pano",
-    href: "/pano",
+    to: "/pano",
     describe:
       "Gene bilgilerin gösterildiği pano sayfası",
   };
@@ -23,11 +23,11 @@ function Pano() {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Pano",
-      href: "/pano",
+      to: "/pano",
     },
 
   ];

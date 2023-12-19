@@ -52,19 +52,19 @@ function TrainerListPage() {
       fetchData();
     }, []);
   
-  const header2 = { header: "Eğitmen Listesi", href: "/egitmen-listesi", describe: "Eğitmen listeme sayfasına hoşgeldiniz buradan eğitmenleri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
+  const header2 = { header: "Eğitmen Listesi", to: "/egitmen-listesi", describe: "Eğitmen listeme sayfasına hoşgeldiniz buradan eğitmenleri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
     const subtitle = [
       {
         title: "Anasayfa",
-        href: "/yonetici-sayfasi",
+        to: "/yonetici-sayfasi",
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/egitmen-listesi",
+        to: "/egitmen-listesi",
       },
       {
         title: "Eğitmen Listesi",
-        href: "/egitmen-listesi",
+        to: "/egitmen-listesi",
       },
     ];
     

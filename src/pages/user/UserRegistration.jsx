@@ -7,6 +7,7 @@ import AuthService from "../../services/AuthService";
 import Alert from "../../components/Alert";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import MultiDropdown from "../../components/MultiDropdown";
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,7 +39,7 @@ const UserRegistration = () => {
 
   const successNotify = (string) => toast.success(string);
   const errorNotify = (string)=> toast.error(string);
-
+  const navigate = useNavigate();
   const handleCreate = (event) => {
     event.preventDefault();
     if (user.firstName.length < 2) {
@@ -79,23 +80,23 @@ const UserRegistration = () => {
       });
   };
   const handleRedirect = () => {
-    window.location.href = '/kullanici'
+    navigate("/kullanici")
   };
 
-  const header = { header: "Kullanıcı Ekle", href: "/kullanici/ekle", describe: "Kullanıcı ekleme sayfasına hoşgeldiniz buradan kullanıcı ekleyebilir, silebilir ve güncelleyebilirsiniz." };
+  const header = { header: "Kullanıcı Ekle", to: "/kullanici/ekle", describe: "Kullanıcı ekleme sayfasına hoşgeldiniz buradan kullanıcı ekleyebilir, silebilir ve güncelleyebilirsiniz." };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Kullanıcı İşlemleri",
-      href: "/kullanici",
+      to: "/kullanici",
     },
     {
       title: "Kullanıcı Ekle",
-      href: "/kullanici/ekle",
+      to: "/kullanici/ekle",
     },
   ];
 //  TAM 8 HANELİ RASTGELE ŞİFRE ÜRETEN BİR METHOD YAZILDI. BACKEND'DEKI VALIDASYONU GEÇEBİLMEK İÇİN 8in ÜSTÜ BİR ŞİFRE OLUŞUYOR EXCEPTION GEÇİLMİŞ OLUYOR

@@ -12,17 +12,17 @@ function QuestionType() {
   const navigate = useNavigate();
   //Breadcrumb
   const header = {
-    header: "Soru Tipi", href: "/soru-tipi-listesi", describe:
+    header: "Soru Tipi", to: "/soru-tipi-listesi", describe:
       "Soru tipi işlemleri sayfasına hoşgeldiniz buradan soru tipi ekleme , silme ve güncelleme işlemleri yapabilirsiniz."
 };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru Tipi İşlemleri",
-      href: "/soru-tipi-listesi",
+      to: "/soru-tipi-listesi",
     },
   ];
 
