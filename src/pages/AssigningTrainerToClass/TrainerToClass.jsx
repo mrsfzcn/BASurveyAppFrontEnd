@@ -10,6 +10,8 @@ import Dropdown from "../../components/Dropdown";
 import SurveyService from "../../services/SurveyService";
 import TrainerService from "../../services/TrainerService";
 import { AxiosError } from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TrainerToClass = () => {
   const [error, setError] = useState("");
@@ -27,6 +29,9 @@ const TrainerToClass = () => {
     classtosend: "Atanacağı Sınıf",
   });
 
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
 
   const numberOptions = [];
   for (let i = 1; i <= 10; i++) {
@@ -75,12 +80,14 @@ const TrainerToClass = () => {
     event.preventDefault();
 
     if (selection === null) {
-      setError("Lütfen bir eğitmen seçiniz.");
+      //setError("Lütfen bir eğitmen seçiniz.");
+      warnNotify("Lütfen bir eğitmen seçiniz.")
       return;
     }
 
     if (!selectedClass) {
-      setError("Lütfen bir sınıf seçiniz.");
+     // setError("Lütfen bir sınıf seçiniz.");
+     warnNotify("Lütfen bir sınıf seçiniz.")
       return;
     }
 
@@ -92,13 +99,16 @@ const TrainerToClass = () => {
     };
     TrainerService.assign(assignSurveyData)
       .then((response) => {
-        setAlert({ type: "success", message: "Eğitmen sınıfa başarıyla eklendi." });
+        // setAlert({ type: "success", message: "Eğitmen sınıfa başarıyla eklendi." });
+        successNotify("Eğitmen sınıfa başarıyla eklendi.")
         setTimeout(() => {
           setAlert({ type: "", message: "" });
       }, 5000);
       })
       .catch((error) => {
+    
         console.error("Trainer Assign hatası:", error);
+        errorNotify("Eğitmen Atama hatası")
       });
   };
 
@@ -223,6 +233,7 @@ const TrainerToClass = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   );
 };

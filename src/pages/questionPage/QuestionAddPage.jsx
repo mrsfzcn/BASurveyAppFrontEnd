@@ -20,6 +20,10 @@ import MultiOptionalMultiSelectable from "../../components/options/MultiOptional
 import MultiOptionalMultiSelectableAndOther from "../../components/options/MultiOptionalMultiSelectableAndOther";
 import OpenEnded from "../../components/options/OpenEnded";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const QuestionAddPage = ({ props }) => {
   const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
@@ -37,6 +41,12 @@ const QuestionAddPage = ({ props }) => {
     tagOids: [],
     options: [],
   });
+
+  
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
+
   const [matrixQuestions, setMatrixQuestions] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -87,11 +97,12 @@ const QuestionAddPage = ({ props }) => {
     setCreateQuestion({ ...createQuestion, tagOids: a });
   };
 
-  function matrixSpecialKeywordError() {
-    setAlert({
-      type: "error",
-      message: "Soru '$$' içeremez! ",
-    });
+  function matrixSpecialKeywordError(){
+    // setAlert({
+    //   type: "error",
+    //   message: "Soru '$$' içeremez! ",
+    // });
+    warnNotify("Soru '$$' içeremez! ")
     setTimeout(() => {
       setError(false);
       setAlert({ type: "", message: "" });
@@ -111,10 +122,11 @@ const QuestionAddPage = ({ props }) => {
 
     if (selectedOption != "Açık Uçlu") {
       if (upData.length === 0) {  //Matriks upData içini doldurmadığı için zaten çalışmıyordu ama burda da hataya giriyor...
-        setAlert({
-          type: "error",
-          message: "Sorularda en az bir şık seçeneği olmalıdır",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message: "Sorularda en az bir şık seçeneği olmalıdır",
+        // });
+        warnNotify("Sorularda en az bir şık seçeneği olmalıdır")
         event.preventDefault(); // Form gönderimin engellemek için 
         setTimeout(() => {
           setError(false);
@@ -123,12 +135,13 @@ const QuestionAddPage = ({ props }) => {
         return;
       }
     }
-
-    if (selectedOption === "Likert" && upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
-      setAlert({
-        type: "error",
-        message: "Sol Etiket boş olamaz",
-      });
+    
+    if (selectedOption==="Likert" && upData[2] === "") { //Likert.jsx dosyasında buraya gelen veride array sıralamasında buttonLeftValue 3.sırada
+      // setAlert({
+      //   type: "error",
+      //   message: "Sol Etiket boş olamaz",
+      // });
+      warnNotify("Sol Etiket boş olamaz")
       event.preventDefault(); // Form gönderimin engellemek için 
       setTimeout(() => {
         setError(false);
@@ -137,12 +150,13 @@ const QuestionAddPage = ({ props }) => {
       return;
 
     }
-
-    if (selectedOption === "Likert" && upData[3] === "") {
-      setAlert({
-        type: "error",
-        message: "Sağ Etiket boş olamaz",
-      });
+    
+    if (selectedOption==="Likert" && upData[3] === "") {
+      // setAlert({
+      //   type: "error",
+      //   message: "Sağ Etiket boş olamaz",
+      // });
+      warnNotify("Sağ Etiket boş olamaz")
       event.preventDefault();
       setTimeout(() => {
         setError(false);
@@ -160,7 +174,8 @@ const QuestionAddPage = ({ props }) => {
         event.preventDefault();
         QuestionService.createQuestions(newDataArray)
           .then((response) => {
-            setAlert({ type: "success", message: "Soru başarıyla eklendi." });
+            //setAlert({ type: "success", message: "Soru başarıyla eklendi." });
+            successNotify("Soru başarıyla eklendi.")
             setCreateQuestion({ ...createQuestion, questionString: "" });
             if (selectedOption != "Matriks")
               document.getElementById("myTextarea").value = "";
@@ -177,19 +192,21 @@ const QuestionAddPage = ({ props }) => {
             console.error("Hata:", error);
             console.log(newDataArray);
             if (error.response.data.exceptionCode === 9007) {
-              setAlert({
-                type: "error",
-                message: error.response.data.customMessage,
-              });
+              // setAlert({
+              //   type: "error",
+              //   message: error.response.data.customMessage,
+              // });
+              errorNotify(error.response.data.customMessage)
               setTimeout(() => {
                 setAlert({ type: "", message: "" });
               }, 5000);
             } else {
-              setAlert({
-                type: "error",
-                message:
-                  "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
-              });
+              // setAlert({
+              //   type: "error",
+              //   message:
+              //     "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
+              // });
+              errorNotify("Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.")
               setTimeout(() => {
                 setAlert({ type: "", message: "" });
               }, 5000);
@@ -200,10 +217,11 @@ const QuestionAddPage = ({ props }) => {
       setIsEmptyTagOids(false);
       if (selectedOption != "Matriks" && createQuestion.questionString.length <= 1) {
         setError(true);
-        setAlert({
-          type: "error",
-          message: "Soru alanı boş olamaz",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message: "Soru alanı boş olamaz",
+        // });
+        warnNotify("Soru alanı boş olamaz")
         setTimeout(() => {
           setError(false);
           setAlert({ type: "", message: "" });
@@ -213,11 +231,12 @@ const QuestionAddPage = ({ props }) => {
         createQuestion.questionTypeOid === null &&
         createQuestion.questionString.length > 1
       ) {
-        setAlert({
-          type: "error",
-          message:
-            "Soru tipi seçimi yapınız. Aradığınız soru tipinin üzerine tıklayarak seçmelisiniz",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message:
+        //     "Soru tipi seçimi yapınız. Aradığınız soru tipinin üzerine tıklayarak seçmelisiniz",
+        // });
+        warnNotify("Soru tipi seçimi yapınız. Aradığınız soru tipinin üzerine tıklayarak seçmelisiniz")
         setTimeout(() => {
           setError(false);
           setAlert({ type: "", message: "" });
@@ -235,10 +254,11 @@ const QuestionAddPage = ({ props }) => {
         setError(false);
       } else {
         setError(true);
-        setAlert({
-          type: "error",
-          message: "Soru alanı boş olamaz",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message: "Soru alanı boş olamaz",
+        // });
+        warnNotify("Soru alanı boş olamaz")
         setTimeout(() => {
           setError(false);
           setAlert({ type: "", message: "" });
@@ -246,10 +266,11 @@ const QuestionAddPage = ({ props }) => {
       }
     } else {
       setError(true);
-      setAlert({
-        type: "error",
-        message: "Soru en fazla 450 karakter olmalıdır.",
-      });
+      // setAlert({
+      //   type: "error",
+      //   message: "Soru en fazla 450 karakter olmalıdır.",
+      // });
+      warnNotify("Soru en fazla 450 karakter olmalıdır.")
     }
   };
 
@@ -475,6 +496,7 @@ const QuestionAddPage = ({ props }) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   );
 };
