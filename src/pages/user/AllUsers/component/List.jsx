@@ -13,7 +13,8 @@ import BreadCrumbs from "../../../../components/BreadCrumbs";
 import LocalStorageServiceUser from "../../../../store/user-store.js";
 import { axiosInstanceGlobal } from "../../../../axiosControl/axiosInstance/axiosInstance.js";
 import UserService from "../../../../services/UserService.js";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function List() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -34,6 +35,10 @@ export default function List() {
   const [sortEposta, setSortEposta] = useState();
   const [sortKullaniciRolu, setSortKullaniciRolu] = useState();
   const [sortKayitTarihi, setSortKayitTarihi] = useState();
+
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
 
   useEffect(() => {
     UserService.get()
@@ -145,15 +150,20 @@ export default function List() {
   const handleDeleteClick = async (oid) => {
     setAlert({ type: "", message: "" });
     try {
-      UserService.delete(oid);
-      setAlert({ type: "success", message: "Kullanıcı başarıyla silindi." });
+     await UserService.delete(oid).then((resp)=>{
+        console.log(resp);
+      }).catch(()=>{
+        throw new Error("Kullanıcı silme işlemi başarısız.")
+      });
+      // setAlert({ type: "success", message: "Kullanıcı başarıyla silindi." });
+      successNotify("Kullanıcı başarıyla silindi.");
       setUserList(userList.filter(user=>user.oid!=oid));
     } catch (error) {
-      console.error(error);
-      setAlert({
-        type: "error",
-        message: "Kullanıcı silme işlemi başarısız.",
-      });
+      // setAlert({
+      //   type: "error",
+      //   message: "Kullanıcı silme işlemi başarısız.",
+      // });
+      errorNotify(error.message);
     }
   };
 
@@ -326,6 +336,7 @@ export default function List() {
           </div>
           {alert.type && <Alert type={alert.type} message={alert.message} />}
         </div>
+        <ToastContainer />
       </Layout>
     </>
   );
