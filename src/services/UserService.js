@@ -8,7 +8,7 @@ class UserService{
     }
     
     async delete(oid){
-        return axiosInstanceGlobal.delete(`/user/delete/${oid}`)
+        return await axiosInstanceGlobal.delete(`/user/delete/${oid}`)
     }
 
 }
