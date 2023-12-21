@@ -15,7 +15,7 @@ const BreadCrumbs = ({ header, subtitle }) => {
   const renderedSubtitle = subtitle.map((item, index) => (
     <span key={index}>
       
-      <Link to={item.href} className="ml-0.5">{item.title}</Link>
+      <Link to={item.to} className="ml-0.5">{item.title}</Link>
       {index === subtitle.length - 1 ? "" : ">"}
     </span>
   ));
@@ -27,7 +27,7 @@ const BreadCrumbs = ({ header, subtitle }) => {
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >          
-          <Link to={header.href}>{header.header}</Link>
+          <Link to={header.to}>{header.header}</Link>
           {showTooltip && (
             <div className="absolute bg-white border border-gray-200 rounded p-2 shadow-md w-72 tablet:w-96 mt-2 z-10 font-thin text-sm ">
               <p>{header.describe}</p>

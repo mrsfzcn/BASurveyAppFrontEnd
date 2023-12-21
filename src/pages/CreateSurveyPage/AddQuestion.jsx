@@ -165,20 +165,20 @@ function AddQuestion() {
         setSearchType(selectedOption.value);
     }
 
-    const header = {header: "Anket Oluşturma", href: "/anket-olustur"};
+    const header = { header: "Anket Oluşturma", to: "/anket-olustur"};
 
     const subtitle = [
         {
             title: "Anasayfa",
-            href: "/yonetici-sayfasi",
+            to: "/yonetici-sayfasi",
         },
         {
             title: "Anket İşlemleri",
-            href: "/anketler",
+            to: "/anketler",
         },
         {
             title: "Anket Oluşturma",
-            href: "/anket-olustur",
+            to: "/anket-olustur",
         },
     ];
     return (

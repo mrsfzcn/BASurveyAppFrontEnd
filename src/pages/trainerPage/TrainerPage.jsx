@@ -52,19 +52,19 @@ function TrainerPage() {
       fetchData();
     }, []);
   
-  const header2 = { header: "Eğitmen Listesi", href: "/egitmenler", describe: "Eğitmen listeme sayfasına hoşgeldiniz." };
+  const header2 = { header: "Eğitmen Listesi", to: "/egitmenler", describe: "Eğitmen listeme sayfasına hoşgeldiniz." };
     const subtitle = [
       {
         title: "Anasayfa",
-        href: "/yonetici-sayfasi",
+        to: "/yonetici-sayfasi",
       },
       {
         title: "Kullanıcı İşlemleri",
-        href: "/egitmenler",
+        to: "/egitmenler",
       },
       {
         title: "Eğitmen Listesi",
-        href: "/egitmenler",
+        to: "/egitmenler",
       },
     ];
     

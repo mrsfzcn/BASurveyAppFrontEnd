@@ -25,13 +25,14 @@ function Pano() {
   const header = {
     header: "Pano",
     to: "/pano",
-    describe: "Gene bilgilerin gösterildiği pano sayfası",
+    describe:
+      "Genel bilgilerin gösterildiği pano sayfası",
   };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      to: "/",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Pano",
@@ -82,8 +83,6 @@ function Pano() {
       }
     });
   };
-
-
   return (<>
     <Layout>
       <div className="background">

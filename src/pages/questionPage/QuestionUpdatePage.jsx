@@ -13,6 +13,8 @@ import CustomComboBox from "./CustomComboBox";
 import QuestionUpdateComboBoxPlus from './QuestionUpdateComboBoxPlus';
 import Alert from "../../components/Alert";
 import MatriksInput from "../../components/QuestionMatriksInput";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function QuestionUpdatePage() {
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -41,6 +43,11 @@ export default function QuestionUpdatePage() {
   const [questionTagIds, setQuestionTagIds] = useState();
   const navigate = useNavigate();
 
+
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
+
   if (!rowData === null) {
     setQuestionOid(rowData.questionOid);
     setQuestionString(rowData.questionString);
@@ -58,7 +65,8 @@ export default function QuestionUpdatePage() {
           setUpdateQuestion({ ...updateQuestion, questionOid: params.id, questionString: response.data.questionString });
         })
         .catch((error) => {
-          alert(params.id + "nolu soru bulunamamıştır");
+          //alert(params.id + "nolu soru bulunamamıştır");
+          errorNotify(params.id + "nolu soru bulunamamıştır")
         });
     }
   }, [params.id]);
@@ -103,11 +111,12 @@ export default function QuestionUpdatePage() {
 
       } else {
         setError(true);
-        setAlert({
-          type: "error",
-          message:
-            "Soru alanı boş olamaz",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message:
+        //     "Soru alanı boş olamaz",
+        // });
+        warnNotify("Soru alanı boş olamaz");
         setTimeout(() => {
           setError(false);
           setAlert({ type: "", message: "" });
@@ -116,10 +125,11 @@ export default function QuestionUpdatePage() {
     }
     else {
       setError(true);
-      setAlert({
-        type: "error",
-        message: "Soru en fazla 450 karakter olmalıdır.",
-      });
+      // setAlert({
+      //   type: "error",
+      //   message: "Soru en fazla 450 karakter olmalıdır.",
+      // });
+      warnNotify("Soru en fazla 450 karakter olmalıdır.");
     }
   }
 
@@ -141,11 +151,12 @@ export default function QuestionUpdatePage() {
     if(questionType == "Matriks"){
       const matriks = questionString.split(" $$ ")
       if(matriks.includes("")){
-        setAlert({
-          type: "error",
-          message:
-            "Matriks bos girdi birakilamaz",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message:
+        //     "Matriks bos girdi birakilamaz",
+        // });
+        warnNotify("Matriks bos girdi birakilamaz")
         setTimeout(() => {
           setAlert({ type: "", message: "" });
         }, 5000);
@@ -157,7 +168,8 @@ export default function QuestionUpdatePage() {
     const confirmedUpdatedQuestion = { ...updateQuestion, questionTypeOid: questionTypeIdFixer.value, questionString:questionString,tagOids: questionTagIds }
     QuestionService.updateQuestion(confirmedUpdatedQuestion)
       .then((response) => {
-        setAlert({ type: "success", message: "Soru başarıyla guncellendi." });
+       // setAlert({ type: "success", message: "Soru başarıyla guncellendi." });
+       successNotify("Soru başarıyla güncellendi.")
         setTimeout(() => {
           setAlert({ type: "", message: "" });
         }, 5000);
@@ -166,20 +178,22 @@ export default function QuestionUpdatePage() {
       .catch((error) => {
         console.error("Hata:", error);
         if (error.response.data.exceptionCode === 9007) {
-          setAlert({
-            type: "error",
-            message:
-              error.response.data.customMessage,
-          });
+          // setAlert({
+          //   type: "error",
+          //   message:
+          //     error.response.data.customMessage,
+          // });
+          errorNotify(error.response.data.customMessage);
           setTimeout(() => {
             setAlert({ type: "", message: "" });
           }, 5000);
         } else {
-          setAlert({
-            type: "error",
-            message:
-              "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
-          });
+          // setAlert({
+          //   type: "error",
+          //   message:
+          //     "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.",
+          // });
+          errorNotify("Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.");
           setTimeout(() => {
             setAlert({ type: "", message: "" });
           }, 5000);
@@ -207,19 +221,19 @@ export default function QuestionUpdatePage() {
     // BACKEND TARAFINDA DÜZELENME YAPILMASI ŞART !!
   };
 
-  const header2 = { header: "Soru Listesi", href: "/soru-listesi" };
+  const header2 = { header: "Soru Listesi", to: "/soru-listesi" };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru İşlemleri",
-      href: "/soru-listesi",
+      to: "/soru-listesi",
     },
     {
       title: "Soru Listesi",
-      href: "/soru-listesi/guncelle/",
+      to: "/soru-listesi/guncelle/",
     },
   ];
 
@@ -339,6 +353,7 @@ export default function QuestionUpdatePage() {
           )}
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   )
 }

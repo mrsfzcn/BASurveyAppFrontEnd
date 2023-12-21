@@ -6,7 +6,8 @@ import Alert from "../../../components/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
 import BreadCrumbs from "../../../components/BreadCrumbs";
 import QuestionTypeService from "../../../services/QuestionTypeService";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateType = () => {
   const navigate = useNavigate();
@@ -24,13 +25,18 @@ const UpdateType = () => {
     setUpdateTag({ ...updateTag, newTagString: e.target.value });
   };
 
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setAlert({ type: "", message: "" });
 
     try {
       if (!updateTag.newTagString) {
-        setAlert({ type: "error", message: "Yeni Etiket boş olamaz." });
+        //setAlert({ type: "error", message: "Yeni Etiket boş olamaz." });
+        warnNotify("Yeni Etiket boş olamaz.");
         setLoading(false);
         return;
       }
@@ -38,20 +44,23 @@ const UpdateType = () => {
       const response = await QuestionTypeService.updateType(updateTag);
 
       if (response.status === 200) {
-        setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
+        //setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
+        successNotify("Etiket başarıyla güncellendi.");
         navigate("/soru-tipi-listesi");
       } else {
-        setAlert({
-          type: "error",
-          message: "Etiket güncelleme başarısız oldu.",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message: "Etiket güncelleme başarısız oldu.",
+        // });
+        errorNotify("Etiket güncelleme başarısız oldu.");
       }
     } catch (error) {
       console.error("Error updating tag:", error);
-      setAlert({
-        type: "error",
-        message: "Bir hata oluştu. Lütfen tekrar deneyin.",
-      });
+      // setAlert({
+      //   type: "error",
+      //   message: "Bir hata oluştu. Lütfen tekrar deneyin.",
+      // });
+      errorNotify("Bir hata oluştu. Lütfen tekrar deneyin.");
     }
   };
 
@@ -64,7 +73,7 @@ const UpdateType = () => {
 
   const header = {
     header: "Soru Tipi Güncelle",
-    href: "/soru-tipi-listesi/guncelle",
+    to: "/soru-tipi-listesi/guncelle",
     describe:
       "Soru Tipi Güncelleme sayfasıdır. Bu sayfada etiket güncelleyebilirsiniz.",
   };
@@ -72,15 +81,15 @@ const UpdateType = () => {
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/",
+      to: "/",
     },
     {
       title: "Soru Tipi İşlemleri",
-      href: "/soru-tipi-listesi",
+      to: "/soru-tipi-listesi",
     },
     {
       title: "Soru Tipi Güncelle",
-      href: "/soru-tipi-listesi/guncelle",
+      to: "/soru-tipi-listesi/guncelle",
     },
   ];
 
@@ -128,7 +137,7 @@ const UpdateType = () => {
           </div>
         </form>
       </div>
-      <div></div>
+      <ToastContainer />
     </Layout>
   );
 };

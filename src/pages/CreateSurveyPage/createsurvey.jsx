@@ -105,21 +105,21 @@ function CreateSurvey() {
       });
   };
   const header = {
-    header: "Anket Oluşturma", href: "/anket-olustur", describe:
+    header: "Anket Oluşturma", to: "/anket-olustur", describe:
       "Anket oluşturma sayfasına hoşgeldiniz buradan anket oluşturabilirsiniz." };
 
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Anket İşlemleri",
-      href: "/anketler",
+      to: "/anketler",
     },
     {
       title: "Anket Oluşturma",
-      href: "/anket-olustur",
+      to: "/anket-olustur",
     },
   ];
   return (

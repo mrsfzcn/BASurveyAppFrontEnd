@@ -10,6 +10,8 @@ import BreadCrumbs from "../../components/BreadCrumbs.jsx";
 import RefreshIcon from "../user/AllUsers/svg/refresh-svg.jsx";
 import LocalStorageServiceAuth from "../../store/auth-store.js";
 import BranchListService from "../../services/BranchListService.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function BranchList() {
   const [selectedCombo, setSelectedCombo] = useState(10);
@@ -28,6 +30,9 @@ export default function BranchList() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const [sortName, setSortName] = useState();
   const [sortCity, setSortCity] = useState();
+
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
 
   useEffect(()=>{
     BranchListService.getData()
@@ -107,7 +112,8 @@ export default function BranchList() {
             return branch;
           })
         );
-        setAlert({ type: "success", message: "Güncelleme başarılı!" });
+        // setAlert({ type: "success", message: "Güncelleme başarılı!" });
+        successNotify("Güncelleme başarılı!")
         setTimeout(() => {
           setSpinner("default");
           setAlert({ type: "", message: "" });
@@ -124,10 +130,11 @@ export default function BranchList() {
           );
         }
 
-        setAlert({
-          type: "error",
-          message: err.response.data.exceptionMessage,
-        });
+        // setAlert({
+        //   type: "error",
+        //   message: err.response.data.exceptionMessage,
+        // });
+        errorNotify(err.response.data.exceptionMessage)
         setTimeout(() => {
           setSpinner("default");
           setAlert({ type: "", message: "" });
@@ -145,18 +152,18 @@ export default function BranchList() {
   );
   const header = {
     header: "Tüm Şubeler",
-    href: "/subeler",
+    to: "/subeler",
     describe:
       "Şube görünteleme sayfasına hoşgeldiniz buradan bütün şubeleri görüntüleyebilirsiniz.",
   };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Şubeler",
-      href: "/subeler",
+      to: "/subeler",
     },
   ];
 
@@ -291,6 +298,7 @@ export default function BranchList() {
           </div>
           {alert.type && <Alert type={alert.type} message={alert.message} />}
         </div>
+        <ToastContainer />
       </Layout>
     </>
   );

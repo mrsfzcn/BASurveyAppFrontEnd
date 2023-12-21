@@ -7,22 +7,24 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import Alert from "../../../components/Alert";
 import QuestionTypeService from "../../../services/QuestionTypeService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function QuestionType() {
   const navigate = useNavigate();
   //Breadcrumb
   const header = {
-    header: "Soru Tipi", href: "/soru-tipi-listesi", describe:
+    header: "Soru Tipi", to: "/soru-tipi-listesi", describe:
       "Soru tipi işlemleri sayfasına hoşgeldiniz buradan soru tipi ekleme , silme ve güncelleme işlemleri yapabilirsiniz."
 };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Soru Tipi İşlemleri",
-      href: "/soru-tipi-listesi",
+      to: "/soru-tipi-listesi",
     },
   ];
 
@@ -37,26 +39,34 @@ function QuestionType() {
   const header2 = ["Soru Tipi ID", "Soru tipi Adı"];
 
 
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (type.questionType.length < 1) {
-      setAlert({ type: "error", message: "Soru tipi adı boş bırakılamaz." });
+      //setAlert({ type: "error", message: "Soru tipi adı boş bırakılamaz." });
+      warnNotify("Soru tipi adı boş bırakılamaz.");
       return;
     }
 
     QuestionTypeService.createType(type)
     .then((response) => {
       if (response.data === false) {
-        setAlert({ type: "error", message: "Bu soru tipi daha önce eklenmiş. Lütfen farklı bir soru tipi giriniz." });
+        //setAlert({ type: "error", message: "Bu soru tipi daha önce eklenmiş. Lütfen farklı bir soru tipi giriniz." });
+        warnNotify("Bu soru tipi daha önce eklenmiş. Lütfen farklı bir soru tipi giriniz.");
       } else {
-        setAlert({ type: "success", message: "Soru Tipi başarıyla güncellendi." });
+       // setAlert({ type: "success", message: "Soru Tipi başarıyla güncellendi." });
+       successNotify("Soru Tipi başarıyla güncellendi.");
         setUpdateType(true);
         e.target.reset();
       }
     })
     .catch((error) => {
-      setAlert({ type: "error", message: "Bir hata meydana geldi." });
+      //setAlert({ type: "error", message: "Bir hata meydana geldi." });
+      errorNotify("Bir hata meydana geldi.");
     });
   };
 
@@ -97,17 +107,20 @@ function QuestionType() {
         const response = await QuestionTypeService.delete(rowData.questionTypeId);
         console.log(response);
         if (response.status === 200) {
-          setAlert({ type: "success", message: rowData.questionTypeId + ". id'ye sahip soru tipi başarıyla silindi" });
+          //setAlert({ type: "success", message: rowData.questionTypeId + ". id'ye sahip soru tipi başarıyla silindi" });
+          successNotify( rowData.questionTypeId + ". id'ye sahip soru tipi başarıyla silindi");
           const updatedTypes = [...types];
           updatedTypes.splice(index, 1);
           setTypes(updatedTypes);
           setUpdateType(true);
         } else {
-          setAlert({ type: "error", message: "Bir hata meydana geldi." });
+         // setAlert({ type: "error", message: "Bir hata meydana geldi." });
+         errorNotify("Bir hata meydana geldi.");
         }
       } catch (error) {
         console.log(error);
-        setAlert({ type: "error", message: "Bir hata meydana geldi." });
+       // setAlert({ type: "error", message: "Bir hata meydana geldi." });
+       errorNotify("Bir hata meydana geldi.");
       }
     }
   };
@@ -149,6 +162,7 @@ function QuestionType() {
           />
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   );
 }

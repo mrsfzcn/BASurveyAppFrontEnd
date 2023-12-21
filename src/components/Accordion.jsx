@@ -18,7 +18,6 @@ function Accordion({ items }) {
             className="mt-2 mb-1 text-sm tablet:text-base"
             key={contentItem.to}
           >
-            {/* <a href={contentItem.href}>{contentItem.name}</a> */}
             <Link to={contentItem.to}>{contentItem.name}</Link>
           </li>
         ))}

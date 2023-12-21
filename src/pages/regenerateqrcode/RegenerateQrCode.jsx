@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import TokenService from "../../services/TokenService";
 import { useNavigate } from "react-router-dom";
@@ -116,7 +116,7 @@ const RegenerateQrCode = () => {
                rounded-lg 
                bg-gradient-to-br from-gray-800 via-gray-800 to-gray-500 text-white  font-poppins font-bold text-base z-10 "
             >
-              <a href="/giris"> Geri dön</a>
+              <Link to="/giris"> Geri dön</Link>
             </button>
             <button
               className=" w-full h-12 

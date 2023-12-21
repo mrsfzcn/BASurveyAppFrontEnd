@@ -52,19 +52,19 @@ function StudentListPage() {
     fetchData();
   }, []);
 
-  const header2 = { header: "Öğrenci Listesi", href: "/ogrenci-listesi", describe: "Öğrenci listeme sayfasına hoşgeldiniz buradan öğrencileri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
+  const header2 = { header: "Öğrenci Listesi", to: "/ogrenci-listesi", describe: "Öğrenci listeme sayfasına hoşgeldiniz buradan öğrencileri görüntüleyebilir, silebilir ve güncelleyebilirsiniz." };
   const subtitle = [
     {
       title: "Anasayfa",
-      href: "/yonetici-sayfasi",
+      to: "/yonetici-sayfasi",
     },
     {
       title: "Sınıf İşlemleri",
-      href: "/ogrenci-listesi",
+      to: "/ogrenci-listesi",
     },
     {
       title: "Öğrenci Listesi",
-      href: "/ogrenci-listesi",
+      to: "/ogrenci-listesi",
     },
   ];
 

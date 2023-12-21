@@ -33,19 +33,19 @@ function ClassListPage() {
       fetchData();
     }, []);
   
-  const header2 = { header: "Sınıf Listesi", href: "/sinif-listesi", describe: "Sınıf listeleme sayfasına hoş geldiniz mevcut sınıfları kontrol edebilirsiniz" };
+  const header2 = { header: "Sınıf Listesi", to: "/sinif-listesi", describe: "Sınıf listeleme sayfasına hoş geldiniz mevcut sınıfları kontrol edebilirsiniz" };
     const subtitle = [
       {
         title: "Anasayfa",
-        href: "/yonetici-sayfasi",
+        to: "/yonetici-sayfasi",
       },
       {
         title: "Sınıf İşlemleri",
-        href: "/sinif-listesi",
+        to: "/sinif-listesi",
       },
       {
         title: "Sınıf Listesi",
-        href: "/sinif-listesi",
+        to: "/sinif-listesi",
       },
     ];
     
