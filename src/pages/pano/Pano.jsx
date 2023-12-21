@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Layout from "../../components/Layout";
 import { Chart } from "chart.js/auto";
+import { ScheduleTableList } from "./ScheduleTable"
 
 function Pano() {
   const [sinifSayisi, setSinifSayisi] = useState(0);
@@ -85,6 +86,7 @@ function Pano() {
   };
   return (<>
     <Layout>
+
       <div className="background">
         <div style={{ marginLeft: "70px" }}>
           <BreadCrumbs header={header} subtitle={subtitle} />
@@ -123,10 +125,12 @@ function Pano() {
               </tr>
             </tbody>
           </table>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "25%", gap: 10 }}>
-            <canvas id="myChart"></canvas>
-            <h1>Sınıf ve Öğrenci Sayısı</h1>
-            <p>{calculateRatio()}</p>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 10, overflow: "scroll" }}>
+            <ScheduleTableList />
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingRight: 50 }}>
+              <canvas id="myChart"></canvas>
+              <p>{calculateRatio()}</p>
+            </div>
           </div>
         </div>
 
