@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsFillTrashFill, BsFillPencilFill, BsFillClipboardFill } from "react-icons/bs";
 import "./Table.css";
 import Input from "../Input";
+import { useNavigate } from "react-router";
+
+
 
 const Table = ({
+  // eslint-disable-next-line react/prop-types
   data,
+  // eslint-disable-next-line react/prop-types
   header,
+  // eslint-disable-next-line react/prop-types
   useIcon,
+  // eslint-disable-next-line react/prop-types
   useSurveyIcons,
+
+  // eslint-disable-next-line react/prop-types
   useLabel,
+  // eslint-disable-next-line react/prop-types
   showTableData,
+  // eslint-disable-next-line react/prop-types
   deleteTableRows,
+  // eslint-disable-next-line react/prop-types
   editTableRows,
 }) => {
   const [selectedCount, setSelectedCount] = useState(null);
@@ -19,6 +31,7 @@ const Table = ({
   const itemsPerPageOptions = [10, 20, 50, 100];
   const itemsPerPage = selectedCount || itemsPerPageOptions[0];
   const [filterColumn, setFilterColumn] = useState("");
+  const navigate = useNavigate();
 
   const handleFilterChange = (e) => {
     setFilterValue(e.target.value);
@@ -35,12 +48,14 @@ const Table = ({
     setCurrentPage(1);
   };
 
+  // eslint-disable-next-line react/prop-types
   const filteredData = data.filter((rowData) => {
     const rowValues = Object.values(rowData).map((value) =>
       value.toString().toLowerCase()
     );
     const filterText = filterValue.toLowerCase();
     if (filterColumn) {
+      // eslint-disable-next-line react/prop-types
       const columnIndex = header.indexOf(filterColumn);
       if (columnIndex !== -1) {
         return rowValues[columnIndex].includes(filterText);
@@ -51,31 +66,41 @@ const Table = ({
     }
   });
 
-  const handleRowClick = (value) => { };
+  const handleRowClick = () => { };
 
   const renderTableCells = (rowData) => {
+
     return Object.keys(rowData).map((key, colIndex) => {
       const value = rowData[key];
+
+
 
       if (key === "studentTags" || key === "trainerTags") {
         const tagNames = value.map(tag => tag.tagString).join(", ");
         return <td key={colIndex}>{tagNames}</td>;
-      } else if (key=="endDate" || key=="startDate") {
+      } else if (key == "endDate" || key == "startDate") {
         const matriksQuestions = value.reverse().join("/")
-        return <td key={colIndex} >{matriksQuestions}</td>
+        return <td key={colIndex} >{matriksQuestions} </td>
       } else if (key == "questionString" && value.includes(" $$ ") && rowData.questionType == "Matriks") {
         const matriksQuestions = value.split(" $$ ").join(", ")
         return <td key={colIndex}>{matriksQuestions}</td>
       } else if (Array.isArray(value)) {
-        return <td key={colIndex} >{value.map(option => <>{option}<br/></>)}</td>;
+        return <td key={colIndex} >{value.map(option => <>{option}<br /></>)}asas</td>;
       } else {
-        return <td key={colIndex}>{value}</td>;
+
+        return <td style={{ cursor: "pointer" }} key={colIndex} onClick={() => handleButtonClick(rowData.id)}>{value}</td>;
+
       }
     });
   };
 
-
+  const handleButtonClick = (id) => {
+    // Id'yi kullanarak bir sayfa oluşturabilir veya başka bir eylem gerçekleştirebilirsiniz
+    console.log(`Id'si ${id} olan satır için düğmeye tıklandı.`);
+    navigate(`/sayfa/${id}`);
+  };
   const handleEditClick = (rowData) => {
+    // eslint-disable-next-line no-undef
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
   };
 
@@ -150,6 +175,7 @@ const Table = ({
               <label>Buna göre: </label>
               <select value={filterColumn} onChange={handleColumnChange} className="mx-3 mobile:mx-0">
                 <option value="">Hepsi</option>
+                {/* eslint-disable-next-line react/prop-types */}
                 {header.map((column) => (
                   <option key={column} value={column}>
                     {column}
@@ -169,6 +195,7 @@ const Table = ({
             <table className="table">
               <thead>
                 <tr>
+                  {/* eslint-disable-next-line react/prop-types */}
                   {header.map((item, index) => (
                     <th className="px-6 py-3 mobile:px-0 mobile:py-0 mobile:text-xs mobile:truncate " key={index}>
                       {item}
@@ -221,6 +248,7 @@ const Table = ({
           </div>
           <div className="footer mobile:w-full ">
             <div className="extra-content mobile:flex mobile:flex-col">
+              {/* eslint-disable-next-line react/prop-types */}
               Toplam {data.length}, Gösterilen veri sayısı:{" "}
               {currentItems.length}
               <ul className="pagination flex gap-1 pr-[35px]">

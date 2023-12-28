@@ -31,7 +31,6 @@ export const items = [
   {
     label: "Sınıf İşlemleri",
     content: [
-      { name: "Öğrenci Listeleme", to: "/ogrenci-listesi" },
       { name: "Eğitmen Listeleme", to: "/egitmen-listesi" },
       { name: "Sınıf Listeleme", to: "/sinif-listesi" },
       { name: "Sınıfa Eğitmen Atama", to: "/sinifa-egitmen-atama" },
