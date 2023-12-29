@@ -163,7 +163,6 @@ const Table = ({
               <label>Buna göre: </label>
               <select value={filterColumn} onChange={handleColumnChange} className="mx-3 mobile:mx-0">
                 <option value="">Hepsi</option>
-                {/* eslint-disable-next-line react/prop-types */}
                 {header.map((column) => (
                   <option key={column} value={column}>
                     {column}
@@ -183,7 +182,6 @@ const Table = ({
             <table className="table">
               <thead>
                 <tr>
-                  {/* eslint-disable-next-line react/prop-types */}
                   {header.map((item, index) => (
                     <th className="px-6 py-3 mobile:px-0 mobile:py-0 mobile:text-xs mobile:truncate " key={index}>
                       {item}
@@ -236,7 +234,6 @@ const Table = ({
           </div>
           <div className="footer mobile:w-full ">
             <div className="extra-content mobile:flex mobile:flex-col">
-              {/* eslint-disable-next-line react/prop-types */}
               Toplam {data.length}, Gösterilen veri sayısı:{" "}
               {currentItems.length}
               <ul className="pagination flex gap-1 pr-[35px]">
