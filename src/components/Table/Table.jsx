@@ -7,22 +7,13 @@ import { useNavigate } from "react-router";
 
 
 const Table = ({
-  // eslint-disable-next-line react/prop-types
   data,
-  // eslint-disable-next-line react/prop-types
   header,
-  // eslint-disable-next-line react/prop-types
   useIcon,
-  // eslint-disable-next-line react/prop-types
   useSurveyIcons,
-
-  // eslint-disable-next-line react/prop-types
   useLabel,
-  // eslint-disable-next-line react/prop-types
   showTableData,
-  // eslint-disable-next-line react/prop-types
   deleteTableRows,
-  // eslint-disable-next-line react/prop-types
   editTableRows,
 }) => {
   const [selectedCount, setSelectedCount] = useState(null);
@@ -48,14 +39,12 @@ const Table = ({
     setCurrentPage(1);
   };
 
-  // eslint-disable-next-line react/prop-types
   const filteredData = data.filter((rowData) => {
     const rowValues = Object.values(rowData).map((value) =>
       value.toString().toLowerCase()
     );
     const filterText = filterValue.toLowerCase();
     if (filterColumn) {
-      // eslint-disable-next-line react/prop-types
       const columnIndex = header.indexOf(filterColumn);
       if (columnIndex !== -1) {
         return rowValues[columnIndex].includes(filterText);
@@ -100,7 +89,6 @@ const Table = ({
     navigate(`/sayfa/${id}`);
   };
   const handleEditClick = (rowData) => {
-    // eslint-disable-next-line no-undef
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
   };
 
