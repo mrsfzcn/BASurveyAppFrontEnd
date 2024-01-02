@@ -4,10 +4,39 @@ import BreadCrumbs from "../../../components/BreadCrumbs";
 import Layout from "../../../components/Layout";
 import ClassDetailsService from "../../../services/ClassDetailsService";
 import "../classDetails/ClassDetails.css"
+import DataTable from "react-data-table-component";
 
 const ClassDetails = () => {
     const { id } = useParams();
     const [students, setStudents] = useState([]);
+
+    const columns = [
+      {
+        name: "No",
+        selector: (row, index) => index + 1,
+        sortable: true,
+      },
+      {
+        name: "İsim",
+        selector: (row) => row.firstName,
+        sortable: true,
+      },
+      {
+        name: "Soyisim",
+        selector: (row) => row.lastName,
+        sortable: true,
+      },
+      {
+        name: "Email",
+        selector: (row) => row.email,
+        sortable: true,
+      },
+      {
+        name: "Durum",
+        selector: (row) => row.state,
+        sortable: true,
+      },
+    ];
 
     async function getStudents() {
         await ClassDetailsService.getStudents(id).then((res) => { setStudents(res.data) })
@@ -47,37 +76,16 @@ const ClassDetails = () => {
     ];
 
     return (
-        <Layout >
-            <div className="backGround">
-                <div className="breadCrumbs">
-                    <BreadCrumbs header={header} subtitle={subtitle} />
-                </div>
-                <div className="detailsPage">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>İsim</th>
-                                <th>Soyisim</th>
-                                <th>Email</th>
-                                <th>Durum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {students.map((student, index) => (
-                                <tr key={student.id} className={student.state === "DELETED" ? "deleted" : "active"}>
-                                    <td>{index + 1}</td>
-                                    <td>{student.firstName}</td>
-                                    <td>{student.lastName}</td>
-                                    <td>{student.email}</td>
-                                    <td>{student.state}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </Layout>
+      <Layout>
+        <div className="backGround">
+          <div className="breadCrumbs">
+            <BreadCrumbs header={header} subtitle={subtitle} />
+          </div>
+          <div className="table">
+            <DataTable columns={columns} data={students} />
+          </div>
+        </div>
+      </Layout>
     );
 
 
