@@ -51,7 +51,7 @@ export const items = [
     content: [
       { name: "Sonuçlanmış Anketler", to: "/anket-raporlama" },
       { name: "Sınıfa Göre Anket Sonuçları", to: "" },
-      { name: "Kişiye Göre Anket Sonuçları", to: "" },
+      { name: "Kişiye Göre Anket Sonuçları", to: "/kisiye-ozel-raporlama" },
     ],
   },
 ];
