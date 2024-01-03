@@ -9,6 +9,11 @@ import SurveySvg from "./surveySvg";
 import UserGroupSvg from "./userGroupSvg";
 import QuestionSvg from "./questionSvg";
 import MultiDropdown from "../../components/MultiDropdown";
+import TokenService from "../../services/TokenService";
+import LocalStorageServiceAuth from "../../store/auth-store.js";
+
+const decodedToken = TokenService.decodeToken(LocalStorageServiceAuth.getToken());
+console.log(decodedToken);
 import { Navigate,useNavigate } from "react-router-dom";
 
 function AdminHome() {
@@ -64,18 +69,25 @@ function AdminHome() {
 
   return (
     <Layout>
+      
+      {decodedToken && (decodedToken.role === "MANAGER" || decodedToken.role === "ADMIN") && (
       <div className="question-container" onClick={handleQuestionClick}>
         <QuestionSvg />
-      </div>
+      </div>)}
+      {decodedToken && (decodedToken && decodedToken.role === "MANAGER"||decodedToken.role === "ADMIN"||decodedToken.role === "MASTER_TRAINER"||decodedToken.role === "ASSISTANT_TRAINER") && (
       <div className="classroom-container" onClick={handleClassroomClick}>
         <ClassroomSvg />
-      </div>
+      </div>)}
+      {decodedToken && (decodedToken && decodedToken.role === "MANAGER"||decodedToken.role === "ADMIN"||decodedToken.role === "MASTER_TRAINER"||decodedToken.role === "ASSISTANT_TRAINER") && (
       <div className="survey-container" onClick={handleSurveyClick}>
         <SurveySvg />
-      </div>
-      <div className="user-container"  onClick={handleUserClick}>
-        <UserGroupSvg />
-      </div>
+      </div>)}
+      {decodedToken && ( decodedToken.role === "ADMIN") && (
+        <div className="user-container" onClick={handleUserClick}>
+          <UserGroupSvg />
+        </div>
+      )}
+      {decodedToken && (decodedToken && decodedToken.role === "MANAGER"||decodedToken.role === "ADMIN"||decodedToken.role === "MASTER_TRAINER"||decodedToken.role === "ASSISTANT_TRAINER") && (
       <div className="circle-reporting" onClick={handleReportingClick}>
         <div className="svg-reporting">
           <ReportingSvg />
@@ -83,7 +95,7 @@ function AdminHome() {
         <div>
           <p>Raporlama İşlemleri</p>
         </div>
-      </div>
+      </div>)}
     </Layout>
   );
 }
