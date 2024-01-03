@@ -14,7 +14,7 @@ import BreadCrumbs from "../../../../components/BreadCrumbs";
 import LocalStorageServiceUser from "../../../../store/user-store.js";
 import { axiosInstanceGlobal } from "../../../../axiosControl/axiosInstance/axiosInstance.js";
 import UserService from "../../../../services/UserService.js";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function List() {
@@ -239,7 +239,6 @@ export default function List() {
           </div>
           {alert.type && <Alert type={alert.type} message={alert.message} />}
         </div>
-        <ToastContainer />
       </Layout>
     </>
   );

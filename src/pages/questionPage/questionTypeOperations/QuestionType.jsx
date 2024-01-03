@@ -7,7 +7,7 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import Alert from "../../../components/Alert";
 import QuestionTypeService from "../../../services/QuestionTypeService";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function QuestionType() {
@@ -162,7 +162,6 @@ function QuestionType() {
           />
         </div>
       </div>
-      <ToastContainer />
     </Layout>
   );
 }

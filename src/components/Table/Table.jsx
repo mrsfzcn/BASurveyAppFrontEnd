@@ -74,7 +74,7 @@ const Table = ({
         const matriksQuestions = value.split(" $$ ").join(", ")
         return <td key={colIndex}>{matriksQuestions}</td>
       } else if (Array.isArray(value)) {
-        return <td key={colIndex} >{value.map(option => <>{option}<br /></>)}asas</td>;
+        return <td key={colIndex} >{value.map(option => <>{option}<br /></>)}</td>;
       } else {
 
         return <td style={{ cursor: "pointer" }} key={colIndex} onClick={() => handleButtonClick(rowData.id)}>{value}</td>;

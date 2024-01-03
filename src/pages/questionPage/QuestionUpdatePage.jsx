@@ -13,7 +13,7 @@ import CustomComboBox from "./CustomComboBox";
 import QuestionUpdateComboBoxPlus from './QuestionUpdateComboBoxPlus';
 import Alert from "../../components/Alert";
 import MatriksInput from "../../components/QuestionMatriksInput";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function QuestionUpdatePage() {
@@ -353,7 +353,6 @@ export default function QuestionUpdatePage() {
           )}
         </div>
       </div>
-      <ToastContainer />
     </Layout>
   )
 }

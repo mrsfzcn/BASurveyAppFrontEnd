@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-import Input from "../../components/Input";
 import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import "./TrainerToClass.css";
 import Dropdown from "../../components/Dropdown";
-import SurveyService from "../../services/SurveyService";
 import TrainerService from "../../services/TrainerService";
-import { AxiosError } from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TrainerToClass = () => {
@@ -233,7 +230,6 @@ const TrainerToClass = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </Layout>
   );
 };
