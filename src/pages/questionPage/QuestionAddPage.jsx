@@ -20,7 +20,7 @@ import MultiOptionalMultiSelectable from "../../components/options/MultiOptional
 import MultiOptionalMultiSelectableAndOther from "../../components/options/MultiOptionalMultiSelectableAndOther";
 import OpenEnded from "../../components/options/OpenEnded";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -496,7 +496,6 @@ const QuestionAddPage = ({ props }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </Layout>
   );
 };

@@ -1,10 +1,7 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   Navigate,
 } from "react-router-dom";
 import Login from "./pages/LoginPage/login";
@@ -29,9 +26,6 @@ import SurveyFilling from "./pages/surveyFillingPage/SurveyFilling";
 import QuestionUpdatePage from "./pages/questionPage/QuestionUpdatePage";
 import QuestionAddPage from "./pages/questionPage/QuestionAddPage";
 import UserEditPage from "./pages/userEdit/UserEditPage";
-// import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
-import QuestionType from "./pages/questionPage/questionTypeOperations/QuestionType";
-import UpdateType from "./pages/questionPage/questionTypeOperations/UpdateType";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import RegenerateQrCode from "./pages/regenerateqrcode/RegenerateQrCode";
 import AssignStudentToClass from "./pages/AssignStudentClass/assignstudentclass"
@@ -44,6 +38,8 @@ import TrainerPage from "./pages/trainerPage/TrainerPage";
 import SurveyReport from "./pages/reportPage/SurveyReport";
 import PersonalizedReport from "./pages/reportPage/PersonalizedReport";
 import Pano from "./pages/pano/Pano";
+import { ScheduleTable } from "./pages/pano/ScheduleTable";
+import ClassDetails from "./pages/classesPage/classDetails/ClassDetails";
 
 function App() {
   return (
@@ -135,7 +131,9 @@ function App() {
             <Route index element={<PersonalizedReport />} />
           </Route>
         </Route>
+        <Route path="/zamanlama" element={<ScheduleTable />} />
         <Route path="/pano" element={<Pano />} />
+        <Route path="/sayfa/:id" element={<ClassDetails />} />
         <Route path="/" element={<Login />} />
       </Routes>
     </Router>

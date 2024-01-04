@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import TagService from "../../services/TagService";
 import MultiDropdown from "../../components/MultiDropdown";
 import Alert from "../../components/Alert";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function AddTag() {
@@ -230,7 +230,6 @@ function AddTag() {
           />
         </div>
       </div>
-      <ToastContainer />
     </Layout>
   );
 }

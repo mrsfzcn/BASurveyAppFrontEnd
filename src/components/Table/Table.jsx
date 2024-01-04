@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsFillTrashFill, BsFillPencilFill, BsFillClipboardFill } from "react-icons/bs";
 import "./Table.css";
 import Input from "../Input";
+import { useNavigate } from "react-router";
+
+
 
 const Table = ({
   data,
@@ -19,6 +22,7 @@ const Table = ({
   const itemsPerPageOptions = [10, 20, 50, 100];
   const itemsPerPage = selectedCount || itemsPerPageOptions[0];
   const [filterColumn, setFilterColumn] = useState("");
+  const navigate = useNavigate();
 
   const handleFilterChange = (e) => {
     setFilterValue(e.target.value);
@@ -51,30 +55,39 @@ const Table = ({
     }
   });
 
-  const handleRowClick = (value) => { };
+  const handleRowClick = () => { };
 
   const renderTableCells = (rowData) => {
+
     return Object.keys(rowData).map((key, colIndex) => {
       const value = rowData[key];
+
+
 
       if (key === "studentTags" || key === "trainerTags") {
         const tagNames = value.map(tag => tag.tagString).join(", ");
         return <td key={colIndex}>{tagNames}</td>;
-      } else if (key=="endDate" || key=="startDate") {
+      } else if (key == "endDate" || key == "startDate") {
         const matriksQuestions = value.reverse().join("/")
-        return <td key={colIndex} >{matriksQuestions}</td>
+        return <td key={colIndex} >{matriksQuestions} </td>
       } else if (key == "questionString" && value.includes(" $$ ") && rowData.questionType == "Matriks") {
         const matriksQuestions = value.split(" $$ ").join(", ")
         return <td key={colIndex}>{matriksQuestions}</td>
       } else if (Array.isArray(value)) {
-        return <td key={colIndex} >{value.map(option => <>{option}<br/></>)}</td>;
+        return <td key={colIndex} >{value.map(option => <>{option}<br /></>)}</td>;
       } else {
-        return <td key={colIndex}>{value}</td>;
+
+        return <td style={{ cursor: "pointer" }} key={colIndex} onClick={() => handleButtonClick(rowData.id)}>{value}</td>;
+
       }
     });
   };
 
-
+  const handleButtonClick = (id) => {
+    // Id'yi kullanarak bir sayfa oluşturabilir veya başka bir eylem gerçekleştirebilirsiniz
+    console.log(`Id'si ${id} olan satır için düğmeye tıklandı.`);
+    navigate(`/sayfa/${id}`);
+  };
   const handleEditClick = (rowData) => {
     navigate(`/anketler/guncelle/${rowData.surveyOid}`, { state: rowData });
   };

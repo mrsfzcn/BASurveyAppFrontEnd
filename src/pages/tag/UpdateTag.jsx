@@ -7,6 +7,8 @@ import Alert from "../../components/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
 import MultiDropdown from "../../components/MultiDropdown";
 import BreadCrumbs from "../../components/BreadCrumbs";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateTag = () => {
   const navigate = useNavigate();
@@ -28,6 +30,11 @@ const UpdateTag = () => {
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
 
+
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string)=> toast.error(string);
+  const warnNotify = (string)=> toast.warn(string);
+
   const onChange = (e) => {
     setUpdateTag({ ...updateTag, newTagString: e.target.value.toUpperCase() });
   };
@@ -47,31 +54,36 @@ const UpdateTag = () => {
     
     try {
       if (!updateTag.newTagString) {
-        setAlert({ type: "error", message: "Yeni Etiket boş olamaz." });
+       // setAlert({ type: "error", message: "Yeni Etiket boş olamaz." });
+       warnNotify("Yeni Etiket boş olamaz.");
         setLoading(false);
         return;
       }
       if (updateTag.tagClass.length == 0) {
-        setAlert({ type: "error", message: "Etiket sınıfı boş bırakılamaz." });
+        //setAlert({ type: "error", message: "Etiket sınıfı boş bırakılamaz." });
+        warnNotify("Etiket sınıfı boş bırakılamaz.");
         return;
       }
 
       const response = await TagService.updateTagAndClasses(updateTag);
       if (response.status === 200) {
-        setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
+        //setAlert({ type: "success", message: "Etiket başarıyla güncellendi." });
+        successNotify("Etiket başarıyla güncellendi.");
         navigate("/etiket");
       } else {
-        setAlert({
-          type: "error",
-          message: "Etiket güncelleme başarısız oldu.",
-        });
+        // setAlert({
+        //   type: "error",
+        //   message: "Etiket güncelleme başarısız oldu.",
+        // });
+        errorNotify("Etiket güncelleme başarısız oldu.");
       }
     } catch (error) {
       console.error("Error updating tag:", error);
-      setAlert({
-        type: "error",
-        message: "Bir hata oluştu. Lütfen tekrar deneyin.",
-      });
+      // setAlert({
+      //   type: "error",
+      //   message: "Bir hata oluştu. Lütfen tekrar deneyin.",
+      // });
+      errorNotify("Bir hata oluştu. Lütfen tekrar deneyin.");
     }
   };
 
@@ -177,7 +189,6 @@ const UpdateTag = () => {
           </div>
         </form>
       </div>
-      <div></div>
     </Layout>
   );
 };

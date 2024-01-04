@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./list.css";
 import { useNavigate } from "react-router-dom";
+import DataTable from 'react-data-table-component';
 
 import Layout from "../../../../components/Layout";
 
@@ -13,172 +14,155 @@ import BreadCrumbs from "../../../../components/BreadCrumbs";
 import LocalStorageServiceUser from "../../../../store/user-store.js";
 import { axiosInstanceGlobal } from "../../../../axiosControl/axiosInstance/axiosInstance.js";
 import UserService from "../../../../services/UserService.js";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function List() {
   const [selectedCombo, setSelectedCombo] = useState(10);
   const [alert, setAlert] = useState({ type: "", message: "" });
-
   const [userList, setUserList] = useState([]);
-  const [search, setSeach] = useState("");
-  const [searchedList, setSearchedList] = useState([]);
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [paginationLength, setPaginationLength] = useState();
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const [sortField, setSortField] = useState("");
+  const [sortAsc, setSortAsc] = useState(true);
   const navigate = useNavigate();
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const [sortName, setSortName] = useState();
-  const [sortSurname, setSortSurname] = useState();
-  const [sortEposta, setSortEposta] = useState();
-  const [sortKullaniciRolu, setSortKullaniciRolu] = useState();
-  const [sortKayitTarihi, setSortKayitTarihi] = useState();
+  const [perPage, setPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
+
+  const successNotify = (string) => toast.success(string);
+  const errorNotify = (string) => toast.error(string);
+  const warnNotify = (string) => toast.warn(string);
 
   useEffect(() => {
     UserService.get()
-    .then((response)=>{
-      setUserList(response.data);
-      setSearchedList(response.data);
-      console.log(response.data);
-      setPaginationLength(Math.ceil(searchedList.length / itemsPerPage));
-    })
-    .catch((error)=>{
-      setUserList([]);
-      console.error(error);
-    })
-  }, []);
+      .then((response) => {
+        setUserList(response.data);
+        console.log(response.data);
+        setPaginationLength(Math.ceil(response.data.length / itemsPerPage));
+      })
+      .catch((error) => {
+        setUserList([]);
+        console.error(error);
+      });
+  }, [itemsPerPage]);
 
-  const filterUsers = (userList, search, currentPage, itemsPerPage) => {
-    const filteredList = userList.filter((item) =>
-      item.firstName.toLowerCase().trim().includes(search.toLowerCase().trim())
-    );
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
-    setSearchedList(currentItems);
-    setPaginationLength(Math.ceil(filteredList.length / itemsPerPage));
-  };
+  const columns = [
+    {
+      name: 'Adı',
+      selector: 'firstName',
+      sortable: true,
+    },
+    {
+      name: 'Soyadı',
+      selector: 'lastName',
+      sortable: true,
+    },
+    {
+      name: 'Eposta',
+      selector: 'email',
+      sortable: true,
+    },
+    {
+      name: 'Kullanıcı Rolü',
+      selector: 'authorizedRole',
+      sortable: true,
+    },
+    {
+      name: 'Kayıt Tarihi',
+      selector: 'createdDate',
+      sortable: true,
+    },
+    {
+      name: 'İşlem',
+      cell: (row) => (
+        <div>
+          <button className="editButton" onClick={() => handleEditClick(row.oid)}>
+            <EditIcon />
+          </button>
+          <button onClick={() => handleDeleteClick(row.oid)}>
+            <DeleteIcon />
+          </button>
+        </div>
+      ),
+    },
+  ];
 
-  useEffect(() => {
-    filterUsers(userList, search, currentPage, itemsPerPage);
-  }, [search, currentPage, itemsPerPage, userList]);
 
   const handleCombo = (event) => {
     setSelectedCombo(event.target.value);
-    setItemPerPage(event.target.value);
+    setItemsPerPage(event.target.value);
   };
 
   const handleSearch = (e) => {
-    setSeach(e.target.value);
+    setSearch(e.target.value);
   };
 
-  const handleSortName = () => {  
-     const status = !sortName;   
-     setSortName(status);    
-     const userListCopy = [...userList];    
-     if (status) {     
-      userListCopy.sort((a, b) => a.firstName.localeCompare(b.firstName));       
-    } else {     
-         userListCopy.sort((a, b) => b.firstName.localeCompare(a.firstName));     
-    }   
-    setUserList(userListCopy); };
-
-  const handleSortSurname = () => {
-    const status = !sortSurname;
-    setSortSurname(status);
-
-    const userListCopy = [...userList];    
-    if (status) {     
-     userListCopy.sort((a, b) => a.lastName.localeCompare(b.lastName));       
-   } else {     
-        userListCopy.sort((a, b) => b.lastName.localeCompare(a.lastName));     
-   }   
-   setUserList(userListCopy); 
-  };
-
-  const handleSortEposta = () => {
-    const status = !sortEposta;
-    setSortEposta(status);
-
-    const userListCopy = [...userList];    
-    if (status) {     
-     userListCopy.sort((a, b) => a.email.localeCompare(b.email));       
-   } else {     
-        userListCopy.sort((a, b) => b.email.localeCompare(a.email));     
-   }   
-   setUserList(userListCopy); 
-  };
-
-  const handleSortKullaniciRolu = () => {
-    const status = !sortKullaniciRolu;
-    setSortKullaniciRolu(status);
-
-    const userListCopy = [...userList];    
-    if (status) {     
-     userListCopy.sort((a, b) => a.authorizedRole.localeCompare(b.authorizedRole));       
-   } else {     
-        userListCopy.sort((a, b) => b.authorizedRole.localeCompare(a.authorizedRole));     
-   }   
-   setUserList(userListCopy); 
-  };
-
-  const handleSortKayitTarihi = () => {
-    const status = !sortKayitTarihi;
-    setSortKayitTarihi(status);
-
-    const userListCopy = [...userList];    
-    if (status) {     
-     userListCopy.sort((a, b) => a.createdDate.localeCompare(b.createdDate));       
-   } else {     
-        userListCopy.sort((a, b) => b.createdDate.localeCompare(a.createdDate));     
-   }   
-   setUserList(userListCopy); 
-  };
-
-
-  const handleEditClick = async (oid) => {    
+  const handleEditClick = async (oid) => {
     LocalStorageServiceUser.setUserOid(oid);
-    navigate("/kullanici-bilgileri-guncelle"); //editleme url'i gelecek
+    navigate("/kullanici-bilgileri-guncelle");
   };
+
 
   const handleDeleteClick = async (oid) => {
-    setAlert({ type: "", message: "" });
     try {
       UserService.delete(oid);
-      setAlert({ type: "success", message: "Kullanıcı başarıyla silindi." });
-      setUserList(userList.filter(user=>user.oid!=oid));
+      successNotify("Kullanıcı başarıyla silindi.");
+      setUserList(userList.filter((user) => user.oid !== oid));
     } catch (error) {
-      console.error(error);
-      setAlert({
-        type: "error",
-        message: "Kullanıcı silme işlemi başarısız.",
-      });
+      // console.error(error);
+      // setAlert({
+      //   type: "error",
+      //   message: "Kullanıcı silme işlemi başarısız.",
+      // });
+      errorNotify(error.message);
     }
   };
 
-  const filteredUserList = userList.filter((item) =>
+  const handleChangePage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleChangeRowsPerPage = (newPerPage, page) => {
+    setItemsPerPage(newPerPage);
+    setCurrentPage(page);
+  };
+
+  const handleSort = (column, sortDirection) => {
+    setSortField(column.selector);
+    setSortAsc(sortDirection === 'asc');
+  };
+
+  const filteredList = userList.filter((item) =>
     item.firstName.toLowerCase().trim().includes(search.toLowerCase().trim())
   );
 
-  const currentItems = filteredUserList.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const sortedList = sortField
+    ? [...filteredList].sort((a, b) => {
+      const fieldA = a[sortField];
+      const fieldB = b[sortField];
+      return sortAsc ? fieldA.localeCompare(fieldB) : fieldB.localeCompare(fieldA);
+    })
+    : filteredList;
+
+  const paginatedList = sortedList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   const header = {
-    header: "Tüm Kullanıcılar", to: "/kullanici", describe:
-      "Kullanıcı görünteleme sayfasına hoşgeldiniz buradan bütün kullanıcıları görüntüleyebilirsiniz." }
+    header: "Tüm Kullanıcılar", href: "/kullanici", describe:
+      "Kullanıcı görünteleme sayfasına hoşgeldiniz buradan bütün kullanıcıları görüntüleyebilirsiniz."
+  }
   const subtitle = [
     {
       title: "Anasayfa",
-      to: "/yonetici-sayfasi"
+      href: "/yonetici-sayfasi"
     },
     {
       title: "Kullanıcı İşlemleri",
-      to: "/kullanici"
+      href: "/kullanici"
     }
-  ]
-  
+  ];
 
   return (
     <>
@@ -186,9 +170,9 @@ export default function List() {
         <div className="background ">
           <div>
             <div className="allUsersHeaderDiv ">
-              <div style={{marginLeft: "70px"}}>
+              <div style={{ marginLeft: "70px" }}>
                 <BreadCrumbs header={header} subtitle={subtitle} />
-              </div>                         
+              </div>
             </div>
           </div>
           <div className="list ">
@@ -221,105 +205,34 @@ export default function List() {
                   marginTop: "3rem",
                   height: "58vh",
                   marginLeft: "5%",
-                  
                 }}
               >
-                <table>
-                  <thead>
-                    <tr>
-                      <th style={{ width: "13rem", paddingBottom: "2rem"  }}>
-                        <span>Adı</span>
-                        <button className="bottomSort" onClick={handleSortName}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "13rem", paddingBottom: "2rem" }}>
-                        <span>Soyadı</span>
-                        <button className="bottomSort" onClick={handleSortSurname}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "15rem", paddingBottom: "2rem" }}>
-                        <span>Eposta</span>
-                        <button className="bottomSort" onClick={handleSortEposta}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "13rem", paddingBottom: "2rem" }}>
-                        <span>Kullanıcı Rolü</span>
-                        <button className="bottomSort" onClick={handleSortKullaniciRolu}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "13rem", paddingBottom: "2rem" }}>
-                        <span>Kayıt Tarihi</span>
-                        <button className="bottomSort" onClick={handleSortKayitTarihi}>
-                          <SortIcon />
-                        </button>
-                      </th>
-                      <th style={{ width: "15rem", paddingBottom: "2rem" }}>
-                        <span>İşlem</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="lineTableBody ">
-                    {currentItems.map((user, index) => (
-                      <tr className="tableRow" key={index}>
-                        <td style={{ width: "13rem" }}>{user.firstName}</td>
-                        <td style={{ width: "13rem" }}>{user.lastName}</td>
-                        <td style={{ width: "13rem" }}>{user.email}</td>
-                        <td style={{ width: "13rem" }}>
-                          {user.authorizedRole}
-                        </td>
-                        <td style={{ width: "13rem" }}>{user.createdDate}</td>
-                        <td style={{ width: "15rem" }}>
-                          <button
-                            className="editButton"
-                            onClick={() => handleEditClick(user.oid)}
-                          >
-                            <EditIcon />
-                          </button>
-                          <button onClick={() => handleDeleteClick(user.oid)}>
-                            <DeleteIcon />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <DataTable
+                  columns={columns}
+                  data={paginatedList}
+                  pagination
+                  paginationServer
+                  paginationTotalRows={filteredList.length}
+                  paginationPerPage={perPage}
+                  paginationComponentOptions={{
+                    noRowsPerPage: true,
+                  }}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  onSort={handleSort}
+                  sortServer
+                  sortIcon={<SortIcon />}
+                  highlightOnHover
+                  pointerOnHover
+                  paginationRowsPerPageOptions={[2, 5, 10]}
+                />
               </div>
               <div className="footer mobile:m-0">
                 <div>
                   <p style={{ marginBottom: "2rem" }}>
-                    {userList.length} kullanıcıdan {currentItems.length} tanesi
+                    {filteredList.length} kullanıcıdan {paginatedList.length} tanesi
                     gösteriliyor.
                   </p>
-                </div>
-                <div>
-                  {currentPage > 1 && (
-                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage - 1)}>
-                      ÖNCEKİ
-                    </button>
-                  )}
-                  {Array.from({
-                    length: paginationLength,
-                  }).map((_, index) =>
-                    currentPage - 1 === index || currentPage === index ? (
-                      <button
-                        key={index}
-                        className={currentPage === index + 1 ? "paginationButton active" : "paginationButton"}
-                        onClick={() => paginate(index + 1)}
-                      >
-                        {index + 1}
-                      </button>
-                    ) : null
-                  )}
-
-                  {currentPage < paginationLength && (
-                    <button className="beforeAndNextButton" onClick={() => paginate(currentPage + 1)}>
-                      SONRAKİ
-                    </button>
-                  )}
                 </div>
               </div>
             </div>
