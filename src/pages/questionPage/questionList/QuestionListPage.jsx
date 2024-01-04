@@ -23,7 +23,7 @@ function QuestionListPage() {
   const [listedItems, setListedItems] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
 
-  const [surveys, setSurveys] = useState([
+  const [questions, setQuestions] = useState([
     {
       no: "",
       soru: "",
@@ -89,17 +89,19 @@ function QuestionListPage() {
       sortable: false,
     },
   ];
-
   const deleteQuestion = async (questionOid) => {
     let response;
+    let resp;
     try {
       response = await QuestionService.delete(questionOid);
+      if (response.data) {
+        setQuestions(questions.filter((survey) => survey.questionOid != questionOid));
+      }
+      resp = await QuestionService.list();
+      setListedItems(resp.data);
       successNotify(questionOid + " No'lu soru başarıyla silindi");
     } catch (error) {
       errorNotify(error.response.data.exceptionMessage);
-    }
-    if (response.data) {
-      setSurveys(surveys.filter((survey) => survey.questionOid != questionOid));
     }
   };
 
@@ -116,14 +118,14 @@ function QuestionListPage() {
     const fetchData = async () => {
       try {
         const response = await QuestionService.list();
-        setSurveys(response.data);
+        setQuestions(response.data);
       } catch (error) {
         console.error(error);
         errorNotify(error);
       }
     };
     fetchData();
-  }, []);
+  }, [setQuestions]);
   useEffect(() => {
     QuestionService.list()
       .then((response) => {
