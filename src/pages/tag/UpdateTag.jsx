@@ -7,7 +7,7 @@ import Alert from "../../components/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
 import MultiDropdown from "../../components/MultiDropdown";
 import BreadCrumbs from "../../components/BreadCrumbs";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateTag = () => {
@@ -189,7 +189,6 @@ const UpdateTag = () => {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </Layout>
   );
 };

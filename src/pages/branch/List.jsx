@@ -10,7 +10,7 @@ import BreadCrumbs from "../../components/BreadCrumbs.jsx";
 import RefreshIcon from "../user/AllUsers/svg/refresh-svg.jsx";
 import LocalStorageServiceAuth from "../../store/auth-store.js";
 import BranchListService from "../../services/BranchListService.js";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function BranchList() {
@@ -298,7 +298,6 @@ export default function BranchList() {
           </div>
           {alert.type && <Alert type={alert.type} message={alert.message} />}
         </div>
-        <ToastContainer />
       </Layout>
     </>
   );

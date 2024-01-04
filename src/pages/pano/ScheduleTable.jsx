@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import RefreshIcon from "../user/AllUsers/svg/refresh-svg";
 import JobService from "../../services/JobService";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ScheduleTable.css'
 
@@ -149,6 +149,5 @@ export function ScheduleTableList() {
                 Şubeleri Güncelle
             </Button>
         </div>
-        <ToastContainer />
     </>)
 }

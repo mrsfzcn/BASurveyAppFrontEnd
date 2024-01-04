@@ -6,7 +6,7 @@ import Alert from "../../../components/Alert";
 import { useNavigate, useLocation } from "react-router-dom";
 import BreadCrumbs from "../../../components/BreadCrumbs";
 import QuestionTypeService from "../../../services/QuestionTypeService";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateType = () => {
@@ -137,7 +137,6 @@ const UpdateType = () => {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </Layout>
   );
 };
