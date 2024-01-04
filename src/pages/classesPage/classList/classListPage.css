@@ -11,3 +11,7 @@
 .red{
   color: red;
 }
+.backgroundContainer {
+  max-width: 1200px; /* Adjust the value based on your design needs */
+  margin: 0 auto; /* Center the container horizontally */
+}
