@@ -36,6 +36,7 @@ import CourseList from "./pages/course/assigncourse";
 import ClassListPage from "./pages/classesPage/classList/ClassListPage";
 import TrainerPage from "./pages/trainerPage/TrainerPage";
 import SurveyReport from "./pages/reportPage/SurveyReport";
+import PersonalizedReport from "./pages/reportPage/PersonalizedReport";
 import Pano from "./pages/pano/Pano";
 import { ScheduleTable } from "./pages/pano/ScheduleTable";
 import ClassDetails from "./pages/classesPage/classDetails/ClassDetails";
@@ -125,6 +126,9 @@ function App() {
         <Route>
           <Route path="/anket-raporlama">
             <Route index element={<SurveyReport />} />
+          </Route>
+          <Route path="/kisiye-ozel-raporlama">
+            <Route index element={<PersonalizedReport />} />
           </Route>
         </Route>
         <Route path="/zamanlama" element={<ScheduleTable />} />

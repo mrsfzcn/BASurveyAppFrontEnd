@@ -74,8 +74,8 @@ if (decodedToken && ["MANAGER", "ADMIN", "MASTER_TRAINER", "ASSISTANT_TRAINER"].
     label: "Raporlama",
     content: [
       { name: "Sonuçlanmış Anketler", to: "/anket-raporlama" },
-      { name: "Sınıfa Göre Anket Sonuçları", to: "/sinif-anket-sonuclari" },
-      { name: "Kişiye Göre Anket Sonuçları", to: "/kisi-anket-sonuclari" },
+      { name: "Sınıfa Göre Anket Sonuçları", to: "" },
+      { name: "Kişiye Göre Anket Sonuçları", to: "/kisiye-ozel-raporlama" },
     ],
   });
 }
