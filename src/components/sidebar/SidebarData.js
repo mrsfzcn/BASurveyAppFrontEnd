@@ -6,6 +6,14 @@ const decodedToken = TokenService.decodeToken(LocalStorageServiceAuth.getToken()
 
 const items = [
   {
+    label: "Pano",
+
+    content: [
+      { name: "Pano", to: "/pano" },
+      { name: "Zamanlama Bilgileri", to: "/zamanlama" },
+    ],
+  },
+  {
     label: "Kullanıcı İşlemleri",
     content: [
       { name: "Tüm Kullanıcılar", to: "/kullanici" },
