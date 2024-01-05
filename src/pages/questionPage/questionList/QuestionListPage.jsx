@@ -11,6 +11,7 @@ import Input from "../../../components/Input";
 
 import EditIcon from "../../user/AllUsers/svg/edit-svg";
 import DeleteIcon from "../../user/AllUsers/svg/delete-svg";
+import Swal from 'sweetalert2'
 
 function QuestionListPage() {
   const successNotify = (string) => toast.success(string);
@@ -25,7 +26,7 @@ function QuestionListPage() {
 
   const [questions, setQuestions] = useState([
     {
-      no: "",
+      id: "",
       soru: "",
       tipi: "",
       etiketler: "",
@@ -35,7 +36,7 @@ function QuestionListPage() {
 
   const header = [
     {
-      name: "No",
+      name: "Id",
       selector: (row) => row.questionOid,
       sortable: true,
     },
@@ -89,17 +90,38 @@ function QuestionListPage() {
       sortable: false,
     },
   ];
+
   const deleteQuestion = async (questionOid) => {
     let response;
     let resp;
     try {
-      response = await QuestionService.delete(questionOid);
-      if (response.data) {
-        setQuestions(questions.filter((survey) => survey.questionOid != questionOid));
+      const result = await Swal.fire({
+        title: "Soruyu silmek istediğinize emin misiniz?",
+        text: "Bu işlemi geri alamayacaksınız!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Evet, sil!",
+        cancelButtonText: "İptal"
+      });
+      if (result.isConfirmed) {
+        response = await QuestionService.delete(questionOid);
+        if (response.data) {
+          setQuestions(questions.filter((survey) => survey.questionOid !== questionOid));
+        }
+        resp = await QuestionService.list();
+        setListedItems(resp.data);
+        Swal.fire({
+          title: "Silindi!",
+          text: "Soru başarıyla silindi.",
+          icon: "success"
+        });
+        successNotify(questionOid + " Id'li soru başarıyla silindi");
+      } else {
+        // Kullanıcı "İptal" dediyse, işlemi iptal et
+        return;
       }
-      resp = await QuestionService.list();
-      setListedItems(resp.data);
-      successNotify(questionOid + " No'lu soru başarıyla silindi");
     } catch (error) {
       errorNotify(error.response.data.exceptionMessage);
     }
@@ -125,7 +147,7 @@ function QuestionListPage() {
       }
     };
     fetchData();
-  }, [setQuestions]);
+  }, []);
   useEffect(() => {
     QuestionService.list()
       .then((response) => {
